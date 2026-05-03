@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Favicon -->
+    <link href="{{ asset('assets/images/favicon.png') }}" rel="icon" type="image/png">
+
+    <!-- SEO: Title & Description -->
+    <title>@yield('title', 'EduConnect – Social Platform for Teachers & Students')</title>
+    <meta name="description" content="@yield('description', 'EduConnect is a social media platform built for teachers and students to connect, share knowledge, and collaborate.')">
+    <meta name="keywords" content="@yield('keywords', 'education, teachers, students, social media, learning, classroom')">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="EduConnect">
+
+    <!-- Open Graph (Social Sharing) -->
+    <meta property="og:title" content="@yield('title', 'EduConnect')">
+    <meta property="og:description" content="@yield('description', 'Social platform for teachers and students')">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ asset('assets/images/og-image.png') }}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', 'EduConnect')">
+    <meta name="twitter:description" content="@yield('description', 'Social platform for teachers and students')">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{{ asset('assets/css/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+    @stack('styles')
+</head>
+<body>
+
+    <div id="wrapper">
+
+        <!-- Header -->
+        @include('partials.header')
+
+        <!-- Left Sidebar -->
+        @include('partials.sidebar')
+
+        <!-- Main Content -->
+        <main id="site__main" class="site-main">
+            @yield('content')
+        </main>
+
+    </div>
+
+    <!-- Floating Chat Box -->
+    @include('partials.chat-box')
+
+    <!-- Page Modals -->
+    @yield('modals')
+
+    <!-- JavaScript Libraries -->
+    <script src="{{ asset('assets/js/uikit.min.js') }}"></script>
+    <script src="{{ asset('assets/js/simplebar.js') }}"></script>
+    <script src="{{ asset('assets/js/script.js') }}"></script>
+
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    @stack('scripts')
+</body>
+</html>
