@@ -10,8 +10,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const nightModeBtn = document.getElementById('night-mode-toggle');
     const html = document.documentElement;
 
-    if (localStorage.getItem('darkMode') === 'true') {
-        html.classList.add('dark');
+    // Dark is the DEFAULT. If user previously chose light mode, remove the dark class.
+    if (localStorage.getItem('darkMode') === 'false') {
+        html.classList.remove('dark');
     }
 
     if (nightModeBtn) {

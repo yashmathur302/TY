@@ -1,10 +1,10 @@
 /* =========================================
    EduConnect - Custom Stylesheet
-   No inline styles. All sections use named classes.
+   Dark theme by default. No inline styles.
    ========================================= */
 
 /* -----------------------------------------
-   1. CSS Variables (Design Tokens)
+   1. CSS Variables (Dark Theme Defaults)
 ----------------------------------------- */
 :root {
     --m-top: 64px;
@@ -12,15 +12,23 @@
     --w-side-sm: 240px;
 
     --color-primary: #0ea5e9;
-    --color-primary-soft: rgba(14, 165, 233, 0.1);
-    --color-secondery: #f1f5f9;
-    --color-border: #e2e8f0;
+    --color-primary-soft: rgba(14, 165, 233, 0.15);
+
+    /* Dark theme colors (default) */
+    --color-bg-body:    #13192c;
+    --color-bg-card:    #1b2033;
+    --color-bg-card2:   #1e2846;
+    --color-bg-input:   rgba(255, 255, 255, 0.06);
+    --color-secondery:  rgba(255, 255, 255, 0.08);
+    --color-border:     rgba(255, 255, 255, 0.10);
+    --color-text:       #e2e8f0;
+    --color-text-muted: #8899aa;
 
     --font-base: 'Inter', sans-serif;
 
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
 
     --radius-sm: 0.375rem;
     --radius-md: 0.75rem;
@@ -44,8 +52,8 @@ html {
 body {
     font-family: var(--font-base);
     font-size: 14px;
-    color: #374151;
-    background-color: #f8fafc;
+    color: var(--color-text);
+    background-color: var(--color-bg-body);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
 }
@@ -80,21 +88,26 @@ input[type="search"] {
     outline: none;
     font-size: 14px;
     width: 100%;
-    background-color: #fff;
+    background-color: var(--color-bg-input);
+    color: var(--color-text);
     transition: border-color 0.2s;
 }
 
 textarea:focus,
 input:focus {
     border-color: var(--color-primary);
-    ring: none;
+}
+
+textarea::placeholder,
+input::placeholder {
+    color: var(--color-text-muted);
 }
 
 /* -----------------------------------------
-   3. Color Utilities (Custom - not in Tailwind)
+   3. Color Utilities
 ----------------------------------------- */
 .bg-secondery {
-    background-color: var(--color-secondery);
+    background-color: var(--color-secondery) !important;
 }
 
 .bg-primary {
@@ -109,35 +122,36 @@ input:focus {
     color: var(--color-primary);
 }
 
-/* Dark mode backgrounds */
-.dark2 {
-    background-color: #1e293b;
+/* Dark backgrounds (used by Tailwind dark: classes) */
+.dark2,
+.dark\:bg-dark2.dark .dark\:bg-dark2 {
+    background-color: #1b2033;
 }
 
 .dark3 {
-    background-color: #1a2234;
+    background-color: #16213e;
 }
 
 .dark4 {
     background-color: #243044;
 }
 
-/* Border utilities */
+/* Border utility */
 .border1 {
     border: 1px solid var(--color-border);
 }
 
 .border2 {
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--color-border);
 }
 
-/* Inset 0 utility (used in slideshow items) */
+/* Inset utility */
 .inset-0 {
     inset: 0;
 }
 
 /* -----------------------------------------
-   4. Layout - Wrapper
+   4. Layout
 ----------------------------------------- */
 #wrapper {
     min-height: 100vh;
@@ -145,7 +159,7 @@ input:focus {
 }
 
 /* -----------------------------------------
-   5. Logo (CSS-based, no image needed)
+   5. Logo
 ----------------------------------------- */
 .site-logo-link {
     display: flex;
@@ -173,20 +187,19 @@ input:focus {
     background-clip: text;
 }
 
-/* On mobile show short logo */
 @media (max-width: 767px) {
     .site-logo-text { display: none; }
     .site-logo-text-short { display: block; }
 }
 
-/* Sidebar nav icon style */
+/* Sidebar nav icons */
 .sidebar-nav-list li a ion-icon,
 #side ul li a ion-icon {
     font-size: 1.25rem;
     flex-shrink: 0;
 }
 
-/* Create dropdown link icons */
+/* Create dropdown icon containers */
 .create-link-icon {
     display: grid;
     place-items: center;
@@ -197,7 +210,7 @@ input:focus {
 }
 
 /* -----------------------------------------
-   Header
+   6. Header
 ----------------------------------------- */
 .site-header {
     z-index: 100;
@@ -208,10 +221,10 @@ input:focus {
     width: 100%;
     display: flex;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: var(--color-bg-card);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .header-inner {
@@ -249,10 +262,12 @@ input:focus {
 
 .header-search input {
     padding-left: 2.5rem;
-    background: transparent;
+    background: var(--color-bg-input);
     border: none;
     height: 3rem;
     font-size: 0.875rem;
+    border-radius: 0.75rem;
+    color: var(--color-text);
 }
 
 .header-icons {
@@ -263,6 +278,15 @@ input:focus {
     right: 1.25rem;
     top: 50%;
     transform: translateY(-50%);
+    color: var(--color-text);
+}
+
+/* Header icon buttons round bg */
+.header-create-btn,
+.header-notif-btn,
+.header-msg-btn {
+    color: var(--color-text) !important;
+    background-color: var(--color-secondery) !important;
 }
 
 .notif-badge {
@@ -280,19 +304,11 @@ input:focus {
 }
 
 .dropdown-arrow {
-    width: 0.75rem;
-    height: 0.75rem;
-    position: absolute;
-    top: -0.375rem;
-    right: 0.75rem;
-    background-color: #fff;
-    border-left: 1px solid var(--color-border);
-    border-top: 1px solid var(--color-border);
-    transform: rotate(45deg);
+    display: none;
 }
 
 /* -----------------------------------------
-   6. Sidebar
+   7. Sidebar
 ----------------------------------------- */
 .site-sidebar {
     position: fixed;
@@ -306,7 +322,7 @@ input:focus {
 
 .sidebar-inner {
     padding: 0.5rem;
-    background-color: #fff;
+    background-color: var(--color-bg-card);
     box-shadow: var(--shadow-sm);
     width: 260px;
     height: calc(100vh - var(--m-top));
@@ -338,7 +354,7 @@ input:focus {
     border-radius: var(--radius-md);
     font-size: 0.875rem;
     font-weight: 500;
-    color: #374151;
+    color: var(--color-text);
     transition: background-color 0.15s;
 }
 
@@ -373,7 +389,7 @@ input:focus {
     padding: 0.5rem 1rem;
     border-radius: var(--radius-sm);
     font-size: 0.8125rem;
-    color: #374151;
+    color: var(--color-text);
     transition: background-color 0.15s;
 }
 
@@ -381,19 +397,26 @@ input:focus {
     background-color: var(--color-secondery);
 }
 
-/* Sidebar Footer Links */
+/* Sidebar headings */
+.sidebar-shortcuts,
+.sidebar-pages {
+    border-top: 1px solid var(--color-border);
+}
+
+/* Sidebar Footer */
 .sidebar-footer {
     font-size: 0.75rem;
-    color: #6b7280;
+    color: var(--color-text-muted);
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     padding: 0.5rem;
     margin-top: 0.5rem;
+    border-top: 1px solid var(--color-border);
 }
 
 .sidebar-footer a {
-    color: #6b7280;
+    color: var(--color-text-muted);
     transition: color 0.15s;
 }
 
@@ -414,15 +437,27 @@ input:focus {
     -webkit-backdrop-filter: blur(4px);
 }
 
+/* See More Button */
+.sidebar-seemore {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    width: 100%;
+    text-align: left;
+}
+
 /* -----------------------------------------
-   7. Main Content
+   8. Main Content
 ----------------------------------------- */
 .site-main {
     margin-left: var(--w-side-sm);
     padding: 0.625rem;
-    height: calc(100vh - var(--m-top));
     margin-top: var(--m-top);
-    overflow-y: auto;
+    min-height: calc(100vh - var(--m-top));
 }
 
 /* Feed Layout */
@@ -444,16 +479,37 @@ input:focus {
 }
 
 /* -----------------------------------------
-   8. Stories
+   9. Stories
 ----------------------------------------- */
 .feed-stories {
     margin-bottom: 2rem;
 }
 
+/* Gradient story ring border */
 .story-thumb {
     position: relative;
-    overflow: hidden;
+    overflow: visible !important;
+    border-radius: var(--radius-full) !important;
+    border: none !important;
+}
+
+.story-thumb::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
     border-radius: var(--radius-full);
+    background: linear-gradient(135deg, #ec4899, #f97316, #eab308);
+    z-index: -1;
+}
+
+.story-thumb img {
+    border-radius: var(--radius-full);
+    border: 2px solid var(--color-bg-body);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
 }
 
 .story-add {
@@ -461,10 +517,11 @@ input:focus {
     cursor: pointer;
     display: grid;
     place-items: center;
-    border: 2px dashed #cbd5e1;
-    background-color: #e2e8f0;
+    border: 2px dashed var(--color-border);
+    background-color: var(--color-secondery);
     flex-shrink: 0;
     transition: transform 0.2s;
+    color: var(--color-text);
 }
 
 .story-add:hover {
@@ -473,15 +530,15 @@ input:focus {
 
 .story-skeleton {
     border-radius: var(--radius-full);
-    background-color: rgba(148, 163, 184, 0.3);
+    background-color: var(--color-secondery);
     animation: pulse 1.5s ease-in-out infinite;
 }
 
 /* -----------------------------------------
-   9. Post Cards
+   10. Post Cards
 ----------------------------------------- */
 .post-card {
-    background-color: #fff;
+    background-color: var(--color-bg-card);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
     font-size: 0.875rem;
@@ -499,14 +556,14 @@ input:focus {
 }
 
 .post-author {
-    color: #111827;
+    color: #ffffff;
     font-weight: 600;
     font-size: 0.875rem;
 }
 
 .post-time {
     font-size: 0.75rem;
-    color: #6b7280;
+    color: var(--color-text-muted);
     margin-top: 0.1rem;
 }
 
@@ -524,6 +581,7 @@ input:focus {
     padding: 0 1rem 0.5rem;
     font-weight: 400;
     line-height: 1.6;
+    color: var(--color-text);
 }
 
 .post-actions {
@@ -542,16 +600,17 @@ input:focus {
 .post-reactions {
     position: absolute;
     padding: 0.25rem 0.5rem;
-    background-color: #fff;
+    background-color: var(--color-bg-card);
     border-radius: var(--radius-full);
     box-shadow: var(--shadow-lg);
     font-size: 1.5rem;
     min-width: 212px;
+    border: 1px solid var(--color-border);
 }
 
 .post-comments {
     padding: 1rem;
-    border-top: 1px solid #f3f4f6;
+    border-top: 1px solid var(--color-border);
     font-weight: 400;
     position: relative;
 }
@@ -566,7 +625,7 @@ input:focus {
 .comment-item p {
     margin-top: 0.125rem;
     font-weight: 400;
-    color: #374151;
+    color: var(--color-text);
     line-height: 1.5;
 }
 
@@ -574,7 +633,7 @@ input:focus {
     display: flex;
     align-items: center;
     gap: 0.375rem;
-    color: #6b7280;
+    color: var(--color-text-muted);
     font-size: 0.875rem;
     margin-top: 0.5rem;
     transition: color 0.15s;
@@ -589,7 +648,7 @@ input:focus {
     align-items: center;
     gap: 0.25rem;
     padding: 0.75rem 1rem;
-    border-top: 1px solid #f3f4f6;
+    border-top: 1px solid var(--color-border);
 }
 
 .comment-media-icons {
@@ -603,7 +662,7 @@ input:focus {
 
 /* Post Skeleton */
 .post-skeleton {
-    background-color: rgba(226, 232, 240, 0.4);
+    background-color: var(--color-secondery);
     animation: pulse 1.5s ease-in-out infinite;
     border-radius: var(--radius-lg);
     padding: 1rem;
@@ -611,10 +670,11 @@ input:focus {
 
 /* Create Post Box */
 .post-create-box {
-    background-color: #fff;
+    background-color: var(--color-bg-card);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
     padding: 1rem;
+    border: 1px solid var(--color-border);
 }
 
 .post-create-photo,
@@ -628,7 +688,7 @@ input:focus {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.15);
     border-radius: var(--radius-full);
     width: 2rem;
     height: 2rem;
@@ -636,17 +696,17 @@ input:focus {
     place-items: center;
     box-shadow: var(--shadow-md);
     z-index: 10;
-    color: #374151;
+    color: #fff;
     transition: background-color 0.15s;
 }
 
 .nav-prev:hover,
 .nav-next:hover {
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.25);
 }
 
 /* -----------------------------------------
-   10. Buttons
+   11. Buttons
 ----------------------------------------- */
 .button {
     display: inline-flex;
@@ -676,7 +736,7 @@ input:focus {
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: background-color 0.15s;
-    color: #374151;
+    color: var(--color-text);
     border: none;
     background: none;
     flex-shrink: 0;
@@ -696,30 +756,18 @@ input:focus {
     height: 2rem;
     border-radius: var(--radius-full);
     transition: background-color 0.15s;
+    color: var(--color-text);
 }
 
 .sidebar-toggle:hover {
-    background-color: #f3f4f6;
-}
-
-/* See More Button */
-.sidebar-seemore {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.5rem 1rem;
-    font-weight: 500;
-    font-size: 0.875rem;
-    color: #111827;
-    width: 100%;
-    text-align: left;
+    background-color: var(--color-secondery);
 }
 
 /* -----------------------------------------
-   11. Right Sidebar Widgets
+   12. Right Sidebar Widgets
 ----------------------------------------- */
 .box {
-    background-color: #fff;
+    background-color: var(--color-bg-card);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--color-border);
@@ -730,7 +778,7 @@ input:focus {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    color: #111827;
+    color: #ffffff;
     margin-bottom: 0.75rem;
 }
 
@@ -756,13 +804,13 @@ input:focus {
 .side-list-title {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #111827;
+    color: #ffffff;
     margin: 0;
 }
 
 .side-list-info {
     font-size: 0.75rem;
-    color: #6b7280;
+    color: var(--color-text-muted);
     margin-top: 0.1rem;
 }
 
@@ -778,11 +826,12 @@ input:focus {
     right: 0;
     top: 0;
     margin: 0.5rem;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.15);
     border-radius: var(--radius-full);
     padding: 0.125rem 0.5rem;
     font-size: 0.875rem;
     font-weight: 600;
+    color: #fff;
 }
 
 /* Online Friends */
@@ -817,7 +866,7 @@ input:focus {
     border-radius: var(--radius-full);
     width: 0.5rem;
     height: 0.5rem;
-    border: 2px solid #fff;
+    border: 2px solid var(--color-bg-card);
 }
 
 /* Pro Member Card */
@@ -829,6 +878,7 @@ input:focus {
     padding: 0.5rem;
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border);
+    background-color: var(--color-bg-card);
 }
 
 /* Trends */
@@ -848,7 +898,7 @@ input:focus {
 }
 
 /* -----------------------------------------
-   12. Chat Float Box
+   13. Chat Float Box
 ----------------------------------------- */
 .chat-float-wrap {
     position: relative;
@@ -874,13 +924,13 @@ input:focus {
 
 .chat-float-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
 }
 
 .chat-box {
-    background-color: #fff;
+    background-color: var(--color-bg-card);
     border-radius: var(--radius-lg);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--shadow-lg);
     width: 320px;
     border-top: 1px solid var(--color-border);
 }
@@ -892,11 +942,13 @@ input:focus {
 .chat-box-header h1 {
     font-size: 1.125rem;
     font-weight: 700;
-    color: #111827;
+    color: #ffffff;
 }
 
 .chat-box-search {
     padding: 0.75rem;
+    background-color: var(--color-bg-card) !important;
+    border-color: var(--color-border) !important;
 }
 
 .chat-box-actions {
@@ -907,7 +959,7 @@ input:focus {
     display: flex;
     gap: 0.5rem;
     font-size: 1.25rem;
-    color: #374151;
+    color: var(--color-text);
 }
 
 .chat-contact {
@@ -928,12 +980,12 @@ input:focus {
     position: absolute;
     bottom: -0.5rem;
     right: 1.25rem;
-    background-color: #fff;
+    background-color: var(--color-bg-card);
     transform: rotate(45deg);
 }
 
 /* -----------------------------------------
-   13. Navigation (Tabs / Underline)
+   14. Navigation (Tabs / Underline)
 ----------------------------------------- */
 .nav__underline ul {
     display: flex;
@@ -949,22 +1001,29 @@ input:focus {
     border-bottom: 2px solid transparent;
     font-size: 0.875rem;
     font-weight: 500;
-    color: #6b7280;
+    color: var(--color-text-muted);
     transition: all 0.15s;
 }
 
 .nav__underline ul li a:hover {
-    color: #111827;
+    color: #ffffff;
 }
 
 .nav__underline ul li a[aria-expanded="true"] {
-    color: #111827;
-    border-bottom-color: #111827;
+    color: #ffffff;
+    border-bottom-color: #ffffff;
 }
 
 /* -----------------------------------------
-   14. Modals
+   15. Modals
 ----------------------------------------- */
+.uk-modal-dialog {
+    border-radius: var(--radius-lg) !important;
+    overflow: hidden;
+    background-color: var(--color-bg-card) !important;
+    color: var(--color-text) !important;
+}
+
 .modal-post-preview {
     display: flex;
     position: relative;
@@ -978,7 +1037,7 @@ input:focus {
 }
 
 .modal-post-sidebar {
-    background-color: #fff;
+    background-color: var(--color-bg-card);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -989,11 +1048,20 @@ input:focus {
     text-align: center;
     padding: 1rem;
     border-bottom: 1px solid var(--color-border);
+    color: #ffffff;
 }
 
 .modal-body textarea {
     resize: vertical;
     min-height: 120px;
+    background-color: transparent !important;
+    border: none !important;
+    color: var(--color-text) !important;
+    font-size: 1.1rem;
+}
+
+.modal-body textarea::placeholder {
+    color: var(--color-text) !important;
 }
 
 .modal-footer {
@@ -1001,6 +1069,7 @@ input:focus {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-top: 1px solid var(--color-border);
 }
 
 .modal-media-options {
@@ -1016,7 +1085,8 @@ input:focus {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: #fff;
+    background-color: var(--color-bg-card);
+    border-top: 1px solid var(--color-border);
 }
 
 .modal-close {
@@ -1024,10 +1094,11 @@ input:focus {
     right: 0;
     top: 0;
     margin: 0.75rem;
-    background-color: #fff;
+    background-color: var(--color-secondery);
     border-radius: var(--radius-full);
     padding: 0.5rem;
     z-index: 10;
+    color: #ffffff;
 }
 
 /* Story Upload */
@@ -1038,6 +1109,7 @@ input:focus {
     border-radius: var(--radius-md);
     overflow: hidden;
     border: 1px solid var(--color-border);
+    background-color: var(--color-bg-input);
 }
 
 .story-upload-label {
@@ -1054,7 +1126,7 @@ input:focus {
     padding-bottom: 1.5rem;
     padding-top: 2.5rem;
     cursor: pointer;
-    background: linear-gradient(to top, rgba(55, 65, 81, 0.6), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
 }
 
 .story-file-input {
@@ -1076,43 +1148,61 @@ input:focus {
 }
 
 /* -----------------------------------------
-   15. Dropdowns / Menus
+   16. Dropdowns (UIKit overrides)
 ----------------------------------------- */
-.uk-dropdown,
-[uk-dropdown] {
-    background-color: #fff;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--color-border);
-    padding: 0.5rem;
+.uk-dropdown {
+    background-color: var(--color-bg-card) !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: var(--shadow-lg) !important;
+    border: 1px solid var(--color-border) !important;
+    padding: 0.5rem !important;
+    color: var(--color-text) !important;
+    min-width: 180px;
 }
 
 .uk-dropdown nav a,
-[uk-dropdown] nav a {
+.uk-dropdown a {
     display: flex;
     align-items: center;
     gap: 0.625rem;
     padding: 0.5rem 0.75rem;
     border-radius: var(--radius-sm);
     font-size: 0.875rem;
-    color: #374151;
+    color: var(--color-text) !important;
     transition: background-color 0.15s;
 }
 
 .uk-dropdown nav a:hover,
-[uk-dropdown] nav a:hover {
-    background-color: var(--color-secondery);
+.uk-dropdown a:hover {
+    background-color: var(--color-secondery) !important;
 }
 
-.uk-dropdown nav hr,
-[uk-dropdown] nav hr {
+.uk-dropdown nav hr {
     border: none;
     border-top: 1px solid var(--color-border);
     margin: 0.25rem 0;
 }
 
+/* Header dropdowns (larger containers) */
+.create-dropdown,
+.notif-dropdown,
+.msg-dropdown,
+.profile-dropdown {
+    background-color: var(--color-bg-card) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-lg) !important;
+    color: var(--color-text) !important;
+}
+
+/* Search dropdown */
+.search-dropdown > div {
+    background-color: var(--color-bg-card) !important;
+    border: 1px solid var(--color-border) !important;
+}
+
 /* -----------------------------------------
-   16. Notifications
+   17. Notifications
 ----------------------------------------- */
 .notif-list {
     height: 400px;
@@ -1134,7 +1224,7 @@ input:focus {
 }
 
 .notif-item--unread {
-    background-color: rgba(20, 184, 166, 0.05);
+    background-color: rgba(20, 184, 166, 0.08);
 }
 
 .notif-avatar {
@@ -1153,11 +1243,12 @@ input:focus {
 
 .notif-content {
     flex: 1;
+    color: var(--color-text);
 }
 
 .notif-time {
     font-size: 0.75rem;
-    color: #6b7280;
+    color: var(--color-text-muted);
     margin-top: 0.375rem;
 }
 
@@ -1175,14 +1266,19 @@ input:focus {
 .msg-dropdown-footer {
     text-align: center;
     padding: 1rem;
-    border-top: 1px solid #f1f5f9;
+    border-top: 1px solid var(--color-border);
     font-size: 0.875rem;
     font-weight: 500;
-    color: #2563eb;
+    color: var(--color-primary);
+}
+
+.notif-dropdown-head h3,
+.msg-dropdown-head h3 {
+    color: #ffffff;
 }
 
 /* -----------------------------------------
-   17. Messages Dropdown
+   18. Messages Dropdown
 ----------------------------------------- */
 .msg-list {
     height: 320px;
@@ -1225,7 +1321,7 @@ input:focus {
 }
 
 /* -----------------------------------------
-   18. Profile Dropdown
+   19. Profile Dropdown
 ----------------------------------------- */
 .profile-dropdown-user {
     display: flex;
@@ -1234,8 +1330,13 @@ input:focus {
     padding: 1rem 1.25rem;
 }
 
+.profile-dropdown-nav a div,
+.profile-dropdown-nav button div {
+    color: var(--color-text) !important;
+}
+
 .night-mode-toggle {
-    background-color: rgba(226, 232, 240, 0.4);
+    background-color: var(--color-secondery);
     margin-left: auto;
     padding: 0.125rem;
     border-radius: var(--radius-full);
@@ -1254,7 +1355,7 @@ input:focus {
 }
 
 /* -----------------------------------------
-   19. Animations
+   20. Animations
 ----------------------------------------- */
 @keyframes pulse {
     0%, 100% { opacity: 1; }
@@ -1262,7 +1363,103 @@ input:focus {
 }
 
 /* -----------------------------------------
-   20. Responsive (Mobile)
+   21. UIKit Overrides
+----------------------------------------- */
+.uk-slideshow-items {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.uk-modal-page body {
+    overflow: hidden;
+}
+
+/* UIKit modal overlay */
+.uk-modal {
+    background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+/* -----------------------------------------
+   22. Scrollbar (SimpleBar)
+----------------------------------------- */
+.simplebar-scrollbar::before {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+}
+
+.simplebar-track.simplebar-vertical {
+    width: 6px;
+}
+
+/* -----------------------------------------
+   23. Light Mode Overrides
+      (applied when `dark` class is removed)
+----------------------------------------- */
+html:not(.dark) {
+    --color-bg-body:    #f8fafc;
+    --color-bg-card:    #ffffff;
+    --color-bg-card2:   #f1f5f9;
+    --color-bg-input:   #ffffff;
+    --color-secondery:  #f1f5f9;
+    --color-border:     #e2e8f0;
+    --color-text:       #374151;
+    --color-text-muted: #6b7280;
+}
+
+html:not(.dark) .site-header {
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+html:not(.dark) .sidebar-inner {
+    background-color: #ffffff;
+}
+
+html:not(.dark) .post-author,
+html:not(.dark) .side-list-title,
+html:not(.dark) .widget-head,
+html:not(.dark) .chat-box-header h1 {
+    color: #111827;
+}
+
+html:not(.dark) .uk-dropdown {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #374151 !important;
+}
+
+html:not(.dark) .uk-dropdown nav a,
+html:not(.dark) .uk-dropdown a {
+    color: #374151 !important;
+}
+
+html:not(.dark) .create-dropdown,
+html:not(.dark) .notif-dropdown,
+html:not(.dark) .msg-dropdown,
+html:not(.dark) .profile-dropdown {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #374151 !important;
+}
+
+html:not(.dark) .search-dropdown > div {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) body {
+    background-color: #f8fafc;
+    color: #374151;
+}
+
+html:not(.dark) input,
+html:not(.dark) textarea {
+    background-color: #ffffff;
+    color: #374151;
+    border-color: #e2e8f0;
+}
+
+/* -----------------------------------------
+   24. Responsive (Mobile)
 ----------------------------------------- */
 @media (max-width: 1280px) {
     .site-main {
@@ -1315,70 +1512,4 @@ input:focus {
         padding: 0.625rem;
         border-radius: 1rem;
     }
-
-    .notif-dropdown-head h3,
-    .msg-dropdown-head h3 {
-        font-size: 1rem;
-    }
-}
-
-/* -----------------------------------------
-   21. Dark Mode Overrides
------------------------------------------ */
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #0f172a;
-        color: #e2e8f0;
-    }
-
-    .site-header {
-        background-color: rgba(30, 41, 59, 0.9);
-        border-bottom-color: #334155;
-    }
-
-    .sidebar-inner {
-        background-color: #1e293b;
-        border-right-color: #334155;
-    }
-
-    .post-card,
-    .box,
-    .chat-box {
-        background-color: #1e293b;
-        border-color: #334155;
-    }
-
-    .post-author {
-        color: #f1f5f9;
-    }
-
-    .post-comments,
-    .post-add-comment {
-        border-top-color: rgba(51, 65, 85, 0.4);
-    }
-}
-
-/* -----------------------------------------
-   22. UIKit Custom Overrides
------------------------------------------ */
-.uk-modal-dialog {
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-}
-
-.uk-slideshow-items {
-    border-radius: var(--radius-md);
-    overflow: hidden;
-}
-
-/* -----------------------------------------
-   23. Scrollbar (SimpleBar)
------------------------------------------ */
-.simplebar-scrollbar::before {
-    background-color: #cbd5e1;
-    border-radius: var(--radius-full);
-}
-
-.simplebar-track.simplebar-vertical {
-    width: 6px;
 }
