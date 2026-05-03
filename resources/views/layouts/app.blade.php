@@ -7,20 +7,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
-    <link href="{{ asset('assets/images/favicon.png') }}" rel="icon" type="image/png">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230ea5e9'/><text x='16' y='22' font-size='16' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>E</text></svg>">
 
-    <!-- SEO: Title & Description -->
+    <!-- SEO -->
     <title>@yield('title', 'EduConnect – Social Platform for Teachers & Students')</title>
     <meta name="description" content="@yield('description', 'EduConnect is a social media platform built for teachers and students to connect, share knowledge, and collaborate.')">
     <meta name="keywords" content="@yield('keywords', 'education, teachers, students, social media, learning, classroom')">
     <meta name="robots" content="index, follow">
     <meta name="author" content="EduConnect">
 
-    <!-- Open Graph (Social Sharing) -->
+    <!-- Open Graph -->
     <meta property="og:title" content="@yield('title', 'EduConnect')">
     <meta property="og:description" content="@yield('description', 'Social platform for teachers and students')">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="{{ asset('assets/images/og-image.png') }}">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -32,8 +31,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="{{ asset('assets/css/tailwind.css') }}">
+    <!-- UIKit CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/css/uikit.min.css">
+
+    <!-- SimpleBar CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@6.2.7/dist/simplebar.min.css">
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary: '#0ea5e9',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     @stack('styles')
@@ -61,14 +81,19 @@
     <!-- Page Modals -->
     @yield('modals')
 
-    <!-- JavaScript Libraries -->
-    <script src="{{ asset('assets/js/uikit.min.js') }}"></script>
-    <script src="{{ asset('assets/js/simplebar.js') }}"></script>
-    <script src="{{ asset('assets/js/script.js') }}"></script>
+    <!-- UIKit JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit-icons.min.js"></script>
 
-    <!-- Ionicons -->
+    <!-- SimpleBar JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/simplebar@6.2.7/dist/simplebar.min.js"></script>
+
+    <!-- Ionicons (CDN) -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <!-- Custom Script -->
+    <script src="{{ asset('assets/js/script.js') }}"></script>
 
     @stack('scripts')
 </body>

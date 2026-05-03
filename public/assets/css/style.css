@@ -145,7 +145,59 @@ input:focus {
 }
 
 /* -----------------------------------------
-   5. Header
+   5. Logo (CSS-based, no image needed)
+----------------------------------------- */
+.site-logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.site-logo-text {
+    font-size: 1.25rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #0ea5e9, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+}
+
+.site-logo-text-short {
+    display: none;
+    font-size: 1.125rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #0ea5e9, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* On mobile show short logo */
+@media (max-width: 767px) {
+    .site-logo-text { display: none; }
+    .site-logo-text-short { display: block; }
+}
+
+/* Sidebar nav icon style */
+.sidebar-nav-list li a ion-icon,
+#side ul li a ion-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+/* Create dropdown link icons */
+.create-link-icon {
+    display: grid;
+    place-items: center;
+    border-radius: 0.5rem;
+    width: 1.75rem;
+    height: 1.75rem;
+    flex-shrink: 0;
+}
+
+/* -----------------------------------------
+   Header
 ----------------------------------------- */
 .site-header {
     z-index: 100;

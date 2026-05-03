@@ -28,72 +28,72 @@
                             </li>
 
                             <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                                <a href="{{ asset('assets/images/avatars/avatar-lg-1.jpg') }}" data-caption="Caption 1">
+                                <a href="{{ 'https://picsum.photos/seed/story1/600/800' }}" data-caption="Caption 1">
                                     <div class="story-thumb md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
-                                        <img src="{{ asset('assets/images/avatars/avatar-2.jpg') }}" alt="Story" class="absolute w-full h-full object-cover">
+                                        <img src="{{ 'https://i.pravatar.cc/40?img=2' }}" alt="Story" class="absolute w-full h-full object-cover">
                                     </div>
                                 </a>
                             </li>
                             <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                                <a href="{{ asset('assets/images/avatars/avatar-lg-2.jpg') }}" data-caption="Caption 2">
+                                <a href="{{ 'https://picsum.photos/seed/story2/600/800' }}" data-caption="Caption 2">
                                     <div class="story-thumb md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
-                                        <img src="{{ asset('assets/images/avatars/avatar-3.jpg') }}" alt="Story" class="absolute w-full h-full object-cover">
+                                        <img src="{{ 'https://i.pravatar.cc/40?img=3' }}" alt="Story" class="absolute w-full h-full object-cover">
                                     </div>
                                 </a>
                             </li>
                             <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                                <a href="{{ asset('assets/images/avatars/avatar-lg-4.jpg') }}" data-caption="Caption 3">
+                                <a href="{{ 'https://picsum.photos/seed/story4/600/800' }}" data-caption="Caption 3">
                                     <div class="story-thumb md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
-                                        <img src="{{ asset('assets/images/avatars/avatar-5.jpg') }}" alt="Story" class="absolute w-full h-full object-cover">
+                                        <img src="{{ 'https://i.pravatar.cc/40?img=5' }}" alt="Story" class="absolute w-full h-full object-cover">
                                     </div>
                                 </a>
                             </li>
                             <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                                <a href="{{ asset('assets/images/avatars/avatar-lg-5.jpg') }}" data-caption="Caption 4">
+                                <a href="{{ 'https://picsum.photos/seed/story5/600/800' }}" data-caption="Caption 4">
                                     <div class="story-thumb md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
-                                        <img src="{{ asset('assets/images/avatars/avatar-6.jpg') }}" alt="Story" class="absolute w-full h-full object-cover">
+                                        <img src="{{ 'https://i.pravatar.cc/40?img=6' }}" alt="Story" class="absolute w-full h-full object-cover">
                                     </div>
                                 </a>
                             </li>
                             <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                                <a href="{{ asset('assets/images/avatars/avatar-lg-1.jpg') }}" data-caption="Caption 5">
+                                <a href="{{ 'https://picsum.photos/seed/story1/600/800' }}" data-caption="Caption 5">
                                     <div class="story-thumb md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
-                                        <img src="{{ asset('assets/images/avatars/avatar-7.jpg') }}" alt="Story" class="absolute w-full h-full object-cover">
+                                        <img src="{{ 'https://i.pravatar.cc/40?img=7' }}" alt="Story" class="absolute w-full h-full object-cover">
                                     </div>
                                 </a>
                             </li>
                             <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                                <a href="{{ asset('assets/images/avatars/avatar-lg-1.jpg') }}" data-caption="Caption 6">
+                                <a href="{{ 'https://picsum.photos/seed/story1/600/800' }}" data-caption="Caption 6">
                                     <div class="story-thumb md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
-                                        <img src="{{ asset('assets/images/avatars/avatar-2.jpg') }}" alt="Story" class="absolute w-full h-full object-cover">
+                                        <img src="{{ 'https://i.pravatar.cc/40?img=2' }}" alt="Story" class="absolute w-full h-full object-cover">
                                     </div>
                                 </a>
                             </li>
                             <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                                <a href="{{ asset('assets/images/avatars/avatar-lg-2.jpg') }}" data-caption="Caption 7">
+                                <a href="{{ 'https://picsum.photos/seed/story2/600/800' }}" data-caption="Caption 7">
                                     <div class="story-thumb md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
-                                        <img src="{{ asset('assets/images/avatars/avatar-3.jpg') }}" alt="Story" class="absolute w-full h-full object-cover">
+                                        <img src="{{ 'https://i.pravatar.cc/40?img=3' }}" alt="Story" class="absolute w-full h-full object-cover">
                                     </div>
                                 </a>
                             </li>
                             <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                                <a href="{{ asset('assets/images/avatars/avatar-lg-4.jpg') }}" data-caption="Caption 8">
+                                <a href="{{ 'https://picsum.photos/seed/story4/600/800' }}" data-caption="Caption 8">
                                     <div class="story-thumb md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
-                                        <img src="{{ asset('assets/images/avatars/avatar-5.jpg') }}" alt="Story" class="absolute w-full h-full object-cover">
+                                        <img src="{{ 'https://i.pravatar.cc/40?img=5' }}" alt="Story" class="absolute w-full h-full object-cover">
                                     </div>
                                 </a>
                             </li>
                             <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                                <a href="{{ asset('assets/images/avatars/avatar-lg-5.jpg') }}" data-caption="Caption 9">
+                                <a href="{{ 'https://picsum.photos/seed/story5/600/800' }}" data-caption="Caption 9">
                                     <div class="story-thumb md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
-                                        <img src="{{ asset('assets/images/avatars/avatar-6.jpg') }}" alt="Story" class="absolute w-full h-full object-cover">
+                                        <img src="{{ 'https://i.pravatar.cc/40?img=6' }}" alt="Story" class="absolute w-full h-full object-cover">
                                     </div>
                                 </a>
                             </li>
                             <li class="md:pr-3 pr-2 hover:scale-[1.15] hover:-rotate-2 duration-300">
-                                <a href="{{ asset('assets/images/avatars/avatar-lg-1.jpg') }}" data-caption="Caption 10">
+                                <a href="{{ 'https://picsum.photos/seed/story1/600/800' }}" data-caption="Caption 10">
                                     <div class="story-thumb md:w-16 md:h-16 w-12 h-12 relative md:border-4 border-2 shadow border-white rounded-full overflow-hidden dark:border-slate-700">
-                                        <img src="{{ asset('assets/images/avatars/avatar-7.jpg') }}" alt="Story" class="absolute w-full h-full object-cover">
+                                        <img src="{{ 'https://i.pravatar.cc/40?img=7' }}" alt="Story" class="absolute w-full h-full object-cover">
                                     </div>
                                 </a>
                             </li>
@@ -152,7 +152,7 @@
 
                     <header class="post-header flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
                         <a href="#">
-                            <img src="{{ asset('assets/images/avatars/avatar-3.jpg') }}" alt="Monroe Parker" class="w-9 h-9 rounded-full">
+                            <img src="{{ 'https://i.pravatar.cc/40?img=3' }}" alt="Monroe Parker" class="w-9 h-9 rounded-full">
                         </a>
                         <div class="flex-1">
                             <a href="#"><h4 class="post-author text-black dark:text-white">Monroe Parker</h4></a>
@@ -177,7 +177,7 @@
 
                     <a href="#preview_modal" uk-toggle>
                         <div class="post-image relative w-full lg:h-96 h-full sm:px-4">
-                            <img src="{{ asset('assets/images/post/img-2.jpg') }}" alt="Post image" class="sm:rounded-lg w-full h-full object-cover">
+                            <img src="{{ 'https://picsum.photos/seed/post2/680/400' }}" alt="Post image" class="sm:rounded-lg w-full h-full object-cover">
                         </div>
                     </a>
 
@@ -212,14 +212,14 @@
 
                     <div class="post-comments sm:p-4 p-2.5 border-t border-gray-100 font-normal space-y-3 relative dark:border-slate-700/40">
                         <div class="comment-item flex items-start gap-3 relative">
-                            <a href="#"><img src="{{ asset('assets/images/avatars/avatar-2.jpg') }}" alt="Steeve" class="w-6 h-6 mt-1 rounded-full"></a>
+                            <a href="#"><img src="{{ 'https://i.pravatar.cc/40?img=2' }}" alt="Steeve" class="w-6 h-6 mt-1 rounded-full"></a>
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Steeve</a>
                                 <p class="mt-0.5">What a beautiful photo! I love it. 😍</p>
                             </div>
                         </div>
                         <div class="comment-item flex items-start gap-3 relative">
-                            <a href="#"><img src="{{ asset('assets/images/avatars/avatar-3.jpg') }}" alt="Monroe" class="w-6 h-6 mt-1 rounded-full"></a>
+                            <a href="#"><img src="{{ 'https://i.pravatar.cc/40?img=3' }}" alt="Monroe" class="w-6 h-6 mt-1 rounded-full"></a>
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Monroe</a>
                                 <p class="mt-0.5">You captured the moment.😎</p>
@@ -232,7 +232,7 @@
                     </div>
 
                     <div class="post-add-comment sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1 dark:border-slate-700/40">
-                        <img src="{{ asset('assets/images/avatars/avatar-7.jpg') }}" alt="Your avatar" class="w-6 h-6 rounded-full">
+                        <img src="{{ 'https://i.pravatar.cc/40?img=7' }}" alt="Your avatar" class="w-6 h-6 rounded-full">
                         <div class="flex-1 relative overflow-hidden h-10">
                             <textarea placeholder="Add Comment...." rows="1" class="w-full resize-none !bg-transparent px-4 py-2 focus:!border-transparent focus:!ring-transparent"></textarea>
                             <div class="comment-media-icons absolute top-2 right-2 flex items-center gap-2">
@@ -254,7 +254,7 @@
 
                     <header class="post-header flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
                         <a href="#">
-                            <img src="{{ asset('assets/images/avatars/avatar-3.jpg') }}" alt="Monroe Parker" class="w-9 h-9 rounded-full">
+                            <img src="{{ 'https://i.pravatar.cc/40?img=3' }}" alt="Monroe Parker" class="w-9 h-9 rounded-full">
                         </a>
                         <div class="flex-1">
                             <a href="#"><h4 class="post-author text-black dark:text-white">Monroe Parker</h4></a>
@@ -281,17 +281,17 @@
                         <ul class="uk-slideshow-items overflow-hidden rounded-xl" uk-lightbox="animation: fade">
                             <li class="w-full">
                                 <a class="inline" href="https://getuikit.com/docs/images/photo3.jpg" data-caption="Caption 1">
-                                    <img src="{{ asset('assets/images/post/img-2.jpg') }}" alt="Post slideshow 1" class="w-full h-full absolute object-cover inset-0">
+                                    <img src="{{ 'https://picsum.photos/seed/post2/680/400' }}" alt="Post slideshow 1" class="w-full h-full absolute object-cover inset-0">
                                 </a>
                             </li>
                             <li class="w-full">
                                 <a class="inline" href="https://getuikit.com/docs/images/photo2.jpg" data-caption="Caption 2">
-                                    <img src="{{ asset('assets/images/post/img-3.jpg') }}" alt="Post slideshow 2" class="w-full h-full absolute object-cover inset-0">
+                                    <img src="{{ 'https://picsum.photos/seed/post3/680/400' }}" alt="Post slideshow 2" class="w-full h-full absolute object-cover inset-0">
                                 </a>
                             </li>
                             <li class="w-full">
                                 <a class="inline" href="https://getuikit.com/docs/images/photo.jpg" data-caption="Caption 3">
-                                    <img src="{{ asset('assets/images/post/img-4.jpg') }}" alt="Post slideshow 3" class="w-full h-full absolute object-cover inset-0">
+                                    <img src="{{ 'https://picsum.photos/seed/post4/680/400' }}" alt="Post slideshow 3" class="w-full h-full absolute object-cover inset-0">
                                 </a>
                             </li>
                         </ul>
@@ -330,14 +330,14 @@
 
                     <div class="post-comments sm:p-4 p-2.5 border-t border-gray-100 font-normal space-y-3 relative dark:border-slate-700/40">
                         <div class="comment-item flex items-start gap-3 relative">
-                            <a href="#"><img src="{{ asset('assets/images/avatars/avatar-2.jpg') }}" alt="Steeve" class="w-6 h-6 mt-1 rounded-full"></a>
+                            <a href="#"><img src="{{ 'https://i.pravatar.cc/40?img=2' }}" alt="Steeve" class="w-6 h-6 mt-1 rounded-full"></a>
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Steeve</a>
                                 <p class="mt-0.5">What a beautiful photo! I love it. 😍</p>
                             </div>
                         </div>
                         <div class="comment-item flex items-start gap-3 relative">
-                            <a href="#"><img src="{{ asset('assets/images/avatars/avatar-3.jpg') }}" alt="Monroe" class="w-6 h-6 mt-1 rounded-full"></a>
+                            <a href="#"><img src="{{ 'https://i.pravatar.cc/40?img=3' }}" alt="Monroe" class="w-6 h-6 mt-1 rounded-full"></a>
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Monroe</a>
                                 <p class="mt-0.5">You captured the moment.😎</p>
@@ -350,7 +350,7 @@
                     </div>
 
                     <div class="post-add-comment sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1 dark:border-slate-700/40">
-                        <img src="{{ asset('assets/images/avatars/avatar-7.jpg') }}" alt="Your avatar" class="w-6 h-6 rounded-full">
+                        <img src="{{ 'https://i.pravatar.cc/40?img=7' }}" alt="Your avatar" class="w-6 h-6 rounded-full">
                         <div class="flex-1 relative overflow-hidden h-10">
                             <textarea placeholder="Add Comment...." rows="1" class="w-full resize-none !bg-transparent px-4 py-2 focus:!border-transparent focus:!ring-transparent"></textarea>
                             <div class="comment-media-icons absolute top-2 right-2 flex items-center gap-2">
@@ -372,7 +372,7 @@
 
                     <header class="post-header flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
                         <a href="#">
-                            <img src="{{ asset('assets/images/avatars/avatar-5.jpg') }}" alt="John Michael" class="w-9 h-9 rounded-full">
+                            <img src="{{ 'https://i.pravatar.cc/40?img=5' }}" alt="John Michael" class="w-9 h-9 rounded-full">
                         </a>
                         <div class="flex-1">
                             <a href="#"><h4 class="post-author text-black dark:text-white">John Michael</h4></a>
@@ -430,21 +430,21 @@
 
                     <div class="post-comments sm:p-4 p-2.5 border-t border-gray-100 font-normal space-y-3 relative dark:border-slate-700/40">
                         <div class="comment-item flex items-start gap-3 relative">
-                            <a href="#"><img src="{{ asset('assets/images/avatars/avatar-2.jpg') }}" alt="Steeve" class="w-6 h-6 mt-1 rounded-full"></a>
+                            <a href="#"><img src="{{ 'https://i.pravatar.cc/40?img=2' }}" alt="Steeve" class="w-6 h-6 mt-1 rounded-full"></a>
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Steeve</a>
                                 <p class="mt-0.5">I love taking photos of nature and animals. 🌳🐶</p>
                             </div>
                         </div>
                         <div class="comment-item flex items-start gap-3 relative">
-                            <a href="#"><img src="{{ asset('assets/images/avatars/avatar-3.jpg') }}" alt="Monroe" class="w-6 h-6 mt-1 rounded-full"></a>
+                            <a href="#"><img src="{{ 'https://i.pravatar.cc/40?img=3' }}" alt="Monroe" class="w-6 h-6 mt-1 rounded-full"></a>
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Monroe</a>
                                 <p class="mt-0.5">I enjoy people and emotions. 😊😢</p>
                             </div>
                         </div>
                         <div class="comment-item flex items-start gap-3 relative">
-                            <a href="#"><img src="{{ asset('assets/images/avatars/avatar-5.jpg') }}" alt="Jesse" class="w-6 h-6 mt-1 rounded-full"></a>
+                            <a href="#"><img src="{{ 'https://i.pravatar.cc/40?img=5' }}" alt="Jesse" class="w-6 h-6 mt-1 rounded-full"></a>
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Jesse</a>
                                 <p class="mt-0.5">Photography is my passion. 🎨📸</p>
@@ -453,7 +453,7 @@
                     </div>
 
                     <div class="post-add-comment sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1 dark:border-slate-700/40">
-                        <img src="{{ asset('assets/images/avatars/avatar-7.jpg') }}" alt="Your avatar" class="w-6 h-6 rounded-full">
+                        <img src="{{ 'https://i.pravatar.cc/40?img=7' }}" alt="Your avatar" class="w-6 h-6 rounded-full">
                         <div class="flex-1 relative overflow-hidden h-10">
                             <textarea placeholder="Add Comment...." rows="1" class="w-full resize-none !bg-transparent px-4 py-2 focus:!border-transparent focus:!ring-transparent"></textarea>
                             <div class="comment-media-icons absolute top-2 right-2 flex items-center gap-2">
@@ -507,7 +507,7 @@
                     </div>
                     <div class="side-list">
                         <div class="side-list-item">
-                            <a href="#"><img src="{{ asset('assets/images/avatars/avatar-2.jpg') }}" alt="John Michael" class="side-list-image rounded-full"></a>
+                            <a href="#"><img src="{{ 'https://i.pravatar.cc/40?img=2' }}" alt="John Michael" class="side-list-image rounded-full"></a>
                             <div class="flex-1">
                                 <a href="#"><h4 class="side-list-title">John Michael</h4></a>
                                 <div class="side-list-info">125k Following</div>
@@ -515,7 +515,7 @@
                             <button class="button bg-primary-soft text-primary dark:text-white">follow</button>
                         </div>
                         <div class="side-list-item">
-                            <a href="#"><img src="{{ asset('assets/images/avatars/avatar-3.jpg') }}" alt="Monroe Parker" class="side-list-image rounded-full"></a>
+                            <a href="#"><img src="{{ 'https://i.pravatar.cc/40?img=3' }}" alt="Monroe Parker" class="side-list-image rounded-full"></a>
                             <div class="flex-1">
                                 <a href="#"><h4 class="side-list-title">Monroe Parker</h4></a>
                                 <div class="side-list-info">320k Following</div>
@@ -523,7 +523,7 @@
                             <button class="button bg-primary-soft text-primary dark:text-white">follow</button>
                         </div>
                         <div class="side-list-item">
-                            <a href="#"><img src="{{ asset('assets/images/avatars/avatar-5.jpg') }}" alt="James Lewis" class="side-list-image rounded-full"></a>
+                            <a href="#"><img src="{{ 'https://i.pravatar.cc/40?img=5' }}" alt="James Lewis" class="side-list-image rounded-full"></a>
                             <div class="flex-1">
                                 <a href="#"><h4 class="side-list-title">James Lewis</h4></a>
                                 <div class="side-list-info">125k Following</div>
@@ -531,7 +531,7 @@
                             <button class="button bg-primary-soft text-primary dark:text-white">follow</button>
                         </div>
                         <div class="side-list-item">
-                            <a href="#"><img src="{{ asset('assets/images/avatars/avatar-6.jpg') }}" alt="Alexa Stella" class="side-list-image rounded-full"></a>
+                            <a href="#"><img src="{{ 'https://i.pravatar.cc/40?img=6' }}" alt="Alexa Stella" class="side-list-image rounded-full"></a>
                             <div class="flex-1">
                                 <a href="#"><h4 class="side-list-title">Alexa stella</h4></a>
                                 <div class="side-list-info">192k Following</div>
@@ -539,7 +539,7 @@
                             <button class="button bg-primary-soft text-primary dark:text-white">follow</button>
                         </div>
                         <div class="side-list-item">
-                            <a href="#"><img src="{{ asset('assets/images/avatars/avatar-2.jpg') }}" alt="John Michael" class="side-list-image rounded-full"></a>
+                            <a href="#"><img src="{{ 'https://i.pravatar.cc/40?img=2' }}" alt="John Michael" class="side-list-image rounded-full"></a>
                             <div class="flex-1">
                                 <a href="#"><h4 class="side-list-title">John Michael</h4></a>
                                 <div class="side-list-info">320k Following</div>
@@ -562,7 +562,7 @@
                                     <a href="#">
                                         <div class="product-thumb relative overflow-hidden rounded-lg">
                                             <div class="relative w-full h-40">
-                                                <img src="{{ asset('assets/images/product/product-1.jpg') }}" alt="Chill Lotion" class="object-cover w-full h-full inset-0">
+                                                <img src="{{ 'https://picsum.photos/seed/prod1/300/160' }}" alt="Chill Lotion" class="object-cover w-full h-full inset-0">
                                             </div>
                                             <div class="product-price absolute right-0 top-0 m-2 bg-white/60 rounded-full py-0.5 px-2 text-sm font-semibold dark:bg-slate-800/60">$12</div>
                                         </div>
@@ -573,7 +573,7 @@
                                     <a href="#">
                                         <div class="product-thumb relative overflow-hidden rounded-lg">
                                             <div class="relative w-full h-40">
-                                                <img src="{{ asset('assets/images/product/product-3.jpg') }}" alt="Gaming mouse" class="object-cover w-full h-full inset-0">
+                                                <img src="{{ 'https://picsum.photos/seed/prod3/300/160' }}" alt="Gaming mouse" class="object-cover w-full h-full inset-0">
                                             </div>
                                             <div class="product-price absolute right-0 top-0 m-2 bg-white/60 rounded-full py-0.5 px-2 text-sm font-semibold dark:bg-slate-800/60">$18</div>
                                         </div>
@@ -584,7 +584,7 @@
                                     <a href="#">
                                         <div class="product-thumb relative overflow-hidden rounded-lg">
                                             <div class="relative w-full h-40">
-                                                <img src="{{ asset('assets/images/product/product-5.jpg') }}" alt="Herbal Shampoo" class="object-cover w-full h-full inset-0">
+                                                <img src="{{ 'https://picsum.photos/seed/prod5/300/160' }}" alt="Herbal Shampoo" class="object-cover w-full h-full inset-0">
                                             </div>
                                             <div class="product-price absolute right-0 top-0 m-2 bg-white/60 rounded-full py-0.5 px-2 text-sm font-semibold dark:bg-slate-800/60">$12</div>
                                         </div>
@@ -611,37 +611,37 @@
                     <div class="online-friends-grid grid grid-cols-6 gap-3 mt-4">
                         <a href="#">
                             <div class="online-friend-item w-10 h-10 relative">
-                                <img src="{{ asset('assets/images/avatars/avatar-2.jpg') }}" alt="Online friend" class="w-full h-full absolute inset-0 rounded-full">
+                                <img src="{{ 'https://i.pravatar.cc/40?img=2' }}" alt="Online friend" class="w-full h-full absolute inset-0 rounded-full">
                                 <div class="online-dot absolute bottom-0 right-0 m-0.5 bg-green-500 rounded-full w-2 h-2"></div>
                             </div>
                         </a>
                         <a href="#">
                             <div class="online-friend-item w-10 h-10 relative">
-                                <img src="{{ asset('assets/images/avatars/avatar-3.jpg') }}" alt="Online friend" class="w-full h-full absolute inset-0 rounded-full">
+                                <img src="{{ 'https://i.pravatar.cc/40?img=3' }}" alt="Online friend" class="w-full h-full absolute inset-0 rounded-full">
                                 <div class="online-dot absolute bottom-0 right-0 m-0.5 bg-green-500 rounded-full w-2 h-2"></div>
                             </div>
                         </a>
                         <a href="#">
                             <div class="online-friend-item w-10 h-10 relative">
-                                <img src="{{ asset('assets/images/avatars/avatar-4.jpg') }}" alt="Online friend" class="w-full h-full absolute inset-0 rounded-full">
+                                <img src="{{ 'https://i.pravatar.cc/40?img=4' }}" alt="Online friend" class="w-full h-full absolute inset-0 rounded-full">
                                 <div class="online-dot absolute bottom-0 right-0 m-0.5 bg-green-500 rounded-full w-2 h-2"></div>
                             </div>
                         </a>
                         <a href="#">
                             <div class="online-friend-item w-10 h-10 relative">
-                                <img src="{{ asset('assets/images/avatars/avatar-5.jpg') }}" alt="Online friend" class="w-full h-full absolute inset-0 rounded-full">
+                                <img src="{{ 'https://i.pravatar.cc/40?img=5' }}" alt="Online friend" class="w-full h-full absolute inset-0 rounded-full">
                                 <div class="online-dot absolute bottom-0 right-0 m-0.5 bg-green-500 rounded-full w-2 h-2"></div>
                             </div>
                         </a>
                         <a href="#">
                             <div class="online-friend-item w-10 h-10 relative">
-                                <img src="{{ asset('assets/images/avatars/avatar-6.jpg') }}" alt="Online friend" class="w-full h-full absolute inset-0 rounded-full">
+                                <img src="{{ 'https://i.pravatar.cc/40?img=6' }}" alt="Online friend" class="w-full h-full absolute inset-0 rounded-full">
                                 <div class="online-dot absolute bottom-0 right-0 m-0.5 bg-green-500 rounded-full w-2 h-2"></div>
                             </div>
                         </a>
                         <a href="#">
                             <div class="online-friend-item w-10 h-10 relative">
-                                <img src="{{ asset('assets/images/avatars/avatar-7.jpg') }}" alt="Online friend" class="w-full h-full absolute inset-0 rounded-full">
+                                <img src="{{ 'https://i.pravatar.cc/40?img=7' }}" alt="Online friend" class="w-full h-full absolute inset-0 rounded-full">
                                 <div class="online-dot absolute bottom-0 right-0 m-0.5 bg-green-500 rounded-full w-2 h-2"></div>
                             </div>
                         </a>
@@ -660,7 +660,7 @@
                                     <div class="pro-member-card flex flex-col items-center shadow-sm p-2 rounded-xl border1">
                                         <a href="#">
                                             <div class="relative w-16 h-16 mx-auto mt-2">
-                                                <img src="{{ asset('assets/images/avatars/avatar-5.jpg') }}" alt="Martin Gray" class="h-full object-cover rounded-full shadow w-full">
+                                                <img src="{{ 'https://i.pravatar.cc/40?img=5' }}" alt="Martin Gray" class="h-full object-cover rounded-full shadow w-full">
                                             </div>
                                         </a>
                                         <div class="mt-5 text-center w-full">
@@ -674,7 +674,7 @@
                                     <div class="pro-member-card flex flex-col items-center shadow-sm p-2 rounded-xl border1">
                                         <a href="#">
                                             <div class="relative w-16 h-16 mx-auto mt-2">
-                                                <img src="{{ asset('assets/images/avatars/avatar-4.jpg') }}" alt="Alexa Park" class="h-full object-cover rounded-full shadow w-full">
+                                                <img src="{{ 'https://i.pravatar.cc/40?img=4' }}" alt="Alexa Park" class="h-full object-cover rounded-full shadow w-full">
                                             </div>
                                         </a>
                                         <div class="mt-5 text-center w-full">
@@ -688,7 +688,7 @@
                                     <div class="pro-member-card flex flex-col items-center shadow-sm p-2 rounded-xl border1">
                                         <a href="#">
                                             <div class="relative w-16 h-16 mx-auto mt-2">
-                                                <img src="{{ asset('assets/images/avatars/avatar-4.jpg') }}" alt="James Lewis" class="h-full object-cover rounded-full shadow w-full">
+                                                <img src="{{ 'https://i.pravatar.cc/40?img=4' }}" alt="James Lewis" class="h-full object-cover rounded-full shadow w-full">
                                             </div>
                                         </a>
                                         <div class="mt-5 text-center w-full">
@@ -779,7 +779,7 @@
 
             <div class="modal-post-image lg:h-full lg:w-[calc(100vw-400px)] w-full h-96 flex justify-center items-center relative">
                 <div class="relative z-10 w-full h-full">
-                    <img src="{{ asset('assets/images/post/post-1.jpg') }}" alt="Post preview" class="w-full h-full object-cover absolute">
+                    <img src="{{ 'https://picsum.photos/seed/post1/860/600' }}" alt="Post preview" class="w-full h-full object-cover absolute">
                 </div>
                 <button type="button" class="modal-close bg-white rounded-full p-2 absolute right-0 top-0 m-3 uk-animation-slide-right-medium z-10 dark:bg-slate-600 uk-modal-close">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -792,7 +792,7 @@
 
                 <div class="p-5 pb-0">
                     <div class="flex gap-3 text-sm font-medium">
-                        <img src="{{ asset('assets/images/avatars/avatar-5.jpg') }}" alt="Steeve" class="w-9 h-9 rounded-full">
+                        <img src="{{ 'https://i.pravatar.cc/40?img=5' }}" alt="Steeve" class="w-9 h-9 rounded-full">
                         <div class="flex-1">
                             <h4 class="text-black font-medium dark:text-white">Steeve</h4>
                             <div class="text-gray-500 text-xs dark:text-white/80">2 hours ago</div>
@@ -833,49 +833,49 @@
                 <div class="p-5 h-full overflow-y-auto flex-1">
                     <div class="relative text-sm font-medium space-y-5">
                         <div class="comment-item flex items-start gap-3 relative">
-                            <img src="{{ asset('assets/images/avatars/avatar-2.jpg') }}" alt="Steeve" class="w-6 h-6 mt-1 rounded-full">
+                            <img src="{{ 'https://i.pravatar.cc/40?img=2' }}" alt="Steeve" class="w-6 h-6 mt-1 rounded-full">
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Steeve</a>
                                 <p class="mt-0.5">What a beautiful, I love it. 😍</p>
                             </div>
                         </div>
                         <div class="comment-item flex items-start gap-3 relative">
-                            <img src="{{ asset('assets/images/avatars/avatar-3.jpg') }}" alt="Monroe" class="w-6 h-6 mt-1 rounded-full">
+                            <img src="{{ 'https://i.pravatar.cc/40?img=3' }}" alt="Monroe" class="w-6 h-6 mt-1 rounded-full">
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Monroe</a>
                                 <p class="mt-0.5">You captured the moment.😎</p>
                             </div>
                         </div>
                         <div class="comment-item flex items-start gap-3 relative">
-                            <img src="{{ asset('assets/images/avatars/avatar-7.jpg') }}" alt="Alexa" class="w-6 h-6 mt-1 rounded-full">
+                            <img src="{{ 'https://i.pravatar.cc/40?img=7' }}" alt="Alexa" class="w-6 h-6 mt-1 rounded-full">
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Alexa</a>
                                 <p class="mt-0.5">This photo is amazing!</p>
                             </div>
                         </div>
                         <div class="comment-item flex items-start gap-3 relative">
-                            <img src="{{ asset('assets/images/avatars/avatar-4.jpg') }}" alt="John" class="w-6 h-6 mt-1 rounded-full">
+                            <img src="{{ 'https://i.pravatar.cc/40?img=4' }}" alt="John" class="w-6 h-6 mt-1 rounded-full">
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">John</a>
                                 <p class="mt-0.5">Wow, You are so talented 😍</p>
                             </div>
                         </div>
                         <div class="comment-item flex items-start gap-3 relative">
-                            <img src="{{ asset('assets/images/avatars/avatar-5.jpg') }}" alt="Michael" class="w-6 h-6 mt-1 rounded-full">
+                            <img src="{{ 'https://i.pravatar.cc/40?img=5' }}" alt="Michael" class="w-6 h-6 mt-1 rounded-full">
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Michael</a>
                                 <p class="mt-0.5">I love taking photos 🌳🐶</p>
                             </div>
                         </div>
                         <div class="comment-item flex items-start gap-3 relative">
-                            <img src="{{ asset('assets/images/avatars/avatar-3.jpg') }}" alt="Monroe" class="w-6 h-6 mt-1 rounded-full">
+                            <img src="{{ 'https://i.pravatar.cc/40?img=3' }}" alt="Monroe" class="w-6 h-6 mt-1 rounded-full">
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Monroe</a>
                                 <p class="mt-0.5">Awesome. 😊😢</p>
                             </div>
                         </div>
                         <div class="comment-item flex items-start gap-3 relative">
-                            <img src="{{ asset('assets/images/avatars/avatar-5.jpg') }}" alt="Jesse" class="w-6 h-6 mt-1 rounded-full">
+                            <img src="{{ 'https://i.pravatar.cc/40?img=5' }}" alt="Jesse" class="w-6 h-6 mt-1 rounded-full">
                             <div class="flex-1">
                                 <a href="#" class="text-black font-medium inline-block dark:text-white">Jesse</a>
                                 <p class="mt-0.5">Well done 🎨📸</p>
@@ -885,7 +885,7 @@
                 </div>
 
                 <div class="modal-comment-form bg-white p-3 text-sm font-medium flex items-center gap-2">
-                    <img src="{{ asset('assets/images/avatars/avatar-2.jpg') }}" alt="Your avatar" class="w-6 h-6 rounded-full">
+                    <img src="{{ 'https://i.pravatar.cc/40?img=2' }}" alt="Your avatar" class="w-6 h-6 rounded-full">
                     <div class="flex-1 relative overflow-hidden">
                         <textarea placeholder="Add Comment...." rows="1" class="w-full resize-none px-4 py-2 focus:!border-transparent focus:!ring-transparent resize-y"></textarea>
                         <div class="comment-icons flex items-center gap-2 absolute bottom-0.5 right-0 m-3">
