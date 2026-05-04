@@ -1513,3 +1513,75 @@ html:not(.dark) textarea {
         border-radius: 1rem;
     }
 }
+
+/* -----------------------------------------
+   Messages / Chat Page
+----------------------------------------- */
+.messages-page-wrap {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.chat-sidebar-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.chat-panel-header input[type="text"] {
+    background-color: var(--color-bg-input) !important;
+    border: 1px solid var(--color-border) !important;
+    color: var(--color-text) !important;
+}
+
+.chat-panel-header input[type="text"]::placeholder {
+    color: var(--color-text-muted);
+}
+
+.chat-list-item {
+    transition: background-color 0.15s;
+}
+
+.chat-list-item.active,
+.chat-list-item:focus {
+    background-color: var(--color-secondery);
+}
+
+.chat-header {
+    background-color: var(--color-bg-card);
+}
+
+.chat-bubbles {
+    scroll-behavior: smooth;
+}
+
+.bubble-received {
+    line-height: 1.6;
+    border-bottom-left-radius: 4px !important;
+}
+
+.bubble-sent {
+    line-height: 1.6;
+    border-bottom-right-radius: 4px !important;
+}
+
+.chat-input-area textarea {
+    line-height: 1.5;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.dropbar {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}
+
+.chat-right-panel .w-\[360px\] {
+    background-color: var(--color-bg-card);
+}
+
+html:not(.dark) .chat-panel-header h2 { color: #1e293b; }
+html:not(.dark) .chat-list-item .font-medium { color: #1e293b !important; }
+html:not(.dark) .chat-header .text-base { color: #1e293b !important; }
+html:not(.dark) .chat-right-panel .md\:text-xl { color: #1e293b !important; }

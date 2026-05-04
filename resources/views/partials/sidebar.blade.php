@@ -8,14 +8,14 @@
             <!-- Main Navigation -->
             <nav id="side" class="sidebar-nav">
                 <ul class="sidebar-nav-list">
-                    <li class="sidebar-nav-item active">
+                    <li class="sidebar-nav-item {{ request()->routeIs('feed', 'feed.index') ? 'active' : '' }}">
                         <a href="{{ route('feed') }}">
                             <ion-icon name="home" class="text-xl text-blue-500"></ion-icon>
                             <span>Feed</span>
                         </a>
                     </li>
-                    <li class="sidebar-nav-item">
-                        <a href="#">
+                    <li class="sidebar-nav-item {{ request()->routeIs('messages') ? 'active' : '' }}">
+                        <a href="{{ route('messages') }}">
                             <ion-icon name="chatbubbles" class="text-xl text-green-500"></ion-icon>
                             <span>Messages</span>
                         </a>
