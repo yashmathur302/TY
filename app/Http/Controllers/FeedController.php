@@ -10,4 +10,9 @@ class FeedController extends Controller
     {
         return view('feed');
     }
+
+    public function messages()
+    {
+        return view('messages');
+    }
 }
