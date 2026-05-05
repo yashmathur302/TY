@@ -46,7 +46,11 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        primary: '#0ea5e9',
+                        primary:   '#0ea5e9',
+                        secondery: 'rgba(255,255,255,0.08)',
+                        dark2:     '#1b2033',
+                        dark3:     '#1e2846',
+                        dark4:     '#222a45',
                     }
                 }
             }

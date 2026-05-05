@@ -79,7 +79,7 @@
                 </div>
 
                 <!-- Header Action Icons -->
-                <div class="header-icons flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2 text-black">
+                <div class="header-icons flex items-center sm:gap-4 gap-2 absolute right-5 top-1/2 -translate-y-1/2 text-gray-700 dark:text-white">
 
                     <!-- Create Button -->
                     <button type="button" class="header-create-btn sm:p-2 p-1 rounded-full relative sm:bg-secondery dark:text-white">
@@ -93,7 +93,7 @@
                     <div class="create-dropdown hidden bg-white p-4 rounded-lg overflow-hidden drop-shadow-xl dark:bg-slate-700 md:w-[324px] w-screen border2"
                          uk-drop="offset:6;pos: bottom-right; mode: click; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right">
 
-                        <h3 class="font-bold text-md">Create</h3>
+                        <h3 class="font-bold text-md dark:text-white">Create</h3>
 
                         <div class="mt-4" tabindex="-1" uk-slider="finite:true;sets: true">
                             <div class="uk-slider-container pb-1">
@@ -197,7 +197,7 @@
                          uk-drop="offset:6;pos: bottom-right; mode: click; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right">
 
                         <div class="notif-dropdown-head flex items-center justify-between gap-2 p-4 pb-2">
-                            <h3 class="font-bold text-xl">Notifications</h3>
+                            <h3 class="font-bold text-xl dark:text-white">Notifications</h3>
                             <div class="flex gap-2.5">
                                 <button type="button" class="p-1 flex rounded-full focus:bg-secondery dark:text-white">
                                     <ion-icon class="text-xl" name="ellipsis-horizontal"></ion-icon>
@@ -300,7 +300,7 @@
                          uk-drop="offset:6;pos: bottom-right; mode: click; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right">
 
                         <div class="msg-dropdown-head flex items-center justify-between gap-2 p-4 pb-1">
-                            <h3 class="font-bold text-xl">Chats</h3>
+                            <h3 class="font-bold text-xl dark:text-white">Chats</h3>
                             <div class="flex gap-2.5 text-lg text-slate-900 dark:text-white">
                                 <ion-icon name="expand-outline"></ion-icon>
                                 <ion-icon name="create-outline"></ion-icon>
@@ -386,7 +386,7 @@
                             <div class="profile-dropdown-user p-4 py-5 flex items-center gap-4">
                                 <img src="https://i.pravatar.cc/40?img=8" alt="Stell Johnson" class="w-10 h-10 rounded-full shadow">
                                 <div class="flex-1">
-                                    <h4 class="text-sm font-medium text-black">Stell Johnson</h4>
+                                    <h4 class="text-sm font-medium text-black dark:text-white">Stell Johnson</h4>
                                     <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">@stjohnson</div>
                                 </div>
                             </div>
