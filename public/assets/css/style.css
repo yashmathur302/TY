@@ -213,7 +213,7 @@ input::placeholder {
    6. Header
 ----------------------------------------- */
 .site-header {
-    z-index: 100;
+    z-index: 1000 !important;
     height: var(--m-top);
     position: fixed;
     top: 0;
