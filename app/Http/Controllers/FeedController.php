@@ -20,4 +20,9 @@ class FeedController extends Controller
     {
         return view('events');
     }
+
+    public function eventDetail()
+    {
+        return view('event-detail');
+    }
 }
