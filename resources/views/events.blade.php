@@ -41,7 +41,7 @@
                         ] as $event)
                         <li class="lg:w-1/4 sm:w-1/3 w-1/2 events-slider-item-lg">
                             <div class="card">
-                                <a href="#">
+                                <a href="{{ route('event.detail') }}">
                                     <div class="card-media h-32">
                                         <img src="{{ 'https://picsum.photos/seed/' . $event['seed'] . '/400/200' }}" alt="{{ $event['title'] }}">
                                         <div class="card-overly"></div>
@@ -49,7 +49,7 @@
                                 </a>
                                 <div class="card-body">
                                     <p class="text-xs font-semibold {{ $event['label_color'] }} mb-1">{{ $event['label'] }}</p>
-                                    <a href="#"><h4 class="card-title text-sm">{{ $event['title'] }}</h4></a>
+                                    <a href="{{ route('event.detail') }}"><h4 class="card-title text-sm">{{ $event['title'] }}</h4></a>
                                     <p class="card-text mt-1">{{ $event['location'] }}</p>
                                     <div class="card-list-info mt-1">
                                         <div>{{ $event['interested'] }} Interested</div>
@@ -137,7 +137,7 @@
                     ['seed'=>'up8', 'label'=>'WED AUG 5, 2024 AT 8PM',   'label_color'=>'text-red-500',  'title'=>'Business Leadership Forum',  'location'=>'Singapore','interested'=>40, 'going'=>22],
                 ] as $upcoming)
                 <div class="card">
-                    <a href="#">
+                    <a href="{{ route('event.detail') }}">
                         <div class="card-media h-32">
                             <img src="{{ 'https://picsum.photos/seed/' . $upcoming['seed'] . '/400/200' }}" alt="{{ $upcoming['title'] }}">
                             <div class="card-overly"></div>
@@ -145,7 +145,7 @@
                     </a>
                     <div class="card-body">
                         <p class="text-xs font-semibold {{ $upcoming['label_color'] }} mb-1">{{ $upcoming['label'] }}</p>
-                        <a href="#"><h4 class="card-title text-sm">{{ $upcoming['title'] }}</h4></a>
+                        <a href="{{ route('event.detail') }}"><h4 class="card-title text-sm">{{ $upcoming['title'] }}</h4></a>
                         <p class="card-text mt-1">{{ $upcoming['location'] }}</p>
                         <div class="card-list-info mt-1">
                             <div>{{ $upcoming['interested'] }} Interested</div>
@@ -180,7 +180,7 @@
                     ['seed'=>'pop8', 'label'=>'Hot',       'label_color'=>'text-red-500',   'title'=>'International Book Fair','location'=>'Frankfurt',  'interested'=>45,  'going'=>20],
                 ] as $popular)
                 <div class="card">
-                    <a href="#">
+                    <a href="{{ route('event.detail') }}">
                         <div class="card-media h-32">
                             <img src="{{ 'https://picsum.photos/seed/' . $popular['seed'] . '/400/200' }}" alt="{{ $popular['title'] }}">
                             <div class="card-overly"></div>
@@ -188,7 +188,7 @@
                     </a>
                     <div class="card-body">
                         <p class="text-xs font-semibold {{ $popular['label_color'] }} mb-1">{{ $popular['label'] }}</p>
-                        <a href="#"><h4 class="card-title text-sm">{{ $popular['title'] }}</h4></a>
+                        <a href="{{ route('event.detail') }}"><h4 class="card-title text-sm">{{ $popular['title'] }}</h4></a>
                         <p class="card-text mt-1">{{ $popular['location'] }}</p>
                         <div class="card-list-info mt-1">
                             <div>{{ $popular['interested'] }} Interested</div>
@@ -217,7 +217,7 @@
                     ['seed'=>'my4', 'label'=>'You\'re Going',  'label_color'=>'text-green-500', 'title'=>'Teachers Leadership Summit','location'=>'Chennai',  'interested'=>42, 'going'=>28],
                 ] as $mine)
                 <div class="card">
-                    <a href="#">
+                    <a href="{{ route('event.detail') }}">
                         <div class="card-media h-32">
                             <img src="{{ 'https://picsum.photos/seed/' . $mine['seed'] . '/400/200' }}" alt="{{ $mine['title'] }}">
                             <div class="card-overly"></div>
@@ -225,7 +225,7 @@
                     </a>
                     <div class="card-body">
                         <p class="text-xs font-semibold {{ $mine['label_color'] }} mb-1">{{ $mine['label'] }}</p>
-                        <a href="#"><h4 class="card-title text-sm">{{ $mine['title'] }}</h4></a>
+                        <a href="{{ route('event.detail') }}"><h4 class="card-title text-sm">{{ $mine['title'] }}</h4></a>
                         <p class="card-text mt-1">{{ $mine['location'] }}</p>
                         <div class="card-list-info mt-1">
                             <div>{{ $mine['interested'] }} Interested</div>
