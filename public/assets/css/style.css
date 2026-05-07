@@ -1674,3 +1674,34 @@ html:not(.dark) .chat-panel-header h2 { color: #1e293b; }
 html:not(.dark) .chat-list-item .font-medium { color: #1e293b !important; }
 html:not(.dark) .chat-header .text-base { color: #1e293b !important; }
 html:not(.dark) .chat-right-panel .md\:text-xl { color: #1e293b !important; }
+
+/* -----------------------------------------
+   Events Page
+----------------------------------------- */
+.events-tab-content {
+    padding-top: 1.5rem;
+}
+
+.events-section-gap {
+    margin-bottom: 3.5rem;
+}
+
+.events-section-header {
+    margin-bottom: 1rem;
+}
+
+.events-section-heading {
+    color: var(--color-text);
+}
+
+.events-section-sub {
+    color: var(--color-text-muted);
+}
+
+.events-slider-item-lg {
+    padding-right: 0.75rem;
+}
+
+.events-grid {
+    gap: 1rem;
+}
