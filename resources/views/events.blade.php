@@ -26,7 +26,8 @@
         <li>
 
             <!-- Featured Events Slider -->
-            <div class="relative mb-10" tabindex="-1" uk-slider="finite: true">
+            <div style="margin-bottom:2.5rem">
+            <div class="relative" tabindex="-1" uk-slider="finite: true">
                 <div class="uk-slider-container pb-1">
                     <ul class="uk-slider-items grid-small"
                         uk-scrollspy="target: > li; cls: uk-animation-scale-up; delay: 30; repeat: true">
@@ -71,6 +72,7 @@
                 <a class="nav-prev !top-20" href="#" uk-slider-item="previous"><ion-icon name="chevron-back" class="text-2xl"></ion-icon></a>
                 <a class="nav-next !top-20" href="#" uk-slider-item="next"><ion-icon name="chevron-forward" class="text-2xl"></ion-icon></a>
             </div>
+            </div>{{-- end featured slider wrapper --}}
 
             <!-- Lists You May Like -->
             <div class="flex items-center justify-between mb-4">
@@ -81,7 +83,8 @@
                 <a href="#" class="text-blue-500 text-sm">See all</a>
             </div>
 
-            <div class="relative mb-10" tabindex="-1" uk-slider="finite: true">
+            <div style="margin-bottom:2.5rem">
+            <div class="relative" tabindex="-1" uk-slider="finite: true">
                 <div class="uk-slider-container pb-1">
                     <ul class="uk-slider-items grid-small">
 
@@ -113,6 +116,7 @@
                 <a class="nav-prev" href="#" uk-slider-item="previous"><ion-icon name="chevron-back" class="text-2xl"></ion-icon></a>
                 <a class="nav-next" href="#" uk-slider-item="next"><ion-icon name="chevron-forward" class="text-2xl"></ion-icon></a>
             </div>
+            </div>{{-- end listing slider wrapper --}}
 
             <!-- Upcoming Events -->
             <div class="flex items-center justify-between py-3" style="color:var(--color-text)">
