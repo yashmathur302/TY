@@ -39,7 +39,7 @@
                             ['seed'=>'ev4',  'label'=>'Opening',    'label_color'=>'text-teal-500',   'title'=>'Perspective is Everything','location'=>'London','interested'=>20, 'going'=>16],
                             ['seed'=>'ev5',  'label'=>'Next week',  'label_color'=>'text-blue-500',   'title'=>'About Safety and Flight', 'location'=>'Dubai',  'interested'=>26, 'going'=>8],
                         ] as $event)
-                        <li class="lg:w-1/4 sm:w-1/3 w-1/2 pr-3">
+                        <li class="lg:w-1/4 sm:w-1/3 w-1/2" style="padding-right:0.75rem">
                             <div class="card">
                                 <a href="#">
                                     <div class="card-media h-32">
@@ -96,7 +96,7 @@
                             ['seed'=>'list5', 'city'=>'Turkey',  'type'=>'Restaurant'],
                             ['seed'=>'list6', 'city'=>'Tokyo',   'type'=>'Hotels'],
                         ] as $listing)
-                        <li class="md:w-1/5 sm:w-1/3 w-1/2 pr-3">
+                        <li class="md:w-1/5 sm:w-1/3 w-1/2" style="padding-right:0.75rem">
                             <a href="#">
                                 <div class="relative rounded-lg overflow-hidden">
                                     <img src="{{ 'https://picsum.photos/seed/' . $listing['seed'] . '/300/150' }}" alt="{{ $listing['city'] }}" class="h-36 w-full object-cover">
