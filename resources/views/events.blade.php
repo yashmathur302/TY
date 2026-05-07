@@ -26,7 +26,7 @@
         <li>
 
             <!-- Featured Events Slider -->
-            <div class="relative" tabindex="-1" uk-slider="finite: true">
+            <div class="relative mb-10" tabindex="-1" uk-slider="finite: true">
                 <div class="uk-slider-container pb-1">
                     <ul class="uk-slider-items grid-small"
                         uk-scrollspy="target: > li; cls: uk-animation-scale-up; delay: 30; repeat: true">
@@ -73,15 +73,15 @@
             </div>
 
             <!-- Lists You May Like -->
-            <div class="sm:my-6 my-3 flex items-center justify-between md:mt-10">
+            <div class="flex items-center justify-between mb-4">
                 <div>
-                    <h2 class="text-xl font-semibold dark:text-white">Lists You May Like</h2>
-                    <p class="font-normal text-sm leading-6" style="color:var(--color-text-muted)">Find a group by browsing top categories.</p>
+                    <h2 class="text-xl font-semibold" style="color:var(--color-text)">Lists You May Like</h2>
+                    <p class="font-normal text-sm leading-6 mt-1" style="color:var(--color-text-muted)">Find a group by browsing top categories.</p>
                 </div>
-                <a href="#" class="text-blue-500 sm:block hidden text-sm">See all</a>
+                <a href="#" class="text-blue-500 text-sm">See all</a>
             </div>
 
-            <div class="mt-4" tabindex="-1" uk-slider="finite: true">
+            <div class="relative mb-10" tabindex="-1" uk-slider="finite: true">
                 <div class="uk-slider-container pb-1">
                     <ul class="uk-slider-items grid-small">
 
@@ -115,7 +115,7 @@
             </div>
 
             <!-- Upcoming Events -->
-            <div class="flex items-center justify-between dark:text-white py-3 mt-6">
+            <div class="flex items-center justify-between py-3" style="color:var(--color-text)">
                 <h3 class="text-xl font-semibold">Upcoming Events</h3>
                 <a href="#" class="text-sm text-blue-500">See all</a>
             </div>
