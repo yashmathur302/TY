@@ -15,4 +15,9 @@ class FeedController extends Controller
     {
         return view('messages');
     }
+
+    public function events()
+    {
+        return view('events');
+    }
 }

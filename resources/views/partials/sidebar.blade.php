@@ -26,8 +26,8 @@
                             <span>Video</span>
                         </a>
                     </li>
-                    <li class="sidebar-nav-item">
-                        <a href="#">
+                    <li class="sidebar-nav-item {{ request()->routeIs('events') ? 'active' : '' }}">
+                        <a href="{{ route('events') }}">
                             <ion-icon name="calendar" class="text-xl text-orange-500"></ion-icon>
                             <span>Event</span>
                         </a>
