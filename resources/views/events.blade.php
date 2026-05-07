@@ -39,7 +39,7 @@
                             ['seed'=>'ev4',  'label'=>'Opening',    'label_color'=>'text-teal-500',   'title'=>'Perspective is Everything','location'=>'London','interested'=>20, 'going'=>16],
                             ['seed'=>'ev5',  'label'=>'Next week',  'label_color'=>'text-blue-500',   'title'=>'About Safety and Flight', 'location'=>'Dubai',  'interested'=>26, 'going'=>8],
                         ] as $event)
-                        <li class="lg:w-1/4 sm:w-1/3 w-1/2">
+                        <li class="lg:w-1/4 sm:w-1/3 w-1/2 pr-3">
                             <div class="card">
                                 <a href="#">
                                     <div class="card-media h-32">
@@ -96,7 +96,7 @@
                             ['seed'=>'list5', 'city'=>'Turkey',  'type'=>'Restaurant'],
                             ['seed'=>'list6', 'city'=>'Tokyo',   'type'=>'Hotels'],
                         ] as $listing)
-                        <li class="md:w-1/5 sm:w-1/3 w-1/2">
+                        <li class="md:w-1/5 sm:w-1/3 w-1/2 pr-3">
                             <a href="#">
                                 <div class="relative rounded-lg overflow-hidden">
                                     <img src="{{ 'https://picsum.photos/seed/' . $listing['seed'] . '/300/150' }}" alt="{{ $listing['city'] }}" class="h-36 w-full object-cover">
@@ -124,7 +124,7 @@
                 <a href="#" class="text-sm text-blue-500">See all</a>
             </div>
 
-            <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2.5 mt-4 pb-8">
+            <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 mt-4 pb-8" style="gap:1rem">
 
                 @foreach([
                     ['seed'=>'up1', 'label'=>'WED JUL 10, 2024 AT 10PM', 'label_color'=>'text-red-500',  'title'=>'The Global Creative',      'location'=>'Japan',  'interested'=>15, 'going'=>2],
@@ -168,7 +168,7 @@
 
         <!-- ===== TAB 2: Popular ===== -->
         <li>
-            <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2.5 py-4 pb-8">
+            <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 py-4 pb-8" style="gap:1rem">
                 @foreach([
                     ['seed'=>'pop1', 'label'=>'Trending',  'label_color'=>'text-pink-500',  'title'=>'Street Food Festival',   'location'=>'Bangkok',    'interested'=>120, 'going'=>65],
                     ['seed'=>'pop2', 'label'=>'Hot',       'label_color'=>'text-red-500',   'title'=>'Startup Pitch Night',    'location'=>'San Francisco','interested'=>88,  'going'=>40],
@@ -209,7 +209,7 @@
 
         <!-- ===== TAB 3: My Events ===== -->
         <li>
-            <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2.5 py-4 pb-8">
+            <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 py-4 pb-8" style="gap:1rem">
                 @foreach([
                     ['seed'=>'my1', 'label'=>'You\'re Going',  'label_color'=>'text-green-500', 'title'=>'Web Dev Bootcamp',          'location'=>'Online',   'interested'=>30, 'going'=>18],
                     ['seed'=>'my2', 'label'=>'You\'re Hosting','label_color'=>'text-purple-500','title'=>'EduConnect Meetup 2024',    'location'=>'Mumbai',   'interested'=>55, 'going'=>40],
