@@ -1811,6 +1811,18 @@ html:not(.dark) .event-comment-bar {
     background-color: var(--color-primary-soft) !important;
 }
 
+.pages-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .pages-card-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 /* -----------------------------------------
    Page Detail
 ----------------------------------------- */

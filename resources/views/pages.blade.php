@@ -15,7 +15,7 @@
             <div class="page-heading">
                 <h1 class="page-title">Pages</h1>
                 <nav class="nav__underline">
-                    <ul class="group" uk-switcher="connect: #page-tabs; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
+                    <ul class="group" uk-tab uk-switcher="connect: #page-tabs; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
                         <li><a href="#">Suggestions</a></li>
                         <li><a href="#">Popular</a></li>
                         <li><a href="#">My Pages</a></li>
@@ -24,32 +24,30 @@
             </div>
 
             <!-- Featured Pages Slider -->
-            <div tabindex="-1" uk-slider="finite: true">
+            <div class="relative" tabindex="-1" uk-slider="finite: true">
                 <div class="uk-slider-container pb-1">
                     <ul class="uk-slider-items grid-small">
 
                         @foreach([
-                            ['img' => 1,  'country' => 'Japan',    'name' => 'Jesse Steeve'],
-                            ['img' => 2,  'country' => 'Turkey',   'name' => 'John Michael'],
-                            ['img' => 3,  'country' => 'Dubai',    'name' => 'Monroe Parker'],
-                            ['img' => 14, 'country' => 'London',   'name' => 'Martin Gray'],
-                            ['img' => 6,  'country' => 'Sydney',   'name' => 'Alexa Stella'],
+                            ['img' => 1,  'following' => '162k', 'name' => 'Jesse Steeve'],
+                            ['img' => 2,  'following' => '260k', 'name' => 'John Michael'],
+                            ['img' => 3,  'following' => '125k', 'name' => 'Monroe Parker'],
+                            ['img' => 14, 'following' => '320k', 'name' => 'Martin Gray'],
+                            ['img' => 6,  'following' => '89k',  'name' => 'Alexa Stella'],
                         ] as $featured)
-                        <li class="lg:w-1/4 sm:w-1/3 w-1/2">
-                            <div class="card uk-transition-toggle">
+                        <li class="lg:w-1/4 sm:w-1/3 w-1/2 events-slider-item-lg">
+                            <div class="card">
                                 <a href="{{ route('page.detail') }}">
-                                    <div class="card-media sm:aspect-[2/1.9] h-40">
+                                    <div class="card-media h-32">
                                         <img src="https://i.pravatar.cc/400?img={{ $featured['img'] }}" alt="{{ $featured['name'] }}">
                                         <div class="card-overly"></div>
                                     </div>
                                 </a>
-                                <div class="card-body p-3 w-full z-10 absolute bg-gradient-to-t bottom-0 from-black/60">
-                                    <p class="card-text text-xs text-white/80">{{ $featured['country'] }}</p>
-                                    <a href="{{ route('page.detail') }}"><h4 class="card-title text-sm mt-0.5 !text-white">{{ $featured['name'] }}</h4></a>
+                                <div class="card-body">
+                                    <a href="{{ route('page.detail') }}"><h4 class="card-title text-sm">{{ $featured['name'] }}</h4></a>
+                                    <p class="card-text mt-1">{{ $featured['following'] }} Following</p>
+                                    <button type="button" class="button bg-primary text-white w-full mt-2">Follow</button>
                                 </div>
-                                <button type="button" class="uk-transition-fade absolute top-0 right-0 m-2 z-10 bg-black/20 rounded-full flex p-1">
-                                    <ion-icon name="close" class="text-white"></ion-icon>
-                                </button>
                             </div>
                         </li>
                         @endforeach
@@ -64,7 +62,7 @@
             <div id="page-tabs" class="uk-switcher mt-10">
 
                 <!-- ===== TAB 1: Suggestions – Portrait Cards ===== -->
-                <div class="grid sm:grid-cols-3 grid-cols-2 gap-3"
+                <div class="pages-card-grid"
                      uk-scrollspy="target: > div; cls: uk-animation-scale-up; delay: 100; repeat: true">
 
                     @foreach([
