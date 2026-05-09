@@ -1836,3 +1836,67 @@ html:not(.dark) .event-comment-bar {
     background-color: var(--color-secondery);
     opacity: 1;
 }
+
+/* -----------------------------------------
+   Groups Page
+----------------------------------------- */
+.groups-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.625rem;
+}
+
+@media (min-width: 640px) {
+    .groups-card-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .groups-card-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.groups-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.groups-section-header-lg {
+    margin-top: 2.5rem;
+}
+
+.groups-section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+@media (min-width: 768px) {
+    .groups-section-title {
+        font-size: 1.125rem;
+    }
+}
+
+.groups-section-sub {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+}
+
+.groups-suggest-thumb {
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+@media (min-width: 640px) {
+    .groups-suggest-thumb {
+        width: 5rem;
+        height: 5rem;
+    }
+}
