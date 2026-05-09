@@ -20,12 +20,6 @@
                             <span>Messages</span>
                         </a>
                     </li>
-                    <li class="sidebar-nav-item">
-                        <a href="#">
-                            <ion-icon name="play-circle" class="text-xl text-red-500"></ion-icon>
-                            <span>Video</span>
-                        </a>
-                    </li>
                     <li class="sidebar-nav-item {{ request()->routeIs('events') ? 'active' : '' }}">
                         <a href="{{ route('events') }}">
                             <ion-icon name="calendar" class="text-xl text-orange-500"></ion-icon>
@@ -46,83 +40,13 @@
                     </li>
                     <li class="sidebar-nav-item">
                         <a href="#">
-                            <ion-icon name="storefront" class="text-xl text-teal-500"></ion-icon>
-                            <span>Market</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-nav-item">
-                        <a href="#">
                             <ion-icon name="newspaper" class="text-xl text-indigo-500"></ion-icon>
                             <span>Blog</span>
                         </a>
                     </li>
-                    <li class="sidebar-nav-item !hidden" id="show__more">
-                        <a href="#">
-                            <ion-icon name="game-controller" class="text-xl text-pink-500"></ion-icon>
-                            <span>Games</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-nav-item !hidden" id="show__more">
-                        <a href="#">
-                            <ion-icon name="heart-circle" class="text-xl text-rose-500"></ion-icon>
-                            <span>Fundraiser</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-nav-item !hidden" id="show__more">
-                        <a href="#">
-                            <ion-icon name="document-text" class="text-xl text-amber-500"></ion-icon>
-                            <span>Blog II</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-nav-item !hidden" id="show__more">
-                        <a href="#">
-                            <ion-icon name="ticket" class="text-xl text-cyan-500"></ion-icon>
-                            <span>Event II</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-nav-item !hidden" id="show__more">
-                        <a href="#">
-                            <ion-icon name="person-add" class="text-xl text-violet-500"></ion-icon>
-                            <span>Groups II</span>
-                        </a>
-                    </li>
                 </ul>
 
-                <button type="button" class="sidebar-seemore flex items-center gap-4 py-2 px-4 w-full font-medium text-sm text-black dark:text-white"
-                        uk-toggle="target: #show__more; cls: !hidden uk-animation-fade">
-                    <span class="sidebar-seemore-icon bg-gray-200 rounded-full w-6 h-6 dark:bg-slate-700 flex items-center justify-center">
-                        <ion-icon name="chevron-down" class="text-sm"></ion-icon>
-                    </span>
-                    <span id="show__more">See More</span>
-                    <span class="!hidden" id="show__more">See Less</span>
-                </button>
-
             </nav>
-
-            <!-- Shortcuts Section -->
-            <div class="sidebar-shortcuts font-medium text-sm text-black border-t pt-3 mt-2 dark:text-white dark:border-slate-800">
-                <div class="px-3 pb-2 text-sm font-medium">
-                    <div class="text-black dark:text-white">Shortcut</div>
-                </div>
-                <a href="#">
-                    <div class="sidebar-shortcut-item flex items-center gap-2 p-3 px-4 rounded-xl hover:bg-secondery">
-                        <img src="https://i.pravatar.cc/24?img=2" alt="Marin Gray" class="w-6 h-6 rounded-full object-cover">
-                        <div>Marin Gray</div>
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="sidebar-shortcut-item flex items-center gap-2 p-3 px-4 rounded-xl hover:bg-secondery">
-                        <img src="https://i.pravatar.cc/24?img=7" alt="Alexa Stella" class="w-6 h-6 rounded-full object-cover">
-                        <div>Alexa Stella</div>
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="sidebar-shortcut-item flex items-center gap-2 p-3 px-4 rounded-xl hover:bg-secondery">
-                        <img src="https://i.pravatar.cc/24?img=3" alt="Sarah Ali" class="w-6 h-6 rounded-full object-cover">
-                        <div>Sarah Ali</div>
-                    </div>
-                </a>
-            </div>
 
             <!-- Pages Section -->
             <nav class="sidebar-pages font-medium text-sm text-black border-t pt-3 mt-2 dark:text-white dark:border-slate-800">
