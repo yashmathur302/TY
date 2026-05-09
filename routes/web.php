@@ -11,3 +11,4 @@ Route::get('/event-detail', [FeedController::class, 'eventDetail'])->name('event
 Route::get('/pages', [FeedController::class, 'pages'])->name('pages');
 Route::get('/page-detail', [FeedController::class, 'pageDetail'])->name('page.detail');
 Route::get('/groups', [FeedController::class, 'groups'])->name('groups');
+Route::get('/group-detail', [FeedController::class, 'groupDetail'])->name('group.detail');

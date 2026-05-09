@@ -40,4 +40,9 @@ class FeedController extends Controller
     {
         return view('groups');
     }
+
+    public function groupDetail()
+    {
+        return view('group-detail');
+    }
 }

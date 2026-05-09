@@ -31,7 +31,7 @@
                 ['seed' => 'gc1', 'avatar' => 2, 'name' => 'Graphic Design',    'category' => 'Design',     'members' => '420k'],
             ] as $group)
             <div class="card">
-                <a href="#">
+                <a href="{{ route('group.detail') }}">
                     <div class="card-media h-24">
                         <img src="https://picsum.photos/seed/{{ $group['seed'] }}/400/200" alt="{{ $group['name'] }}">
                         <div class="card-overly"></div>
@@ -40,7 +40,7 @@
                 <div class="card-body relative z-10">
                     <img src="https://i.pravatar.cc/40?img={{ $group['avatar'] }}" alt="{{ $group['name'] }}"
                          class="w-10 rounded-full mb-2 shadow -mt-8 relative border-2 border-white dark:border-slate-800">
-                    <a href="#"><h4 class="card-title">{{ $group['name'] }}</h4></a>
+                    <a href="{{ route('group.detail') }}"><h4 class="card-title">{{ $group['name'] }}</h4></a>
                     <div class="card-list-info font-normal mt-1">
                         <a href="#">{{ $group['category'] }}</a>
                         <div class="md:block hidden">·</div>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="flex gap-2">
                         <button type="button" class="button bg-primary text-white flex-1">Join</button>
-                        <a href="#" class="button bg-secondery dark:text-white">View</a>
+                        <a href="{{ route('group.detail') }}" class="button bg-secondery dark:text-white">View</a>
                     </div>
                 </div>
             </div>
@@ -64,14 +64,14 @@
                 ['seed' => 'gp4', 'name' => 'Abstract Minimal', 'members' => '360k', 'category' => 'Education', 'friends' => 3,  'av' => [2, 3, 7]],
             ] as $group)
             <div class="card">
-                <a href="#">
+                <a href="{{ route('group.detail') }}">
                     <div class="card-media h-24">
                         <img src="https://picsum.photos/seed/{{ $group['seed'] }}/400/200" alt="{{ $group['name'] }}">
                         <div class="card-overly"></div>
                     </div>
                 </a>
                 <div class="card-body">
-                    <a href="#"><h4 class="card-title">{{ $group['name'] }}</h4></a>
+                    <a href="{{ route('group.detail') }}"><h4 class="card-title">{{ $group['name'] }}</h4></a>
                     <div class="card-text">
                         <div class="card-list-info font-normal mt-1">
                             <div>{{ $group['members'] }} members</div>
@@ -89,7 +89,7 @@
                     </div>
                     <div class="flex gap-2">
                         <button type="button" class="button bg-primary text-white flex-1">Join</button>
-                        <a href="#" class="button bg-secondery dark:text-white">View</a>
+                        <a href="{{ route('group.detail') }}" class="button bg-secondery dark:text-white">View</a>
                     </div>
                 </div>
             </div>
@@ -105,14 +105,14 @@
                 ['seed' => 'gc4', 'name' => 'Delicious Foods',   'category' => 'Travel',          'members' => '620k'],
             ] as $group)
             <div class="card">
-                <a href="#">
+                <a href="{{ route('group.detail') }}">
                     <div class="card-media h-24">
                         <img src="https://picsum.photos/seed/{{ $group['seed'] }}/400/200" alt="{{ $group['name'] }}">
                         <div class="card-overly"></div>
                     </div>
                 </a>
                 <div class="card-body">
-                    <a href="#"><h4 class="card-title">{{ $group['name'] }}</h4></a>
+                    <a href="{{ route('group.detail') }}"><h4 class="card-title">{{ $group['name'] }}</h4></a>
                     <div class="card-list-info font-normal mt-1">
                         <a href="#">{{ $group['category'] }}</a>
                         <div class="md:block hidden">·</div>
