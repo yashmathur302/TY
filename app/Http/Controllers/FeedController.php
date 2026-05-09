@@ -25,4 +25,9 @@ class FeedController extends Controller
     {
         return view('event-detail');
     }
+
+    public function pages()
+    {
+        return view('pages');
+    }
 }

@@ -32,8 +32,8 @@
                             <span>Event</span>
                         </a>
                     </li>
-                    <li class="sidebar-nav-item">
-                        <a href="#">
+                    <li class="sidebar-nav-item {{ request()->routeIs('pages') ? 'active' : '' }}">
+                        <a href="{{ route('pages') }}">
                             <ion-icon name="flag" class="text-xl text-purple-500"></ion-icon>
                             <span>Pages</span>
                         </a>

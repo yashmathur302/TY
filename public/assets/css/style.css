@@ -732,6 +732,7 @@ html:not(.dark) .page-title { color: #111827; }
     border-radius: var(--radius-lg);
     border: 1px solid var(--color-border) !important;
     overflow: hidden;
+    position: relative;
     transition: transform 0.15s, box-shadow 0.15s;
 }
 
@@ -1801,4 +1802,11 @@ html:not(.dark) .chat-right-panel .md\:text-xl { color: #1e293b !important; }
 
 html:not(.dark) .event-comment-bar {
     background-color: rgba(0, 0, 0, 0.025);
+}
+
+/* -----------------------------------------
+   Pages Page
+----------------------------------------- */
+.bg-primary-soft {
+    background-color: var(--color-primary-soft) !important;
 }
