@@ -30,4 +30,9 @@ class FeedController extends Controller
     {
         return view('pages');
     }
+
+    public function pageDetail()
+    {
+        return view('page-detail');
+    }
 }

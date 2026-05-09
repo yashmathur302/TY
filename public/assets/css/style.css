@@ -1810,3 +1810,17 @@ html:not(.dark) .event-comment-bar {
 .bg-primary-soft {
     background-color: var(--color-primary-soft) !important;
 }
+
+/* -----------------------------------------
+   Page Detail
+----------------------------------------- */
+.button-outline {
+    background: transparent;
+    border: 1.5px solid var(--color-border) !important;
+    color: var(--color-text);
+}
+
+.button-outline:hover {
+    background-color: var(--color-secondery);
+    opacity: 1;
+}

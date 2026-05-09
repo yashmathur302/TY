@@ -9,3 +9,4 @@ Route::get('/messages', [FeedController::class, 'messages'])->name('messages');
 Route::get('/events', [FeedController::class, 'events'])->name('events');
 Route::get('/event-detail', [FeedController::class, 'eventDetail'])->name('event.detail');
 Route::get('/pages', [FeedController::class, 'pages'])->name('pages');
+Route::get('/page-detail', [FeedController::class, 'pageDetail'])->name('page.detail');
