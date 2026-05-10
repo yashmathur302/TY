@@ -38,8 +38,8 @@
                             <span>Groups</span>
                         </a>
                     </li>
-                    <li class="sidebar-nav-item">
-                        <a href="#">
+                    <li class="sidebar-nav-item {{ request()->routeIs('blog') ? 'active' : '' }}">
+                        <a href="{{ route('blog') }}">
                             <ion-icon name="newspaper" class="text-xl text-indigo-500"></ion-icon>
                             <span>Blog</span>
                         </a>

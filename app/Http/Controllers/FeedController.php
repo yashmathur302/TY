@@ -45,4 +45,9 @@ class FeedController extends Controller
     {
         return view('group-detail');
     }
+
+    public function blog()
+    {
+        return view('blog');
+    }
 }

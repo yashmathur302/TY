@@ -12,3 +12,4 @@ Route::get('/pages', [FeedController::class, 'pages'])->name('pages');
 Route::get('/page-detail', [FeedController::class, 'pageDetail'])->name('page.detail');
 Route::get('/groups', [FeedController::class, 'groups'])->name('groups');
 Route::get('/group-detail', [FeedController::class, 'groupDetail'])->name('group.detail');
+Route::get('/blog', [FeedController::class, 'blog'])->name('blog');
