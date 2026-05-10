@@ -382,7 +382,7 @@
                     <div class="profile-dropdown hidden bg-white rounded-lg drop-shadow-xl dark:bg-slate-700 w-64 border2"
                          uk-drop="offset:6;pos: bottom-right;animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right">
 
-                        <a href="#">
+                        <a href="{{ route('profile') }}">
                             <div class="profile-dropdown-user p-4 py-5 flex items-center gap-4">
                                 <img src="https://i.pravatar.cc/40?img=8" alt="Stell Johnson" class="w-10 h-10 rounded-full shadow">
                                 <div class="flex-1">

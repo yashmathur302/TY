@@ -55,4 +55,9 @@ class FeedController extends Controller
     {
         return view('blog-read');
     }
+
+    public function profile()
+    {
+        return view('profile');
+    }
 }
