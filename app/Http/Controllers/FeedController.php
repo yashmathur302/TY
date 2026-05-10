@@ -50,4 +50,9 @@ class FeedController extends Controller
     {
         return view('blog');
     }
+
+    public function blogRead()
+    {
+        return view('blog-read');
+    }
 }

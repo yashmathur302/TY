@@ -73,15 +73,15 @@ $articles = [
 
             {{-- Featured card (spans 2 columns) --}}
             <div class="card sm:col-span-2">
-                <a href="#">
+                <a href="{{ route('blog.read') }}">
                     <div class="card-media h-full">
                         <img src="https://picsum.photos/seed/blog-hero/800/500" alt="Featured Post">
                         <div class="card-overly"></div>
                     </div>
                 </a>
                 <div class="card-body blog-featured-body">
-                    <a href="#"><p class="card-text text-white/80">Jesse Steeve</p></a>
-                    <a href="#">
+                    <a href="{{ route('blog.read') }}"><p class="card-text text-white/80">Jesse Steeve</p></a>
+                    <a href="{{ route('blog.read') }}">
                         <h4 class="card-title text-xl mt-1.5 !text-white">Top amazing web demos and experiments in 2024 should know about</h4>
                     </a>
                     <div class="card-list-info items-center gap-4 text-white/80">
@@ -101,7 +101,7 @@ $articles = [
             {{-- Regular article cards --}}
             @foreach($articles as $article)
             <div class="card">
-                <a href="#">
+                <a href="{{ route('blog.read') }}">
                     <div class="card-media h-36">
                         <img src="https://picsum.photos/seed/{{ $article['seed'] }}/400/250" alt="{{ $article['title'] }}">
                         <div class="card-overly"></div>
@@ -109,8 +109,8 @@ $articles = [
                     </div>
                 </a>
                 <div class="card-body">
-                    <a href="#"><p class="card-text">{{ $article['author'] }}</p></a>
-                    <a href="#">
+                    <a href="{{ route('blog.read') }}"><p class="card-text">{{ $article['author'] }}</p></a>
+                    <a href="{{ route('blog.read') }}">
                         <h4 class="card-title text-sm line-clamp-2 mt-1.5">{{ $article['title'] }}</h4>
                     </a>
                     <div class="card-list-info items-center gap-4">
@@ -143,15 +143,15 @@ $articles = [
              uk-scrollspy="target: > div; cls: uk-animation-slide-bottom-small; delay: 100; repeat: true">
 
             <div class="card sm:col-span-2">
-                <a href="#">
+                <a href="{{ route('blog.read') }}">
                     <div class="card-media h-full">
                         <img src="https://picsum.photos/seed/blog-pop-hero/800/500" alt="Featured Post">
                         <div class="card-overly"></div>
                     </div>
                 </a>
                 <div class="card-body blog-featured-body">
-                    <a href="#"><p class="card-text text-white/80">Monroe Parker</p></a>
-                    <a href="#">
+                    <a href="{{ route('blog.read') }}"><p class="card-text text-white/80">Monroe Parker</p></a>
+                    <a href="{{ route('blog.read') }}">
                         <h4 class="card-title text-xl mt-1.5 !text-white">The most popular design trends and tools developers use today</h4>
                     </a>
                     <div class="card-list-info items-center gap-4 text-white/80">
@@ -170,7 +170,7 @@ $articles = [
 
             @foreach(array_slice($articles, 0, 11) as $i => $article)
             <div class="card">
-                <a href="#">
+                <a href="{{ route('blog.read') }}">
                     <div class="card-media h-36">
                         <img src="https://picsum.photos/seed/blog-p{{ $i }}/400/250" alt="{{ $article['title'] }}">
                         <div class="card-overly"></div>
@@ -178,8 +178,8 @@ $articles = [
                     </div>
                 </a>
                 <div class="card-body">
-                    <a href="#"><p class="card-text">{{ $article['author'] }}</p></a>
-                    <a href="#">
+                    <a href="{{ route('blog.read') }}"><p class="card-text">{{ $article['author'] }}</p></a>
+                    <a href="{{ route('blog.read') }}">
                         <h4 class="card-title text-sm line-clamp-2 mt-1.5">{{ $article['title'] }}</h4>
                     </a>
                     <div class="card-list-info items-center gap-4">
@@ -213,7 +213,7 @@ $articles = [
 
             @foreach($articles as $article)
             <div class="card">
-                <a href="#">
+                <a href="{{ route('blog.read') }}">
                     <div class="card-media h-36">
                         <img src="https://picsum.photos/seed/my-{{ $article['seed'] }}/400/250" alt="{{ $article['title'] }}">
                         <div class="card-overly"></div>
@@ -221,8 +221,8 @@ $articles = [
                     </div>
                 </a>
                 <div class="card-body">
-                    <a href="#"><p class="card-text">{{ $article['author'] }}</p></a>
-                    <a href="#">
+                    <a href="{{ route('blog.read') }}"><p class="card-text">{{ $article['author'] }}</p></a>
+                    <a href="{{ route('blog.read') }}">
                         <h4 class="card-title text-sm line-clamp-2 mt-1.5">{{ $article['title'] }}</h4>
                     </a>
                     <div class="card-list-info items-center gap-4">

@@ -13,3 +13,4 @@ Route::get('/page-detail', [FeedController::class, 'pageDetail'])->name('page.de
 Route::get('/groups', [FeedController::class, 'groups'])->name('groups');
 Route::get('/group-detail', [FeedController::class, 'groupDetail'])->name('group.detail');
 Route::get('/blog', [FeedController::class, 'blog'])->name('blog');
+Route::get('/blog-read', [FeedController::class, 'blogRead'])->name('blog.read');
