@@ -65,4 +65,9 @@ class FeedController extends Controller
     {
         return view('settings');
     }
+
+    public function login()
+    {
+        return view('login');
+    }
 }

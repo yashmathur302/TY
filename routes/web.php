@@ -16,3 +16,4 @@ Route::get('/blog', [FeedController::class, 'blog'])->name('blog');
 Route::get('/blog-read', [FeedController::class, 'blogRead'])->name('blog.read');
 Route::get('/profile', [FeedController::class, 'profile'])->name('profile');
 Route::get('/settings', [FeedController::class, 'settings'])->name('settings');
+Route::get('/login', [FeedController::class, 'login'])->name('login');

@@ -67,7 +67,7 @@
                         </a>
                     </li>
                     <li class="sidebar-pages-item">
-                        <a href="#">
+                        <a href="{{ route('login') }}">
                             <ion-icon name="log-in-outline" class="w-4 h-4"></ion-icon>
                             <span>Authentication</span>
                         </a>
