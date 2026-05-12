@@ -70,4 +70,9 @@ class FeedController extends Controller
     {
         return view('login');
     }
+
+    public function register()
+    {
+        return view('register');
+    }
 }

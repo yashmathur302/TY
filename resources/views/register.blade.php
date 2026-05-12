@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In – EduConnect</title>
+    <title>Sign Up – EduConnect</title>
 
     <link rel="stylesheet" href="{{ asset('assets/css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -14,7 +14,7 @@
 
 <div class="sm:flex">
 
-    {{-- Left panel: login form --}}
+    {{-- Left panel: register form --}}
     <div class="relative lg:w-[580px] md:w-96 w-full p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10">
 
         <div class="w-full lg:max-w-sm mx-auto space-y-10"
@@ -30,10 +30,10 @@
 
             {{-- Title --}}
             <div>
-                <h2 class="text-2xl font-semibold mb-1.5">Sign in to your account</h2>
+                <h2 class="text-2xl font-semibold mb-1.5">Sign up to get started</h2>
                 <p class="text-sm text-gray-700 font-normal dark:text-white/70">
-                    If you haven't signed up yet.
-                    <a href="{{ route('register') }}" class="text-blue-700">Register here!</a>
+                    If you already have an account.
+                    <a href="{{ route('login') }}" class="text-blue-700">Login here!</a>
                 </p>
             </div>
 
@@ -43,36 +43,66 @@
 
                 @csrf
 
-                {{-- Email --}}
-                <div>
-                    <label for="email">Email address</label>
-                    <div class="mt-2.5">
-                        <input id="email" name="email" type="email" autofocus placeholder="Email" required
-                               class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
-                    </div>
-                </div>
+                <div class="grid grid-cols-2 gap-4 gap-y-7">
 
-                {{-- Password --}}
-                <div>
-                    <label for="password">Password</label>
-                    <div class="mt-2.5">
-                        <input id="password" name="password" type="password" placeholder="***"
-                               class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+                    {{-- First name --}}
+                    <div>
+                        <label for="first_name">First name</label>
+                        <div class="mt-2.5">
+                            <input id="first_name" name="first_name" type="text" autofocus placeholder="First name" required
+                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+                        </div>
                     </div>
-                </div>
 
-                {{-- Remember me / Forgot password --}}
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <input id="rememberme" name="rememberme" type="checkbox">
-                        <label for="rememberme" class="font-normal">Remember me</label>
+                    {{-- Last name --}}
+                    <div>
+                        <label for="last_name">Last name</label>
+                        <div class="mt-2.5">
+                            <input id="last_name" name="last_name" type="text" placeholder="Last name" required
+                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+                        </div>
                     </div>
-                    <a href="#" class="text-blue-700">Forgot password</a>
-                </div>
 
-                {{-- Submit --}}
-                <div>
-                    <button type="submit" class="button bg-primary text-white w-full">Sign in</button>
+                    {{-- Email --}}
+                    <div class="col-span-2">
+                        <label for="email">Email address</label>
+                        <div class="mt-2.5">
+                            <input id="email" name="email" type="email" placeholder="Email" required
+                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+                        </div>
+                    </div>
+
+                    {{-- Password --}}
+                    <div>
+                        <label for="password">Password</label>
+                        <div class="mt-2.5">
+                            <input id="password" name="password" type="password" placeholder="***"
+                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+                        </div>
+                    </div>
+
+                    {{-- Confirm Password --}}
+                    <div>
+                        <label for="password_confirmation">Confirm Password</label>
+                        <div class="mt-2.5">
+                            <input id="password_confirmation" name="password_confirmation" type="password" placeholder="***"
+                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+                        </div>
+                    </div>
+
+                    {{-- Terms --}}
+                    <div class="col-span-2">
+                        <label class="inline-flex items-center" for="accept_terms">
+                            <input type="checkbox" id="accept_terms" name="accept_terms" class="!rounded-md">
+                            <span class="ml-2">You agree to our <a href="#" class="text-blue-700 hover:underline">terms of use</a></span>
+                        </label>
+                    </div>
+
+                    {{-- Submit --}}
+                    <div class="col-span-2">
+                        <button type="submit" class="button bg-primary text-white w-full">Get Started</button>
+                    </div>
+
                 </div>
 
                 <div class="text-center flex items-center gap-6">
@@ -81,7 +111,7 @@
                     <hr class="flex-1 border-slate-200 dark:border-slate-800">
                 </div>
 
-                {{-- Social login --}}
+                {{-- Social signup --}}
                 <div class="flex gap-2"
                      uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 400; repeat: true">
                     <a href="#" class="button flex-1 flex items-center gap-2 bg-primary text-white text-sm">
@@ -109,7 +139,7 @@
             <ul class="uk-slideshow-items w-full h-full">
 
                 <li class="w-full">
-                    <img src="https://picsum.photos/seed/login-slide1/1200/800"
+                    <img src="https://picsum.photos/seed/register-slide1/1200/800"
                          alt="" class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
                     <div class="absolute bottom-0 w-full z-10">
                         <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative"
@@ -125,16 +155,16 @@
                 </li>
 
                 <li class="w-full">
-                    <img src="https://picsum.photos/seed/login-slide2/1200/800"
+                    <img src="https://picsum.photos/seed/register-slide2/1200/800"
                          alt="" class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
                     <div class="absolute bottom-0 w-full z-10">
                         <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative"
                              uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100; repeat: true">
                             <ion-icon name="planet-outline" class="text-5xl text-white"></ion-icon>
                             <h4 class="text-white text-2xl font-semibold mt-7"
-                                uk-slideshow-parallax="y: 800,0,0">Share Your Moments</h4>
+                                uk-slideshow-parallax="y: 800,0,0">Start Your Journey</h4>
                             <p class="text-white text-lg mt-7 leading-8"
-                               uk-slideshow-parallax="y: 800,0,0">Capture and share the moments that matter most with the people who matter most to you.</p>
+                               uk-slideshow-parallax="y: 800,0,0">Join thousands of people sharing their stories, ideas, and moments with the world.</p>
                         </div>
                     </div>
                     <div class="w-full h-96 bg-gradient-to-t from-black absolute bottom-0 left-0"></div>
