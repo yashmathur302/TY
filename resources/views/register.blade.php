@@ -21,8 +21,11 @@
              uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100; repeat: true">
 
             {{-- Logo --}}
-            <a href="{{ route('login') }}" class="absolute top-10 left-10">
-                <span class="text-xl font-bold text-primary tracking-wide">EduConnect</span>
+            <a href="{{ route('login') }}" class="absolute top-10 left-10 flex items-center gap-2">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-primary">
+                    <path d="M12 2 L13.8 9.2 L21 12 L13.8 14.8 L12 22 L10.2 14.8 L3 12 L10.2 9.2 Z"/>
+                </svg>
+                <span class="text-xl font-bold dark:text-white">EduConnect</span>
             </a>
 
             {{-- Title --}}
@@ -157,7 +160,10 @@
                          alt="" class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
                     <div class="absolute bottom-0 w-full z-10">
                         <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative">
-                            <ion-icon name="planet-outline" class="text-5xl text-white"></ion-icon>
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-white"
+                                 uk-slideshow-parallax="y: 600,0,0">
+                                <path d="M12 2 L13.8 9.2 L21 12 L13.8 14.8 L12 22 L10.2 14.8 L3 12 L10.2 9.2 Z"/>
+                            </svg>
                             <h4 class="text-white text-2xl font-semibold mt-7"
                                 uk-slideshow-parallax="y: 600,0,0">Connect With Friends</h4>
                             <p class="text-white text-lg mt-7 leading-8"
@@ -172,7 +178,10 @@
                          alt="" class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
                     <div class="absolute bottom-0 w-full z-10">
                         <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative">
-                            <ion-icon name="planet-outline" class="text-5xl text-white"></ion-icon>
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-white"
+                                 uk-slideshow-parallax="y: 600,0,0">
+                                <path d="M12 2 L13.8 9.2 L21 12 L13.8 14.8 L12 22 L10.2 14.8 L3 12 L10.2 9.2 Z"/>
+                            </svg>
                             <h4 class="text-white text-2xl font-semibold mt-7"
                                 uk-slideshow-parallax="y: 800,0,0">Start Your Journey</h4>
                             <p class="text-white text-lg mt-7 leading-8"

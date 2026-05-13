@@ -14,15 +14,18 @@
 
 <div class="sm:flex">
 
-    {{-- Left panel: login form --}}
+    {{-- Left panel --}}
     <div class="relative lg:w-[580px] md:w-96 w-full p-10 min-h-screen bg-white shadow-xl flex items-center pt-10 dark:bg-slate-900 z-10">
 
         <div class="w-full lg:max-w-sm mx-auto space-y-10"
              uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100; repeat: true">
 
             {{-- Logo --}}
-            <a href="{{ route('feed') }}" class="absolute top-10 left-10">
-                <span class="text-xl font-bold text-primary tracking-wide">EduConnect</span>
+            <a href="{{ route('feed') }}" class="absolute top-10 left-10 flex items-center gap-2">
+                <svg viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-primary">
+                    <path d="M12 2 L13.8 9.2 L21 12 L13.8 14.8 L12 22 L10.2 14.8 L3 12 L10.2 9.2 Z"/>
+                </svg>
+                <span class="text-xl font-bold dark:text-white">EduConnect</span>
             </a>
 
             {{-- Title --}}
@@ -70,7 +73,7 @@
                     </div>
                 </div>
 
-                {{-- Remember me / Forgot password --}}
+                {{-- Remember / Forgot --}}
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
                         <input id="rememberme" name="rememberme" type="checkbox">
@@ -100,7 +103,7 @@
                         <ion-icon name="logo-twitter"></ion-icon> Twitter
                     </a>
                     <a href="#" class="button flex-1 flex items-center gap-2 bg-black text-white text-sm">
-                        <ion-icon name="logo-github"></ion-icon> GitHub
+                        <ion-icon name="logo-github"></ion-icon> Github
                     </a>
                 </div>
 
@@ -121,12 +124,16 @@
                     <img src="https://picsum.photos/seed/login-slide1/1200/800"
                          alt="" class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
                     <div class="absolute bottom-0 w-full z-10">
-                        <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative">
-                            <ion-icon name="planet-outline" class="text-5xl text-white"></ion-icon>
+                        <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative"
+                             uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100; repeat: true">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-white"
+                                 uk-slideshow-parallax="y: 600,0,0">
+                                <path d="M12 2 L13.8 9.2 L21 12 L13.8 14.8 L12 22 L10.2 14.8 L3 12 L10.2 9.2 Z"/>
+                            </svg>
                             <h4 class="text-white text-2xl font-semibold mt-7"
                                 uk-slideshow-parallax="y: 600,0,0">Connect With Friends</h4>
                             <p class="text-white text-lg mt-7 leading-8"
-                               uk-slideshow-parallax="y: 800,0,0">Keep your friends updated on what's happening in your life.</p>
+                               uk-slideshow-parallax="y: 800,0,0">This phrase is more casual and playful. It suggests that you are keeping your friends updated on what's happening in your life.</p>
                         </div>
                     </div>
                     <div class="w-full h-96 bg-gradient-to-t from-black absolute bottom-0 left-0"></div>
@@ -136,12 +143,16 @@
                     <img src="https://picsum.photos/seed/login-slide2/1200/800"
                          alt="" class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
                     <div class="absolute bottom-0 w-full z-10">
-                        <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative">
-                            <ion-icon name="planet-outline" class="text-5xl text-white"></ion-icon>
+                        <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative"
+                             uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100; repeat: true">
+                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-white"
+                                 uk-slideshow-parallax="y: 600,0,0">
+                                <path d="M12 2 L13.8 9.2 L21 12 L13.8 14.8 L12 22 L10.2 14.8 L3 12 L10.2 9.2 Z"/>
+                            </svg>
                             <h4 class="text-white text-2xl font-semibold mt-7"
                                 uk-slideshow-parallax="y: 800,0,0">Share Your Moments</h4>
                             <p class="text-white text-lg mt-7 leading-8"
-                               uk-slideshow-parallax="y: 800,0,0">Capture and share the moments that matter most.</p>
+                               uk-slideshow-parallax="y: 800,0,0">Capture and share the moments that matter most with the people who matter most to you.</p>
                         </div>
                     </div>
                     <div class="w-full h-96 bg-gradient-to-t from-black absolute bottom-0 left-0"></div>
