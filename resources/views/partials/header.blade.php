@@ -375,7 +375,9 @@
 
                     <!-- Profile Avatar -->
                     <div class="header-profile rounded-full relative bg-secondery cursor-pointer shrink-0">
-                        <img src="https://i.pravatar.cc/40?img=8" alt="Profile" class="sm:w-9 sm:h-9 w-7 h-7 rounded-full shadow shrink-0">
+                        <img src="{{ auth()->user()->profile_photo ? asset('storage/' . auth()->user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=0ea5e9&color=fff&size=80' }}"
+                             alt="{{ auth()->user()->name }}"
+                             class="sm:w-9 sm:h-9 w-7 h-7 rounded-full shadow shrink-0 object-cover">
                     </div>
 
                     <!-- Profile Dropdown -->
@@ -384,10 +386,12 @@
 
                         <a href="{{ route('profile') }}">
                             <div class="profile-dropdown-user p-4 py-5 flex items-center gap-4">
-                                <img src="https://i.pravatar.cc/40?img=8" alt="Stell Johnson" class="w-10 h-10 rounded-full shadow">
+                                <img src="{{ auth()->user()->profile_photo ? asset('storage/' . auth()->user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=0ea5e9&color=fff&size=80' }}"
+                                     alt="{{ auth()->user()->name }}"
+                                     class="w-10 h-10 rounded-full shadow object-cover">
                                 <div class="flex-1">
-                                    <h4 class="text-sm font-medium text-black dark:text-white">Stell Johnson</h4>
-                                    <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">@stjohnson</div>
+                                    <h4 class="text-sm font-medium text-black dark:text-white">{{ auth()->user()->name }}</h4>
+                                    <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">@{{ auth()->user()->username }}</div>
                                 </div>
                             </div>
                         </a>
@@ -424,14 +428,17 @@
                                 </div>
                             </button>
                             <hr class="-mx-2 my-2 dark:border-gray-600/60">
-                            <a href="{{ route('login') }}">
-                                <div class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10">
-                                    <svg class="w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-                                    </svg>
-                                    Log Out
-                                </div>
-                            </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="w-full text-left">
+                                    <div class="flex items-center gap-2.5 hover:bg-secondery p-2 px-2.5 rounded-md dark:hover:bg-white/10">
+                                        <svg class="w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                                        </svg>
+                                        Log Out
+                                    </div>
+                                </button>
+                            </form>
                         </nav>
                     </div>
 
