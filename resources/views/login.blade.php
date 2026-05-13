@@ -6,7 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In – EduConnect</title>
 
-    <link rel="stylesheet" href="{{ asset('assets/css/tailwind.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/css/uikit.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary:   '#0ea5e9',
+                        secondery: 'rgba(255,255,255,0.08)',
+                        dark2:     '#1b2033',
+                        dark3:     '#1e2846',
+                        dark4:     '#222a45',
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -170,7 +188,8 @@
 
 </div>
 
-<script src="{{ asset('assets/js/uikit.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.21.6/dist/js/uikit-icons.min.js"></script>
 <script src="{{ asset('assets/js/script.js') }}"></script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
