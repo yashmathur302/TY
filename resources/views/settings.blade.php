@@ -4,6 +4,14 @@
 
 @section('content')
 
+@php
+    $user      = auth()->user();
+    $activeTab = (int)(old('active_tab') ?? session('active_tab') ?? 0);
+    $avatarUrl = $user->profile_photo
+        ? asset('storage/' . $user->profile_photo)
+        : 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&background=0ea5e9&color=fff&size=80';
+@endphp
+
 <div class="max-w-3xl mx-auto">
 
     <div class="box relative rounded-lg shadow-md">
@@ -11,22 +19,27 @@
         {{-- Profile header --}}
         <div class="flex md:gap-8 gap-4 items-center md:p-8 p-6 md:pb-4">
 
-            <div class="relative md:w-20 md:h-20 w-12 h-12 shrink-0">
-                <label for="avatar-file" class="cursor-pointer">
-                    <img src="https://i.pravatar.cc/80?img=3" class="object-cover w-full h-full rounded-full" alt="Monroe Parker">
-                </label>
-                <label for="avatar-file" class="md:p-1 p-0.5 rounded-full bg-slate-600 md:border-4 border-white absolute -bottom-2 -right-2 cursor-pointer dark:border-slate-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="md:w-4 md:h-4 w-3 h-3 fill-white">
-                        <path d="M12 9a3.75 3.75 0 100 7.5A3.75 3.75 0 0012 9z" />
-                        <path fill-rule="evenodd" d="M9.344 3.071a49.52 49.52 0 015.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 01-3 3h-15a3 3 0 01-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 001.11-.71l.822-1.315a2.942 2.942 0 012.332-1.39zM6.75 12.75a5.25 5.25 0 1110.5 0 5.25 5.25 0 01-10.5 0zm12-1.5a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
-                    </svg>
-                    <input id="avatar-file" type="file" class="hidden">
-                </label>
-            </div>
+            {{-- Avatar upload form --}}
+            <form method="POST" action="{{ route('settings.avatar') }}" enctype="multipart/form-data" id="avatar-form">
+                @csrf
+                <div class="relative md:w-20 md:h-20 w-12 h-12 shrink-0">
+                    <label for="avatar-file" class="cursor-pointer">
+                        <img src="{{ $avatarUrl }}" class="object-cover w-full h-full rounded-full" alt="{{ $user->name }}">
+                    </label>
+                    <label for="avatar-file" class="md:p-1 p-0.5 rounded-full bg-slate-600 md:border-4 border-white absolute -bottom-2 -right-2 cursor-pointer dark:border-slate-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="md:w-4 md:h-4 w-3 h-3 fill-white">
+                            <path d="M12 9a3.75 3.75 0 100 7.5A3.75 3.75 0 0012 9z" />
+                            <path fill-rule="evenodd" d="M9.344 3.071a49.52 49.52 0 015.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 01-3 3h-15a3 3 0 01-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 001.11-.71l.822-1.315a2.942 2.942 0 012.332-1.39zM6.75 12.75a5.25 5.25 0 1110.5 0 5.25 5.25 0 01-10.5 0zm12-1.5a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+                        </svg>
+                        <input id="avatar-file" name="avatar" type="file" class="hidden"
+                               onchange="document.getElementById('avatar-form').submit()">
+                    </label>
+                </div>
+            </form>
 
             <div class="flex-1">
-                <h3 class="md:text-xl text-base font-semibold text-black dark:text-white">Monroe Parker</h3>
-                <p class="text-sm text-blue-600 mt-1 font-normal">@Monroe</p>
+                <h3 class="md:text-xl text-base font-semibold text-black dark:text-white">{{ $user->name }}</h3>
+                <p class="text-sm text-blue-600 mt-1 font-normal">&#64;{{ $user->username ?? 'username' }}</p>
             </div>
 
             <button class="inline-flex items-center gap-1 py-1 pl-2.5 pr-3 rounded-full bg-slate-50 border-2 border-slate-100 dark:text-white dark:bg-slate-700" type="button">
@@ -35,10 +48,26 @@
             </button>
         </div>
 
+        {{-- Flash message --}}
+        @if(session('success'))
+        <div class="mx-6 mb-2 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg px-4 py-3 text-sm text-green-700 dark:text-green-400">
+            {{ session('success') }}
+        </div>
+        @endif
+
+        @if($errors->any())
+        <div class="mx-6 mb-2 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg px-4 py-3 text-sm text-red-600 dark:text-red-400">
+            @foreach($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+        @endif
+
         {{-- Scrollable nav tabs --}}
         <div class="relative border-b" tabindex="-1" uk-slider="finite: true">
             <nav class="uk-slider-container overflow-hidden nav__underline px-6 p-0 border-transparent -mb-px">
                 <ul class="uk-slider-items w-[calc(100%+10px)] !overflow-hidden"
+                    id="settings-switcher"
                     uk-switcher="connect: #setting_tab; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium">
                     <li class="w-auto pr-2.5"><a href="#">Description</a></li>
                     <li class="w-auto pr-2.5"><a href="#">Social Links</a></li>
@@ -63,122 +92,161 @@
 
             {{-- Tab 1: Description (Basic Info) --}}
             <div>
-                <div class="space-y-6">
+                <form method="POST" action="{{ route('settings.profile') }}">
+                    @csrf
+                    <input type="hidden" name="active_tab" value="0">
 
-                    <div class="md:flex items-center gap-10">
-                        <label class="md:w-32 text-right dark:text-white/80">Username</label>
-                        <div class="flex-1 max-md:mt-4">
-                            <input type="text" placeholder="Monroe" class="lg:w-1/2 w-full">
+                    <div class="space-y-6">
+
+                        <div class="md:flex items-center gap-10">
+                            <label class="md:w-32 text-right dark:text-white/80">Name</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <input type="text" name="name"
+                                       value="{{ old('name', $user->name) }}"
+                                       placeholder="Full name"
+                                       class="w-full @error('name') !border-red-400 @enderror">
+                            </div>
                         </div>
+
+                        <div class="md:flex items-center gap-10">
+                            <label class="md:w-32 text-right dark:text-white/80">Username</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <input type="text" name="username"
+                                       value="{{ old('username', $user->username) }}"
+                                       placeholder="username"
+                                       class="lg:w-1/2 w-full @error('username') !border-red-400 @enderror">
+                            </div>
+                        </div>
+
+                        <div class="md:flex items-center gap-10">
+                            <label class="md:w-32 text-right dark:text-white/80">Email</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <input type="email" name="email"
+                                       value="{{ old('email', $user->email) }}"
+                                       placeholder="you@example.com"
+                                       class="w-full @error('email') !border-red-400 @enderror">
+                            </div>
+                        </div>
+
+                        <div class="md:flex items-start gap-10">
+                            <label class="md:w-32 text-right dark:text-white/80">Bio</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <textarea name="bio" class="w-full" rows="5"
+                                          placeholder="Tell people a bit about yourself">{{ old('bio', $user->bio) }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="md:flex items-center gap-10">
+                            <label class="md:w-32 text-right dark:text-white/80">Gender</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <select name="gender" class="!border-0 !rounded-md lg:w-1/2 w-full">
+                                    <option value="">Prefer not to say</option>
+                                    <option value="male"   @selected(old('gender', $user->gender) === 'male')>Male</option>
+                                    <option value="female" @selected(old('gender', $user->gender) === 'female')>Female</option>
+                                    <option value="other"  @selected(old('gender', $user->gender) === 'other')>Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="md:flex items-center gap-10">
+                            <label class="md:w-32 text-right dark:text-white/80">Relationship</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <select name="relationship_status" class="!border-0 !rounded-md lg:w-1/2 w-full">
+                                    <option value="">None</option>
+                                    <option value="single"       @selected(old('relationship_status', $user->relationship_status) === 'single')>Single</option>
+                                    <option value="relationship" @selected(old('relationship_status', $user->relationship_status) === 'relationship')>In a relationship</option>
+                                    <option value="married"      @selected(old('relationship_status', $user->relationship_status) === 'married')>Married</option>
+                                    <option value="engaged"      @selected(old('relationship_status', $user->relationship_status) === 'engaged')>Engaged</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="md:flex items-center gap-10">
-                        <label class="md:w-32 text-right dark:text-white/80">Email</label>
-                        <div class="flex-1 max-md:mt-4">
-                            <input type="text" placeholder="info@mydomain.com" class="w-full">
-                        </div>
+                    <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
+                        <a href="{{ route('settings') }}" class="button lg:px-6 bg-secondery max-md:flex-1">Cancel</a>
+                        <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
                     </div>
-
-                    <div class="md:flex items-start gap-10">
-                        <label class="md:w-32 text-right dark:text-white/80">Bio</label>
-                        <div class="flex-1 max-md:mt-4">
-                            <textarea class="w-full" rows="5" placeholder="Enter your Bio"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="md:flex items-center gap-10">
-                        <label class="md:w-32 text-right dark:text-white/80">Gender</label>
-                        <div class="flex-1 max-md:mt-4">
-                            <select class="!border-0 !rounded-md lg:w-1/2 w-full">
-                                <option value="1">Male</option>
-                                <option value="2">Female</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="md:flex items-center gap-10">
-                        <label class="md:w-32 text-right dark:text-white/80">Relationship</label>
-                        <div class="flex-1 max-md:mt-4">
-                            <select class="!border-0 !rounded-md lg:w-1/2 w-full">
-                                <option value="0">None</option>
-                                <option value="1">Single</option>
-                                <option value="2">In a relationship</option>
-                                <option value="3">Married</option>
-                                <option value="4">Engaged</option>
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="flex items-center gap-4 mt-16 lg:pl-[10.5rem]">
-                    <button type="button" class="button lg:px-6 bg-secondery max-md:flex-1">Cancel</button>
-                    <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
-                </div>
+                </form>
             </div>
 
             {{-- Tab 2: Social Links --}}
             <div>
-                <div class="max-w-md mx-auto">
-                    <div>
-                        <h4 class="text-xl font-medium text-black dark:text-white">Social Links</h4>
-                        <p class="mt-3 font-normal text-gray-600 dark:text-white/70">We may still send you important notifications about your account and content outside of your preferred notification settings.</p>
+                <form method="POST" action="{{ route('settings.social') }}">
+                    @csrf
+                    <input type="hidden" name="active_tab" value="1">
+
+                    <div class="max-w-md mx-auto">
+                        <div>
+                            <h4 class="text-xl font-medium text-black dark:text-white">Social Links</h4>
+                            <p class="mt-3 font-normal text-gray-600 dark:text-white/70">Add links to your social profiles so others can find you.</p>
+                        </div>
+
+                        <div class="space-y-6 mt-8">
+
+                            <div class="flex items-center gap-3">
+                                <div class="bg-blue-50 rounded-full p-2 flex">
+                                    <ion-icon name="logo-facebook" class="text-2xl text-blue-600"></ion-icon>
+                                </div>
+                                <div class="flex-1">
+                                    <input type="url" name="facebook_url" class="w-full"
+                                           value="{{ old('facebook_url', $user->facebook_url) }}"
+                                           placeholder="https://www.facebook.com/yourname">
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <div class="bg-pink-50 rounded-full p-2 flex">
+                                    <ion-icon name="logo-instagram" class="text-2xl text-pink-600"></ion-icon>
+                                </div>
+                                <div class="flex-1">
+                                    <input type="url" name="instagram_url" class="w-full"
+                                           value="{{ old('instagram_url', $user->instagram_url) }}"
+                                           placeholder="https://www.instagram.com/yourname">
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <div class="bg-sky-50 rounded-full p-2 flex">
+                                    <ion-icon name="logo-twitter" class="text-2xl text-sky-600"></ion-icon>
+                                </div>
+                                <div class="flex-1">
+                                    <input type="url" name="twitter_url" class="w-full"
+                                           value="{{ old('twitter_url', $user->twitter_url) }}"
+                                           placeholder="https://www.twitter.com/yourname">
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <div class="bg-red-50 rounded-full p-2 flex">
+                                    <ion-icon name="logo-youtube" class="text-2xl text-red-600"></ion-icon>
+                                </div>
+                                <div class="flex-1">
+                                    <input type="url" name="youtube_url" class="w-full"
+                                           value="{{ old('youtube_url', $user->youtube_url) }}"
+                                           placeholder="https://www.youtube.com/yourname">
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <div class="bg-slate-50 rounded-full p-2 flex">
+                                    <ion-icon name="logo-github" class="text-2xl text-black dark:text-white"></ion-icon>
+                                </div>
+                                <div class="flex-1">
+                                    <input type="url" name="github_url" class="w-full"
+                                           value="{{ old('github_url', $user->github_url) }}"
+                                           placeholder="https://www.github.com/yourname">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="flex items-center justify-center gap-4 mt-16">
+                            <a href="{{ route('settings') }}" class="button lg:px-6 bg-secondery max-md:flex-1">Cancel</a>
+                            <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
+                        </div>
                     </div>
-
-                    <div class="space-y-6 mt-8">
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-blue-50 rounded-full p-2 flex">
-                                <ion-icon name="logo-facebook" class="text-2xl text-blue-600"></ion-icon>
-                            </div>
-                            <div class="flex-1">
-                                <input type="text" class="w-full" placeholder="http://www.facebook.com/myname">
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-pink-50 rounded-full p-2 flex">
-                                <ion-icon name="logo-instagram" class="text-2xl text-pink-600"></ion-icon>
-                            </div>
-                            <div class="flex-1">
-                                <input type="text" class="w-full" placeholder="http://www.instagram.com/myname">
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-sky-50 rounded-full p-2 flex">
-                                <ion-icon name="logo-twitter" class="text-2xl text-sky-600"></ion-icon>
-                            </div>
-                            <div class="flex-1">
-                                <input type="text" class="w-full" placeholder="http://www.twitter.com/myname">
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-red-50 rounded-full p-2 flex">
-                                <ion-icon name="logo-youtube" class="text-2xl text-red-600"></ion-icon>
-                            </div>
-                            <div class="flex-1">
-                                <input type="text" class="w-full" placeholder="http://www.youtube.com/myname">
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="bg-slate-50 rounded-full p-2 flex">
-                                <ion-icon name="logo-github" class="text-2xl text-black dark:text-white"></ion-icon>
-                            </div>
-                            <div class="flex-1">
-                                <input type="text" class="w-full" placeholder="http://www.github.com/myname">
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="flex items-center justify-center gap-4 mt-16">
-                        <button type="button" class="button lg:px-6 bg-secondery max-md:flex-1">Cancel</button>
-                        <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
-                    </div>
-                </div>
+                </form>
             </div>
 
             {{-- Tab 3: Notifications (checkboxes) --}}
@@ -209,7 +277,7 @@
 
                 <div class="flex items-center justify-center gap-4 mt-16">
                     <button type="button" class="button lg:px-6 bg-secondery max-md:flex-1">Cancel</button>
-                    <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
+                    <button type="button" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
                 </div>
             </div>
 
@@ -255,7 +323,7 @@
 
                 <div class="flex items-center justify-center gap-4 mt-16">
                     <button type="button" class="button lg:px-6 bg-secondery max-md:flex-1">Cancel</button>
-                    <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
+                    <button type="button" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
                 </div>
             </div>
 
@@ -329,7 +397,7 @@
 
                 <div class="flex items-center justify-center gap-4 mt-16">
                     <button type="button" class="button lg:px-6 bg-secondery max-md:flex-1">Cancel</button>
-                    <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
+                    <button type="button" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
                 </div>
             </div>
 
@@ -394,53 +462,61 @@
 
                 <div class="flex items-center justify-center gap-4 mt-16">
                     <button type="button" class="button lg:px-6 bg-secondery max-md:flex-1">Cancel</button>
-                    <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
+                    <button type="button" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
                 </div>
             </div>
 
             {{-- Tab 7: Password --}}
             <div>
-                <div class="space-y-6 max-w-lg mx-auto">
+                <form method="POST" action="{{ route('settings.password') }}">
+                    @csrf
+                    <input type="hidden" name="active_tab" value="6">
 
-                    <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
-                        <label class="md:w-40 text-right dark:text-white/80">Current Password</label>
-                        <div class="flex-1 max-md:mt-4">
-                            <input type="password" placeholder="******" class="w-full">
+                    <div class="space-y-6 max-w-lg mx-auto">
+
+                        <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
+                            <label class="md:w-40 text-right dark:text-white/80">Current Password</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <input type="password" name="current_password" placeholder="******"
+                                       class="w-full @error('current_password') !border-red-400 @enderror">
+                            </div>
                         </div>
+
+                        <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
+                            <label class="md:w-40 text-right dark:text-white/80">New Password</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <input type="password" name="password" placeholder="Min 8 chars"
+                                       class="w-full @error('password') !border-red-400 @enderror">
+                            </div>
+                        </div>
+
+                        <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
+                            <label class="md:w-40 text-right dark:text-white/80">Repeat Password</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <input type="password" name="password_confirmation" placeholder="Repeat"
+                                       class="w-full">
+                            </div>
+                        </div>
+
+                        <hr class="border-gray-100 dark:border-gray-700">
+
+                        <div class="md:flex items-center gap-16 justify-between">
+                            <label class="md:w-40 text-right dark:text-white/80">Two-factor authentication</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <select class="w-full !border-0 !rounded-md">
+                                    <option value="1">Enable</option>
+                                    <option value="2">Disable</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
-                        <label class="md:w-40 text-right dark:text-white/80">New Password</label>
-                        <div class="flex-1 max-md:mt-4">
-                            <input type="password" placeholder="******" class="w-full">
-                        </div>
+                    <div class="flex items-center justify-center gap-4 mt-16">
+                        <a href="{{ route('settings') }}" class="button lg:px-6 bg-secondery max-md:flex-1">Cancel</a>
+                        <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
                     </div>
-
-                    <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
-                        <label class="md:w-40 text-right dark:text-white/80">Repeat Password</label>
-                        <div class="flex-1 max-md:mt-4">
-                            <input type="password" placeholder="******" class="w-full">
-                        </div>
-                    </div>
-
-                    <hr class="border-gray-100 dark:border-gray-700">
-
-                    <div class="md:flex items-center gap-16 justify-between">
-                        <label class="md:w-40 text-right dark:text-white/80">Two-factor authentication</label>
-                        <div class="flex-1 max-md:mt-4">
-                            <select class="w-full !border-0 !rounded-md">
-                                <option value="1">Enable</option>
-                                <option value="2">Disable</option>
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="flex items-center justify-center gap-4 mt-16">
-                    <button type="button" class="button lg:px-6 bg-secondery max-md:flex-1">Cancel</button>
-                    <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1">Save</button>
-                </div>
+                </form>
             </div>
 
         </div>
@@ -448,5 +524,14 @@
     </div>
 
 </div>
+
+@if($activeTab > 0)
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var el = document.getElementById('settings-switcher');
+    if (el) UIkit.switcher(el).show({{ $activeTab }});
+});
+</script>
+@endif
 
 @endsection

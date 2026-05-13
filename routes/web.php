@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SettingsController;
 
 // ── Auth (guest only) ──────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -28,5 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/blog',         [FeedController::class, 'blog'])->name('blog');
     Route::get('/blog-read',    [FeedController::class, 'blogRead'])->name('blog.read');
     Route::get('/profile',      [FeedController::class, 'profile'])->name('profile');
-    Route::get('/settings',     [FeedController::class, 'settings'])->name('settings');
+    Route::get('/settings',          [FeedController::class, 'settings'])->name('settings');
+    Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile');
+    Route::post('/settings/social',  [SettingsController::class, 'updateSocial'])->name('settings.social');
+    Route::post('/settings/password',[SettingsController::class, 'updatePassword'])->name('settings.password');
+    Route::post('/settings/avatar',  [SettingsController::class, 'updateAvatar'])->name('settings.avatar');
 });
