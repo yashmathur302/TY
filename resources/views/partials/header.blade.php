@@ -391,7 +391,7 @@
                                      class="w-10 h-10 rounded-full shadow object-cover">
                                 <div class="flex-1">
                                     <h4 class="text-sm font-medium text-black dark:text-white">{{ auth()->user()->name }}</h4>
-                                    <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">@{{ auth()->user()->username }}</div>
+                                    <div class="text-sm mt-1 text-blue-600 font-light dark:text-white/70">&#64;{{ auth()->user()->username ?? 'username' }}</div>
                                 </div>
                             </div>
                         </a>
