@@ -21,11 +21,8 @@
              uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100; repeat: true">
 
             {{-- Logo --}}
-            <a href="{{ route('feed') }}">
-                <img src="{{ asset('assets/images/logo.png') }}" class="w-28 absolute top-10 left-10 dark:hidden" alt="EduConnect">
-            </a>
-            <a href="{{ route('feed') }}">
-                <img src="{{ asset('assets/images/logo-light.png') }}" class="w-28 absolute top-10 left-10 hidden dark:!block" alt="EduConnect">
+            <a href="{{ route('login') }}" class="absolute top-10 left-10">
+                <span class="text-xl font-bold text-primary tracking-wide">EduConnect</span>
             </a>
 
             {{-- Title --}}
@@ -37,8 +34,18 @@
                 </p>
             </div>
 
+            {{-- Validation errors --}}
+            @if ($errors->any())
+            <div class="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg p-3 text-sm text-red-600 dark:text-red-400">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+            @endif
+
             {{-- Form --}}
-            <form method="POST" action="#" class="space-y-7 text-sm text-black font-medium dark:text-white"
+            <form method="POST" action="{{ route('register.post') }}"
+                  class="space-y-7 text-sm text-black font-medium dark:text-white"
                   uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100; repeat: true">
 
                 @csrf
@@ -49,8 +56,10 @@
                     <div>
                         <label for="first_name">First name</label>
                         <div class="mt-2.5">
-                            <input id="first_name" name="first_name" type="text" autofocus placeholder="First name" required
-                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+                            <input id="first_name" name="first_name" type="text" autofocus
+                                   value="{{ old('first_name') }}"
+                                   placeholder="First name" required
+                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5 @error('first_name') !border-red-400 @enderror">
                         </div>
                     </div>
 
@@ -58,8 +67,10 @@
                     <div>
                         <label for="last_name">Last name</label>
                         <div class="mt-2.5">
-                            <input id="last_name" name="last_name" type="text" placeholder="Last name" required
-                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+                            <input id="last_name" name="last_name" type="text"
+                                   value="{{ old('last_name') }}"
+                                   placeholder="Last name" required
+                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5 @error('last_name') !border-red-400 @enderror">
                         </div>
                     </div>
 
@@ -67,8 +78,10 @@
                     <div class="col-span-2">
                         <label for="email">Email address</label>
                         <div class="mt-2.5">
-                            <input id="email" name="email" type="email" placeholder="Email" required
-                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+                            <input id="email" name="email" type="email"
+                                   value="{{ old('email') }}"
+                                   placeholder="Email" required
+                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5 @error('email') !border-red-400 @enderror">
                         </div>
                     </div>
 
@@ -76,8 +89,8 @@
                     <div>
                         <label for="password">Password</label>
                         <div class="mt-2.5">
-                            <input id="password" name="password" type="password" placeholder="***"
-                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
+                            <input id="password" name="password" type="password" placeholder="Min 8 chars"
+                                   class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5 @error('password') !border-red-400 @enderror">
                         </div>
                     </div>
 
@@ -85,7 +98,7 @@
                     <div>
                         <label for="password_confirmation">Confirm Password</label>
                         <div class="mt-2.5">
-                            <input id="password_confirmation" name="password_confirmation" type="password" placeholder="***"
+                            <input id="password_confirmation" name="password_confirmation" type="password" placeholder="Repeat"
                                    class="!w-full !rounded-lg !bg-transparent !shadow-sm !border-slate-200 dark:!border-slate-800 dark:!bg-white/5">
                         </div>
                     </div>
@@ -93,7 +106,8 @@
                     {{-- Terms --}}
                     <div class="col-span-2">
                         <label class="inline-flex items-center" for="accept_terms">
-                            <input type="checkbox" id="accept_terms" name="accept_terms" class="!rounded-md">
+                            <input type="checkbox" id="accept_terms" name="accept_terms"
+                                   class="!rounded-md @error('accept_terms') !border-red-400 @enderror">
                             <span class="ml-2">You agree to our <a href="#" class="text-blue-700 hover:underline">terms of use</a></span>
                         </label>
                     </div>
@@ -142,13 +156,12 @@
                     <img src="https://picsum.photos/seed/register-slide1/1200/800"
                          alt="" class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
                     <div class="absolute bottom-0 w-full z-10">
-                        <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative"
-                             uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100; repeat: true">
+                        <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative">
                             <ion-icon name="planet-outline" class="text-5xl text-white"></ion-icon>
                             <h4 class="text-white text-2xl font-semibold mt-7"
                                 uk-slideshow-parallax="y: 600,0,0">Connect With Friends</h4>
                             <p class="text-white text-lg mt-7 leading-8"
-                               uk-slideshow-parallax="y: 800,0,0">This phrase is more casual and playful. It suggests that you are keeping your friends updated on what's happening in your life.</p>
+                               uk-slideshow-parallax="y: 800,0,0">Keep your friends updated on what's happening in your life.</p>
                         </div>
                     </div>
                     <div class="w-full h-96 bg-gradient-to-t from-black absolute bottom-0 left-0"></div>
@@ -158,13 +171,12 @@
                     <img src="https://picsum.photos/seed/register-slide2/1200/800"
                          alt="" class="w-full h-full object-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-center-left">
                     <div class="absolute bottom-0 w-full z-10">
-                        <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative"
-                             uk-scrollspy="target: > *; cls: uk-animation-scale-up; delay: 100; repeat: true">
+                        <div class="max-w-xl w-full mx-auto pb-32 px-5 z-30 relative">
                             <ion-icon name="planet-outline" class="text-5xl text-white"></ion-icon>
                             <h4 class="text-white text-2xl font-semibold mt-7"
                                 uk-slideshow-parallax="y: 800,0,0">Start Your Journey</h4>
                             <p class="text-white text-lg mt-7 leading-8"
-                               uk-slideshow-parallax="y: 800,0,0">Join thousands of people sharing their stories, ideas, and moments with the world.</p>
+                               uk-slideshow-parallax="y: 800,0,0">Join thousands of people sharing their stories and ideas.</p>
                         </div>
                     </div>
                     <div class="w-full h-96 bg-gradient-to-t from-black absolute bottom-0 left-0"></div>
@@ -172,7 +184,6 @@
 
             </ul>
 
-            {{-- Slideshow nav dots --}}
             <div class="flex justify-center">
                 <ul class="inline-flex flex-wrap justify-center absolute bottom-8 gap-1.5 uk-dotnav uk-slideshow-nav"></ul>
             </div>
