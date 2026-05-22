@@ -6,7 +6,7 @@
 
 @php
     $avatarUrl = $user->avatarUrl();
-    $coverUrl  = $user->cover_photo ? asset('storage/' . $user->cover_photo) : null;
+    $coverUrl  = $user->coverUrl();
     $relationLabels = [
         'single'          => 'Single',
         'in_relationship' => 'In a Relationship',
@@ -21,18 +21,22 @@
     <div class="bg-white shadow lg:rounded-b-2xl lg:-mt-10 dark:bg-dark2">
 
         {{-- Cover Image --}}
-        <div class="relative overflow-hidden w-full lg:h-72 h-48 @if(!$coverUrl) bg-gradient-to-br from-primary to-blue-700 @endif">
-            @if($coverUrl)
-            <img src="{{ $coverUrl }}" alt="Cover" class="h-full w-full object-cover inset-0">
-            @endif
-            <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-20 z-10"></div>
-            <div class="absolute bottom-0 right-0 m-4 z-20">
-                <div class="flex items-center gap-3">
-                    <button class="button bg-white/20 text-white flex items-center gap-2 backdrop-blur-small">Crop</button>
-                    <button class="button bg-black/10 text-white flex items-center gap-2 backdrop-blur-small">Edit</button>
+        <form method="POST" action="{{ route('settings.cover') }}" enctype="multipart/form-data" id="cover-upload-form">
+            @csrf
+            <div class="relative overflow-hidden w-full lg:h-72 h-48 @if(!$coverUrl) bg-gradient-to-br from-primary to-blue-700 @endif">
+                @if($coverUrl)
+                <img src="{{ $coverUrl }}" alt="Cover" class="h-full w-full object-cover inset-0">
+                @endif
+                <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-20 z-10"></div>
+                <div class="absolute bottom-0 right-0 m-4 z-20">
+                    <label for="cover-file-profile" class="button bg-black/10 text-white flex items-center gap-2 backdrop-blur-small cursor-pointer">
+                        <ion-icon name="camera-outline"></ion-icon> Edit Cover
+                    </label>
+                    <input id="cover-file-profile" name="cover" type="file" accept="image/*" class="hidden"
+                           onchange="document.getElementById('cover-upload-form').submit()">
                 </div>
             </div>
-        </div>
+        </form>
 
         {{-- User Info --}}
         <div class="p-3">

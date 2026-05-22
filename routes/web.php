@@ -34,4 +34,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings/social',  [SettingsController::class, 'updateSocial'])->name('settings.social');
     Route::post('/settings/password',[SettingsController::class, 'updatePassword'])->name('settings.password');
     Route::post('/settings/avatar',  [SettingsController::class, 'updateAvatar'])->name('settings.avatar');
+    Route::post('/settings/cover',   [SettingsController::class, 'updateCover'])->name('settings.cover');
 });

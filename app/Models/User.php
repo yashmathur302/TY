@@ -30,6 +30,11 @@ class User extends Authenticatable
             : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=0ea5e9&color=fff&size=200';
     }
 
+    public function coverUrl(): ?string
+    {
+        return $this->cover_photo ? asset($this->cover_photo) : null;
+    }
+
     protected $hidden = [
         'password',
         'remember_token',

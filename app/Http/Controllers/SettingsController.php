@@ -69,6 +69,27 @@ class SettingsController extends Controller
         return back()->with('success', 'Password updated successfully.')->with('active_tab', 6);
     }
 
+    private function storeUpload($file, string $folder): string
+    {
+        $dir = public_path('uploads/' . $folder);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+        $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
+        $file->move($dir, $filename);
+        return 'uploads/' . $folder . '/' . $filename;
+    }
+
+    private function deleteUpload(?string $path): void
+    {
+        if ($path && str_starts_with($path, 'uploads/')) {
+            $full = public_path($path);
+            if (file_exists($full)) {
+                unlink($full);
+            }
+        }
+    }
+
     public function updateAvatar(Request $request)
     {
         $request->validate([
@@ -76,27 +97,22 @@ class SettingsController extends Controller
         ]);
 
         $user = Auth::user();
-
-        // Delete old photo if stored in public/uploads
-        if ($user->profile_photo && str_starts_with($user->profile_photo, 'uploads/')) {
-            $oldPath = public_path($user->profile_photo);
-            if (file_exists($oldPath)) {
-                unlink($oldPath);
-            }
-        }
-
-        // Store directly in public/uploads/profile-photos/ — no symlink needed on cPanel
-        $uploadDir = public_path('uploads/profile-photos');
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
-        }
-
-        $file     = $request->file('avatar');
-        $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
-        $file->move($uploadDir, $filename);
-
-        $user->update(['profile_photo' => 'uploads/profile-photos/' . $filename]);
+        $this->deleteUpload($user->profile_photo);
+        $user->update(['profile_photo' => $this->storeUpload($request->file('avatar'), 'profile-photos')]);
 
         return back()->with('success', 'Profile photo updated.')->with('active_tab', 0);
+    }
+
+    public function updateCover(Request $request)
+    {
+        $request->validate([
+            'cover' => ['required', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
+        ]);
+
+        $user = Auth::user();
+        $this->deleteUpload($user->cover_photo);
+        $user->update(['cover_photo' => $this->storeUpload($request->file('cover'), 'cover-photos')]);
+
+        return back()->with('success', 'Cover photo updated.')->with('active_tab', 0);
     }
 }

@@ -12,35 +12,53 @@
 
 <div class="max-w-3xl mx-auto">
 
-    <div class="box relative rounded-lg shadow-md">
+    <div class="box relative rounded-lg shadow-md overflow-hidden">
+
+        {{-- Cover photo upload --}}
+        <form method="POST" action="{{ route('settings.cover') }}" enctype="multipart/form-data" id="cover-form">
+            @csrf
+            <label for="cover-file" class="cursor-pointer block relative lg:h-44 h-32 bg-gradient-to-br from-primary to-blue-700 overflow-hidden group">
+                @if($user->coverUrl())
+                <img src="{{ $user->coverUrl() }}" class="w-full h-full object-cover" alt="Cover photo">
+                @endif
+                <div class="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div class="flex items-center gap-2 text-white text-sm font-medium bg-black/40 px-4 py-2 rounded-full">
+                        <ion-icon name="camera-outline" class="text-xl"></ion-icon>
+                        Change Cover Photo
+                    </div>
+                </div>
+                <input id="cover-file" name="cover" type="file" accept="image/*" class="hidden"
+                       onchange="document.getElementById('cover-form').submit()">
+            </label>
+        </form>
 
         {{-- Profile header --}}
-        <div class="flex md:gap-8 gap-4 items-center md:p-8 p-6 md:pb-4">
+        <div class="flex md:gap-8 gap-4 items-center md:px-8 md:pb-6 px-6 pb-4 -mt-8 relative">
 
             {{-- Avatar upload form --}}
             <form method="POST" action="{{ route('settings.avatar') }}" enctype="multipart/form-data" id="avatar-form">
                 @csrf
-                <div class="relative md:w-20 md:h-20 w-12 h-12 shrink-0">
-                    <label for="avatar-file" class="cursor-pointer">
-                        <img src="{{ $avatarUrl }}" class="object-cover w-full h-full rounded-full" alt="{{ $user->name }}">
+                <div class="relative md:w-20 md:h-20 w-16 h-16 shrink-0">
+                    <label for="avatar-file" class="cursor-pointer block w-full h-full">
+                        <img src="{{ $avatarUrl }}" class="object-cover w-full h-full rounded-full ring-4 ring-white dark:ring-slate-800 shadow" alt="{{ $user->name }}">
                     </label>
-                    <label for="avatar-file" class="md:p-1 p-0.5 rounded-full bg-slate-600 md:border-4 border-white absolute -bottom-2 -right-2 cursor-pointer dark:border-slate-700">
+                    <label for="avatar-file" class="md:p-1 p-0.5 rounded-full bg-slate-600 md:border-4 border-2 border-white absolute -bottom-1 -right-1 cursor-pointer dark:border-slate-800">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="md:w-4 md:h-4 w-3 h-3 fill-white">
                             <path d="M12 9a3.75 3.75 0 100 7.5A3.75 3.75 0 0012 9z" />
                             <path fill-rule="evenodd" d="M9.344 3.071a49.52 49.52 0 015.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 01-3 3h-15a3 3 0 01-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 001.11-.71l.822-1.315a2.942 2.942 0 012.332-1.39zM6.75 12.75a5.25 5.25 0 1110.5 0 5.25 5.25 0 01-10.5 0zm12-1.5a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
                         </svg>
-                        <input id="avatar-file" name="avatar" type="file" class="hidden"
+                        <input id="avatar-file" name="avatar" type="file" accept="image/*" class="hidden"
                                onchange="document.getElementById('avatar-form').submit()">
                     </label>
                 </div>
             </form>
 
-            <div class="flex-1">
+            <div class="flex-1 pt-10">
                 <h3 class="md:text-xl text-base font-semibold text-black dark:text-white">{{ $user->name }}</h3>
-                <p class="text-sm text-blue-600 mt-1 font-normal">&#64;{{ $user->username ?? 'username' }}</p>
+                <p class="text-sm text-blue-600 mt-0.5 font-normal">&#64;{{ $user->username ?? 'username' }}</p>
             </div>
 
-            <button class="inline-flex items-center gap-1 py-1 pl-2.5 pr-3 rounded-full bg-slate-50 border-2 border-slate-100 dark:text-white dark:bg-slate-700" type="button">
+            <button class="inline-flex items-center gap-1 py-1 pl-2.5 pr-3 rounded-full bg-slate-50 border-2 border-slate-100 dark:text-white dark:bg-slate-700 self-end mb-1" type="button">
                 <ion-icon name="flash-outline" class="text-base"></ion-icon>
                 <span class="font-medium text-sm">Upgrade</span>
             </button>
