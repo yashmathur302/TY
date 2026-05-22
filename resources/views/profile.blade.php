@@ -108,63 +108,32 @@
 
                     {{-- Create Status Box --}}
                     <div class="bg-white rounded-xl shadow-sm p-4 space-y-4 text-sm font-medium border1 dark:bg-dark2">
-                        <div class="flex items-center gap-3">
+                        <div class="flex items-center md:gap-3 gap-1">
                             <img src="{{ $avatarUrl }}" alt="{{ $user->name }}" class="w-9 h-9 rounded-full object-cover shrink-0">
                             <div class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3" uk-toggle="target: #create-status">
                                 <div class="py-2.5 text-center dark:text-white">What do you have in mind?</div>
+                            </div>
+                            <div class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-xl transition-all bg-pink-100/60 hover:bg-pink-100 dark:bg-white/10 dark:hover:bg-white/20" uk-toggle="target: #create-status">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-pink-600 fill-pink-200/70" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M15 8h.01" />
+                                    <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
+                                    <path d="M3.5 15.5l4.5 -4.5c.928 -.893 2.072 -.893 3 0l5 5" />
+                                    <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l2.5 2.5" />
+                                </svg>
+                            </div>
+                            <div class="cursor-pointer hover:bg-opacity-80 p-1 px-1.5 rounded-xl transition-all bg-sky-100/60 hover:bg-sky-100 dark:bg-white/10 dark:hover:bg-white/20" uk-toggle="target: #create-status">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 stroke-sky-600 fill-sky-200/70" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z" />
+                                    <path d="M3 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
+                                </svg>
                             </div>
                         </div>
                     </div>
 
                     @forelse($posts as $post)
-                    <div class="bg-white rounded-xl shadow-sm text-sm font-medium border1 dark:bg-dark2">
-                        <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
-                            <img src="{{ $avatarUrl }}" alt="{{ $user->name }}" class="w-9 h-9 rounded-full object-cover">
-                            <div class="flex-1">
-                                <h4 class="text-black dark:text-white">{{ $user->name }}</h4>
-                                <div class="text-xs text-gray-500 dark:text-white/80">{{ $post->created_at->diffForHumans() }}</div>
-                            </div>
-                        </div>
-                        @if($post->content)
-                        <div class="sm:px-4 p-2.5 pt-0"><p class="font-normal">{{ $post->content }}</p></div>
-                        @endif
-                        @if($post->image)
-                        <div class="relative w-full lg:h-96 h-full sm:px-4">
-                            <img src="{{ asset($post->image) }}" alt="" class="sm:rounded-lg w-full h-full object-cover">
-                        </div>
-                        @endif
-                        <div class="sm:p-4 p-2.5 flex items-center gap-4 text-xs font-semibold">
-                            <div class="flex items-center gap-2.5">
-                                <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700"><ion-icon class="text-lg" name="heart-outline"></ion-icon></button>
-                                <span>{{ number_format($post->likes_count) }}</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700"><ion-icon class="text-lg" name="chatbubble-ellipses"></ion-icon></button>
-                                <span>{{ number_format($post->comments_count) }}</span>
-                            </div>
-                            <button type="button" class="button-icon ml-auto"><ion-icon class="text-xl" name="share-outline"></ion-icon></button>
-                        </div>
-                        @if($post->comments->count())
-                        <div class="sm:p-4 p-2.5 border-t border-gray-100 font-normal space-y-3 dark:border-slate-700/40">
-                            @foreach($post->comments as $comment)
-                            <div class="flex items-start gap-3">
-                                <img src="{{ $comment->user->avatarUrl() }}" class="w-6 h-6 mt-1 rounded-full object-cover" alt="">
-                                <div class="flex-1">
-                                    <span class="text-black font-medium dark:text-white">{{ $comment->user->name }}</span>
-                                    <p class="mt-0.5">{{ $comment->content }}</p>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                        @endif
-                        <div class="sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1 dark:border-slate-700/40">
-                            <img src="{{ $avatarUrl }}" class="w-6 h-6 rounded-full object-cover" alt="">
-                            <div class="flex-1 relative overflow-hidden h-10">
-                                <textarea placeholder="Add Comment...." rows="1" class="w-full resize-none !bg-transparent px-4 py-2 focus:!border-transparent focus:!ring-transparent"></textarea>
-                            </div>
-                            <button type="submit" class="text-sm rounded-full py-1.5 px-3.5 bg-secondery">Reply</button>
-                        </div>
-                    </div>
+                        @include('partials._post-card', ['post' => $post])
                     @empty
                     <div class="bg-white rounded-xl shadow-sm p-10 text-center border1 dark:bg-dark2">
                         <ion-icon name="camera-outline" class="text-5xl text-gray-300 dark:text-gray-600"></ion-icon>
@@ -625,42 +594,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-{{-- Create Status --}}
-<div class="hidden lg:p-20 uk-open" id="create-status" uk-modal="">
-    <div class="uk-modal-dialog relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[520px] w-full dark:bg-dark2">
-        <div class="text-center py-4 border-b mb-0 dark:border-slate-700">
-            <h2 class="text-sm font-medium text-black dark:text-white">Create Status</h2>
-            <button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
-        <div class="space-y-5 mt-3 p-2">
-            <textarea class="w-full !text-black placeholder:!text-black !bg-white !border-transparent focus:!border-transparent focus:!ring-transparent !font-normal !text-xl dark:!text-white dark:placeholder:!text-white dark:!bg-slate-800" rows="6" placeholder="What do you have in mind?"></textarea>
-        </div>
-        <div class="flex items-center gap-2 text-sm py-2 px-4 font-medium flex-wrap">
-            <button type="button" class="flex items-center gap-1.5 bg-sky-50 text-sky-600 rounded-full py-1 px-2 border-2 border-sky-100 dark:bg-sky-950 dark:border-sky-900">
-                <ion-icon name="image" class="text-base"></ion-icon> Image
-            </button>
-            <button type="button" class="flex items-center gap-1.5 bg-teal-50 text-teal-600 rounded-full py-1 px-2 border-2 border-teal-100 dark:bg-teal-950 dark:border-teal-900">
-                <ion-icon name="videocam" class="text-base"></ion-icon> Video
-            </button>
-            <button type="button" class="flex items-center gap-1.5 bg-orange-50 text-orange-600 rounded-full py-1 px-2 border-2 border-orange-100 dark:bg-yellow-950 dark:border-yellow-900">
-                <ion-icon name="happy" class="text-base"></ion-icon> Feeling
-            </button>
-            <button type="button" class="flex items-center gap-1.5 bg-red-50 text-red-600 rounded-full py-1 px-2 border-2 border-rose-100 dark:bg-rose-950 dark:border-rose-900">
-                <ion-icon name="location" class="text-base"></ion-icon> Check in
-            </button>
-        </div>
-        <div class="p-5 flex justify-between items-center">
-            <button class="inline-flex items-center py-1 px-2.5 gap-1 font-medium text-sm rounded-full bg-slate-50 border-2 border-slate-100 dark:text-white dark:bg-slate-700 dark:border-slate-600" type="button">
-                Everyone <ion-icon name="chevron-down-outline" class="text-base duration-500"></ion-icon>
-            </button>
-            <button type="button" class="button bg-blue-500 text-white py-2 px-12 text-[14px]">Create</button>
-        </div>
-    </div>
-</div>
+@include('partials._create-status-modal', ['modalRedirectTo' => 'profile'])
 
 {{-- Create Album Modal --}}
 <div class="hidden lg:p-20" id="create-album-modal" uk-modal="">
