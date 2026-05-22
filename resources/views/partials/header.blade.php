@@ -375,7 +375,7 @@
 
                     <!-- Profile Avatar -->
                     <div class="header-profile rounded-full relative bg-secondery cursor-pointer shrink-0">
-                        <img src="{{ auth()->user()->profile_photo ? asset('storage/' . auth()->user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=0ea5e9&color=fff&size=80' }}"
+                        <img src="{{ auth()->user()->avatarUrl() }}"
                              alt="{{ auth()->user()->name }}"
                              class="sm:w-9 sm:h-9 w-7 h-7 rounded-full shadow shrink-0 object-cover">
                     </div>
@@ -386,7 +386,7 @@
 
                         <a href="{{ route('profile') }}">
                             <div class="profile-dropdown-user p-4 py-5 flex items-center gap-4">
-                                <img src="{{ auth()->user()->profile_photo ? asset('storage/' . auth()->user()->profile_photo) : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=0ea5e9&color=fff&size=80' }}"
+                                <img src="{{ auth()->user()->avatarUrl() }}"
                                      alt="{{ auth()->user()->name }}"
                                      class="w-10 h-10 rounded-full shadow object-cover">
                                 <div class="flex-1">

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
@@ -78,12 +77,25 @@ class SettingsController extends Controller
 
         $user = Auth::user();
 
-        if ($user->profile_photo) {
-            Storage::disk('public')->delete($user->profile_photo);
+        // Delete old photo if stored in public/uploads
+        if ($user->profile_photo && str_starts_with($user->profile_photo, 'uploads/')) {
+            $oldPath = public_path($user->profile_photo);
+            if (file_exists($oldPath)) {
+                unlink($oldPath);
+            }
         }
 
-        $path = $request->file('avatar')->store('profile-photos', 'public');
-        $user->update(['profile_photo' => $path]);
+        // Store directly in public/uploads/profile-photos/ — no symlink needed on cPanel
+        $uploadDir = public_path('uploads/profile-photos');
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        $file     = $request->file('avatar');
+        $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
+        $file->move($uploadDir, $filename);
+
+        $user->update(['profile_photo' => 'uploads/profile-photos/' . $filename]);
 
         return back()->with('success', 'Profile photo updated.')->with('active_tab', 0);
     }

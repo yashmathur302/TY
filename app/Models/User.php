@@ -26,7 +26,7 @@ class User extends Authenticatable
     public function avatarUrl(): string
     {
         return $this->profile_photo
-            ? asset('storage/' . $this->profile_photo)
+            ? asset($this->profile_photo)
             : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=0ea5e9&color=fff&size=200';
     }
 
