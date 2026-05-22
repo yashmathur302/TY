@@ -58,7 +58,13 @@ class FeedController extends Controller
 
     public function profile()
     {
-        return view('profile');
+        $user  = auth()->user();
+        $posts = $user->posts()
+            ->with(['comments' => fn($q) => $q->with('user')->latest()->limit(2)])
+            ->latest()
+            ->get();
+
+        return view('profile', compact('user', 'posts'));
     }
 
     public function settings()

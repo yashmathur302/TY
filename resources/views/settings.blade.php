@@ -137,6 +137,46 @@
                         </div>
 
                         <div class="md:flex items-center gap-10">
+                            <label class="md:w-32 text-right dark:text-white/80">Location</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <input type="text" name="location"
+                                       value="{{ old('location', $user->location) }}"
+                                       placeholder="City, Country"
+                                       class="w-full @error('location') !border-red-400 @enderror">
+                            </div>
+                        </div>
+
+                        <div class="md:flex items-center gap-10">
+                            <label class="md:w-32 text-right dark:text-white/80">Work</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <input type="text" name="work"
+                                       value="{{ old('work', $user->work) }}"
+                                       placeholder="Where do you work?"
+                                       class="w-full @error('work') !border-red-400 @enderror">
+                            </div>
+                        </div>
+
+                        <div class="md:flex items-center gap-10">
+                            <label class="md:w-32 text-right dark:text-white/80">Education</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <input type="text" name="education"
+                                       value="{{ old('education', $user->education) }}"
+                                       placeholder="School or university"
+                                       class="w-full @error('education') !border-red-400 @enderror">
+                            </div>
+                        </div>
+
+                        <div class="md:flex items-center gap-10">
+                            <label class="md:w-32 text-right dark:text-white/80">Website</label>
+                            <div class="flex-1 max-md:mt-4">
+                                <input type="url" name="website"
+                                       value="{{ old('website', $user->website) }}"
+                                       placeholder="https://yoursite.com"
+                                       class="w-full @error('website') !border-red-400 @enderror">
+                            </div>
+                        </div>
+
+                        <div class="md:flex items-center gap-10">
                             <label class="md:w-32 text-right dark:text-white/80">Gender</label>
                             <div class="flex-1 max-md:mt-4">
                                 <select name="gender" class="!border-0 !rounded-md lg:w-1/2 w-full">
@@ -152,11 +192,11 @@
                             <label class="md:w-32 text-right dark:text-white/80">Relationship</label>
                             <div class="flex-1 max-md:mt-4">
                                 <select name="relationship_status" class="!border-0 !rounded-md lg:w-1/2 w-full">
-                                    <option value="">None</option>
-                                    <option value="single"       @selected(old('relationship_status', $user->relationship_status) === 'single')>Single</option>
-                                    <option value="relationship" @selected(old('relationship_status', $user->relationship_status) === 'relationship')>In a relationship</option>
-                                    <option value="married"      @selected(old('relationship_status', $user->relationship_status) === 'married')>Married</option>
-                                    <option value="engaged"      @selected(old('relationship_status', $user->relationship_status) === 'engaged')>Engaged</option>
+                                    <option value="none"            @selected(old('relationship_status', $user->relationship_status) === 'none')>None</option>
+                                    <option value="single"          @selected(old('relationship_status', $user->relationship_status) === 'single')>Single</option>
+                                    <option value="in_relationship" @selected(old('relationship_status', $user->relationship_status) === 'in_relationship')>In a relationship</option>
+                                    <option value="married"         @selected(old('relationship_status', $user->relationship_status) === 'married')>Married</option>
+                                    <option value="engaged"         @selected(old('relationship_status', $user->relationship_status) === 'engaged')>Engaged</option>
                                 </select>
                             </div>
                         </div>

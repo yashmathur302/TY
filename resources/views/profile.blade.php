@@ -1,8 +1,19 @@
 @extends('layouts.app')
 
-@section('title', 'Monroe Parker – Profile')
+@section('title', $user->name . ' – Profile')
 
 @section('content')
+
+@php
+    $avatarUrl = $user->avatarUrl();
+    $coverUrl  = $user->cover_photo ? asset('storage/' . $user->cover_photo) : null;
+    $relationLabels = [
+        'single'          => 'Single',
+        'in_relationship' => 'In a Relationship',
+        'married'         => 'Married',
+        'engaged'         => 'Engaged',
+    ];
+@endphp
 
 <div class="max-w-[1065px] mx-auto max-lg:-m-2.5">
 
@@ -10,8 +21,10 @@
     <div class="bg-white shadow lg:rounded-b-2xl lg:-mt-10 dark:bg-dark2">
 
         {{-- Cover Image --}}
-        <div class="relative overflow-hidden w-full lg:h-72 h-48">
-            <img src="https://picsum.photos/seed/profile-cover/1200/400" alt="Cover" class="h-full w-full object-cover inset-0">
+        <div class="relative overflow-hidden w-full lg:h-72 h-48 @if(!$coverUrl) bg-gradient-to-br from-primary to-blue-700 @endif">
+            @if($coverUrl)
+            <img src="{{ $coverUrl }}" alt="Cover" class="h-full w-full object-cover inset-0">
+            @endif
             <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-20 z-10"></div>
             <div class="absolute bottom-0 right-0 m-4 z-20">
                 <div class="flex items-center gap-3">
@@ -27,16 +40,21 @@
 
                 <div class="relative lg:h-48 lg:w-48 w-28 h-28 mb-4 z-10">
                     <div class="relative overflow-hidden rounded-full md:border-[6px] border-gray-100 shrink-0 dark:border-slate-900 shadow">
-                        <img src="https://i.pravatar.cc/200?img=6" alt="Monroe Parker" class="h-full w-full object-cover inset-0">
+                        <img src="{{ $avatarUrl }}" alt="{{ $user->name }}" class="h-full w-full object-cover inset-0">
                     </div>
-                    <button type="button" class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white shadow p-1.5 rounded-full sm:flex hidden">
+                    <a href="{{ route('settings') }}" class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white shadow p-1.5 rounded-full sm:flex hidden">
                         <ion-icon name="camera" class="text-2xl"></ion-icon>
-                    </button>
+                    </a>
                 </div>
 
-                <h3 class="md:text-3xl text-base font-bold text-black dark:text-white">Monroe Parker</h3>
-                <p class="mt-2 text-gray-500 dark:text-white/80">Family , Food , Fashion , Forever
-                    <a href="#" class="text-blue-500 ml-4 inline-block">Edit</a>
+                <h3 class="md:text-3xl text-base font-bold text-black dark:text-white">{{ $user->name }}</h3>
+                <p class="mt-2 text-gray-500 dark:text-white/80">
+                    @if($user->bio)
+                        {{ $user->bio }}
+                    @else
+                        <span class="italic text-gray-400">No bio yet.</span>
+                    @endif
+                    <a href="{{ route('settings') }}" class="text-blue-500 ml-4 inline-block">Edit</a>
                 </p>
 
             </div>
@@ -47,7 +65,8 @@
              uk-sticky="offset:50; cls-active: bg-white/80 shadow rounded-b-2xl z-50 backdrop-blur-xl dark:!bg-slate-700/80; animation:uk-animation-slide-top; media: 992">
 
             <div class="flex items-center gap-2 text-sm py-2 pr-1 max-md:w-full lg:order-2">
-                <button class="button bg-primary flex items-center gap-2 text-white py-2 px-3.5 max-md:flex-1">
+                <button class="button bg-primary flex items-center gap-2 text-white py-2 px-3.5 max-md:flex-1"
+                        uk-toggle="target: #create-status">
                     <ion-icon name="add-circle" class="text-xl"></ion-icon>
                     <span class="text-sm">Add Your Story</span>
                 </button>
@@ -60,12 +79,8 @@
                     </button>
                     <div class="w-[240px]" uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click; offset:10">
                         <nav>
-                            <a href="#"><ion-icon class="text-xl" name="pricetags-outline"></ion-icon> Unfollow</a>
-                            <a href="#"><ion-icon class="text-xl" name="time-outline"></ion-icon> Mute story</a>
                             <a href="#"><ion-icon class="text-xl" name="flag-outline"></ion-icon> Report</a>
                             <a href="#"><ion-icon class="text-xl" name="share-outline"></ion-icon> Share profile</a>
-                            <hr>
-                            <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50"><ion-icon class="text-xl" name="stop-circle-outline"></ion-icon> Block</a>
                         </nav>
                     </div>
                 </div>
@@ -73,26 +88,10 @@
 
             <nav class="flex gap-0.5 rounded-xl -mb-px text-gray-600 font-medium text-[15px] dark:text-white max-md:w-full max-md:overflow-x-auto">
                 <a href="#" class="inline-block py-3 leading-8 px-3.5 border-b-2 border-blue-600 text-blue-600">Timeline</a>
-                <a href="#" class="inline-block py-3 leading-8 px-3.5">Friend <span class="text-xs pl-2 font-normal lg:inline-block hidden">2,680</span></a>
+                <a href="#" class="inline-block py-3 leading-8 px-3.5">Friend <span class="text-xs pl-2 font-normal lg:inline-block hidden">{{ number_format($user->following_count) }}</span></a>
                 <a href="#" class="inline-block py-3 leading-8 px-3.5">Photo</a>
                 <a href="#" class="inline-block py-3 leading-8 px-3.5">Video</a>
                 <a href="#" class="inline-block py-3 leading-8 px-3.5">Group</a>
-                <div>
-                    <a href="#" class="inline-flex items-center gap-2 py-3 leading-8 px-3">
-                        More <ion-icon name="chevron-down"></ion-icon>
-                    </a>
-                    <div class="md:w-[240px] w-screen" uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click; offset:-4">
-                        <nav class="text-[15px]">
-                            <a href="#">Likes</a>
-                            <a href="#">Music</a>
-                            <a href="#">Events</a>
-                            <a href="#">Books</a>
-                            <a href="#">Reviews given</a>
-                            <a href="#">Groups</a>
-                            <a href="#">Manage Sections</a>
-                        </nav>
-                    </div>
-                </div>
             </nav>
 
         </div>
@@ -108,6 +107,7 @@
             {{-- Create Status Box --}}
             <div class="bg-white rounded-xl shadow-sm p-4 space-y-4 text-sm font-medium border1 dark:bg-dark2">
                 <div class="flex items-center gap-3">
+                    <img src="{{ $avatarUrl }}" alt="{{ $user->name }}" class="w-9 h-9 rounded-full object-cover shrink-0">
                     <div class="flex-1 bg-slate-100 hover:bg-opacity-80 transition-all rounded-lg cursor-pointer dark:bg-dark3" uk-toggle="target: #create-status">
                         <div class="py-2.5 text-center dark:text-white">What do you have in mind?</div>
                     </div>
@@ -129,203 +129,95 @@
                 </div>
             </div>
 
-            {{-- Image Post --}}
+            {{-- Posts --}}
+            @forelse($posts as $post)
             <div class="bg-white rounded-xl shadow-sm text-sm font-medium border1 dark:bg-dark2">
+
+                {{-- Post Header --}}
                 <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
-                    <a href="#"><img src="https://i.pravatar.cc/40?img=3" alt="Monroe Parker" class="w-9 h-9 rounded-full"></a>
+                    <a href="{{ route('profile') }}">
+                        <img src="{{ $avatarUrl }}" alt="{{ $user->name }}" class="w-9 h-9 rounded-full object-cover">
+                    </a>
                     <div class="flex-1">
-                        <a href="#"><h4 class="text-black dark:text-white">Monroe Parker</h4></a>
-                        <div class="text-xs text-gray-500 dark:text-white/80">2 hours ago</div>
+                        <a href="{{ route('profile') }}"><h4 class="text-black dark:text-white">{{ $user->name }}</h4></a>
+                        <div class="text-xs text-gray-500 dark:text-white/80">{{ $post->created_at->diffForHumans() }}</div>
                     </div>
                     <div class="-mr-1">
                         <button type="button" class="button-icon w-8 h-8"><ion-icon class="text-xl" name="ellipsis-horizontal"></ion-icon></button>
                         <div class="w-[245px]" uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click">
                             <nav>
                                 <a href="#"><ion-icon class="text-xl shrink-0" name="bookmark-outline"></ion-icon> Add to favorites</a>
-                                <a href="#"><ion-icon class="text-xl shrink-0" name="notifications-off-outline"></ion-icon> Mute Notification</a>
                                 <a href="#"><ion-icon class="text-xl shrink-0" name="flag-outline"></ion-icon> Report this post</a>
-                                <a href="#"><ion-icon class="text-xl shrink-0" name="share-outline"></ion-icon> Share your profile</a>
                                 <hr>
-                                <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50"><ion-icon class="text-xl shrink-0" name="stop-circle-outline"></ion-icon> Unfollow</a>
+                                <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50"><ion-icon class="text-xl shrink-0" name="trash-outline"></ion-icon> Delete</a>
                             </nav>
                         </div>
                     </div>
                 </div>
 
-                <div class="relative w-full lg:h-96 h-full sm:px-4">
-                    <img src="https://picsum.photos/seed/profile-post1/800/500" alt="" class="sm:rounded-lg w-full h-full object-cover">
-                </div>
-
-                <div class="sm:p-4 p-2.5 flex items-center gap-4 text-xs font-semibold">
-                    <div>
-                        <div class="flex items-center gap-2.5">
-                            <button type="button" class="button-icon text-red-500 bg-red-100 dark:bg-slate-700"><ion-icon class="text-lg" name="heart"></ion-icon></button>
-                            <a href="#">1,300</a>
-                        </div>
-                        <div class="p-1 px-2 bg-white rounded-full drop-shadow-md w-[212px] dark:bg-slate-700 text-2xl"
-                             uk-drop="offset:10; pos: top-left; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-bottom-left">
-                            <div class="flex gap-2" uk-scrollspy="target: > button; cls: uk-animation-scale-up; delay: 100; repeat: true">
-                                <button type="button" class="hover:scale-125 duration-300"><span>👍</span></button>
-                                <button type="button" class="hover:scale-125 duration-300"><span>❤️</span></button>
-                                <button type="button" class="hover:scale-125 duration-300"><span>😂</span></button>
-                                <button type="button" class="hover:scale-125 duration-300"><span>😯</span></button>
-                                <button type="button" class="hover:scale-125 duration-300"><span>😢</span></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700"><ion-icon class="text-lg" name="chatbubble-ellipses"></ion-icon></button>
-                        <span>260</span>
-                    </div>
-                    <button type="button" class="button-icon ml-auto"><ion-icon class="text-xl" name="paper-plane-outline"></ion-icon></button>
-                    <button type="button" class="button-icon"><ion-icon class="text-xl" name="share-outline"></ion-icon></button>
-                </div>
-
-                <div class="sm:p-4 p-2.5 border-t border-gray-100 font-normal space-y-3 relative dark:border-slate-700/40">
-                    <div class="flex items-start gap-3 relative">
-                        <a href="#"><img src="https://i.pravatar.cc/24?img=2" alt="" class="w-6 h-6 mt-1 rounded-full"></a>
-                        <div class="flex-1">
-                            <a href="#" class="text-black font-medium inline-block dark:text-white">Steeve</a>
-                            <p class="mt-0.5">What a beautiful photo! I love it. 😍</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-3 relative">
-                        <a href="#"><img src="https://i.pravatar.cc/24?img=3" alt="" class="w-6 h-6 mt-1 rounded-full"></a>
-                        <div class="flex-1">
-                            <a href="#" class="text-black font-medium inline-block dark:text-white">Monroe</a>
-                            <p class="mt-0.5">You captured the moment. 😎</p>
-                        </div>
-                    </div>
-                    <button type="button" class="flex items-center gap-1.5 text-gray-500 hover:text-blue-500 mt-2">
-                        <ion-icon name="chevron-down-outline" class="ml-auto duration-200"></ion-icon>
-                        More Comment
-                    </button>
-                </div>
-
-                <div class="sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1 dark:border-slate-700/40">
-                    <img src="https://i.pravatar.cc/24?img=7" alt="" class="w-6 h-6 rounded-full">
-                    <div class="flex-1 relative overflow-hidden h-10">
-                        <textarea placeholder="Add Comment...." rows="1" class="w-full resize-none !bg-transparent px-4 py-2 focus:!border-transparent focus:!ring-transparent"></textarea>
-                        <div class="!top-2 pr-2" uk-drop="pos: bottom-right; mode: click">
-                            <div class="flex items-center gap-2" uk-scrollspy="target: > svg; cls: uk-animation-slide-right-small; delay: 100; repeat: true">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 fill-sky-600">
-                                    <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd"></path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 fill-pink-600">
-                                    <path d="M3.25 4A2.25 2.25 0 001 6.25v7.5A2.25 2.25 0 003.25 16h7.5A2.25 2.25 0 0013 13.75v-7.5A2.25 2.25 0 0010.75 4h-7.5zM19 4.75a.75.75 0 00-1.28-.53l-3 3a.75.75 0 00-.22.53v4.5c0 .199.079.39.22.53l3 3a.75.75 0 001.28-.53V4.75z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="text-sm rounded-full py-1.5 px-3.5 bg-secondery">Reply</button>
-                </div>
-            </div>
-
-            {{-- Text Post --}}
-            <div class="bg-white rounded-xl shadow-sm text-sm font-medium border1 dark:bg-dark2">
-                <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
-                    <a href="#"><img src="https://i.pravatar.cc/40?img=5" alt="John Michael" class="w-9 h-9 rounded-full"></a>
-                    <div class="flex-1">
-                        <a href="#"><h4 class="text-black dark:text-white">John Michael</h4></a>
-                        <div class="text-xs text-gray-500 dark:text-white/80">2 hours ago</div>
-                    </div>
-                    <div class="-mr-1">
-                        <button type="button" class="button-icon w-8 h-8"><ion-icon class="text-xl" name="ellipsis-horizontal"></ion-icon></button>
-                        <div class="w-[245px]" uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true; mode: click">
-                            <nav>
-                                <a href="#"><ion-icon class="text-xl shrink-0" name="bookmark-outline"></ion-icon> Add to favorites</a>
-                                <a href="#"><ion-icon class="text-xl shrink-0" name="notifications-off-outline"></ion-icon> Mute Notification</a>
-                                <a href="#"><ion-icon class="text-xl shrink-0" name="flag-outline"></ion-icon> Report this post</a>
-                                <a href="#"><ion-icon class="text-xl shrink-0" name="share-outline"></ion-icon> Share your profile</a>
-                                <hr>
-                                <a href="#" class="text-red-400 hover:!bg-red-50 dark:hover:!bg-red-500/50"><ion-icon class="text-xl shrink-0" name="stop-circle-outline"></ion-icon> Unfollow</a>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-
+                {{-- Post Content --}}
+                @if($post->content)
                 <div class="sm:px-4 p-2.5 pt-0">
-                    <p class="font-normal">Photography is the art of capturing light with a camera. It can be used to create images that tell stories, express emotions, or document reality. It can be fun, challenging, or rewarding. It can also be a hobby, a profession, or a passion. 📷</p>
+                    <p class="font-normal">{{ $post->content }}</p>
                 </div>
+                @endif
 
+                {{-- Post Image --}}
+                @if($post->image)
+                <div class="relative w-full lg:h-96 h-full sm:px-4">
+                    <img src="{{ asset('storage/' . $post->image) }}" alt="" class="sm:rounded-lg w-full h-full object-cover">
+                </div>
+                @endif
+
+                {{-- Post Actions --}}
                 <div class="sm:p-4 p-2.5 flex items-center gap-4 text-xs font-semibold">
                     <div>
                         <div class="flex items-center gap-2.5">
-                            <button type="button" class="button-icon text-red-500 bg-red-100 dark:bg-slate-700"><ion-icon class="text-lg" name="heart"></ion-icon></button>
-                            <a href="#">1,300</a>
-                        </div>
-                        <div class="p-1 px-2 bg-white rounded-full drop-shadow-md w-[212px] dark:bg-slate-700 text-2xl"
-                             uk-drop="offset:10; pos: top-left; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-bottom-left">
-                            <div class="flex gap-2" uk-scrollspy="target: > button; cls: uk-animation-scale-up; delay: 100; repeat: true">
-                                <button type="button" class="hover:scale-125 duration-300"><span>👍</span></button>
-                                <button type="button" class="hover:scale-125 duration-300"><span>❤️</span></button>
-                                <button type="button" class="hover:scale-125 duration-300"><span>😂</span></button>
-                                <button type="button" class="hover:scale-125 duration-300"><span>😯</span></button>
-                                <button type="button" class="hover:scale-125 duration-300"><span>😢</span></button>
-                            </div>
+                            <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700"><ion-icon class="text-lg" name="heart-outline"></ion-icon></button>
+                            <span>{{ number_format($post->likes_count) }}</span>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
                         <button type="button" class="button-icon bg-slate-200/70 dark:bg-slate-700"><ion-icon class="text-lg" name="chatbubble-ellipses"></ion-icon></button>
-                        <span>260</span>
+                        <span>{{ number_format($post->comments_count) }}</span>
                     </div>
                     <button type="button" class="button-icon ml-auto"><ion-icon class="text-xl" name="paper-plane-outline"></ion-icon></button>
                     <button type="button" class="button-icon"><ion-icon class="text-xl" name="share-outline"></ion-icon></button>
                 </div>
 
+                {{-- Comments --}}
+                @if($post->comments->count())
                 <div class="sm:p-4 p-2.5 border-t border-gray-100 font-normal space-y-3 relative dark:border-slate-700/40">
-                    @foreach([
-                        ['av' => 2, 'name' => 'Steeve',  'text' => 'I love taking photos of nature and animals. 🌳🐶'],
-                        ['av' => 3, 'name' => 'Monroe',  'text' => 'I enjoy people and emotions. 😊😢'],
-                        ['av' => 5, 'name' => 'Jesse',   'text' => 'Photography is my passion. 🎨📸'],
-                    ] as $c)
+                    @foreach($post->comments as $comment)
                     <div class="flex items-start gap-3 relative">
-                        <a href="#"><img src="https://i.pravatar.cc/24?img={{ $c['av'] }}" alt="" class="w-6 h-6 mt-1 rounded-full"></a>
+                        <a href="#">
+                            <img src="{{ $comment->user->avatarUrl() }}" alt="{{ $comment->user->name }}" class="w-6 h-6 mt-1 rounded-full object-cover">
+                        </a>
                         <div class="flex-1">
-                            <a href="#" class="text-black font-medium inline-block dark:text-white">{{ $c['name'] }}</a>
-                            <p class="mt-0.5">{{ $c['text'] }}</p>
+                            <a href="#" class="text-black font-medium inline-block dark:text-white">{{ $comment->user->name }}</a>
+                            <p class="mt-0.5">{{ $comment->content }}</p>
                         </div>
                     </div>
                     @endforeach
                 </div>
+                @endif
 
+                {{-- Comment Input --}}
                 <div class="sm:px-4 sm:py-3 p-2.5 border-t border-gray-100 flex items-center gap-1 dark:border-slate-700/40">
-                    <img src="https://i.pravatar.cc/24?img=7" alt="" class="w-6 h-6 rounded-full">
+                    <img src="{{ $avatarUrl }}" alt="{{ $user->name }}" class="w-6 h-6 rounded-full object-cover">
                     <div class="flex-1 relative overflow-hidden h-10">
                         <textarea placeholder="Add Comment...." rows="1" class="w-full resize-none !bg-transparent px-4 py-2 focus:!border-transparent focus:!ring-transparent"></textarea>
-                        <div class="!top-2 pr-2 uk-drop" uk-drop="pos: bottom-right; mode: click">
-                            <div class="flex items-center gap-2" uk-scrollspy="target: > svg; cls: uk-animation-slide-right-small; delay: 100; repeat: true">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 fill-sky-600">
-                                    <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd"></path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 fill-pink-600">
-                                    <path d="M3.25 4A2.25 2.25 0 001 6.25v7.5A2.25 2.25 0 003.25 16h7.5A2.25 2.25 0 0013 13.75v-7.5A2.25 2.25 0 0010.75 4h-7.5zM19 4.75a.75.75 0 00-1.28-.53l-3 3a.75.75 0 00-.22.53v4.5c0 .199.079.39.22.53l3 3a.75.75 0 001.28-.53V4.75z"></path>
-                                </svg>
-                            </div>
-                        </div>
                     </div>
                     <button type="submit" class="text-sm rounded-full py-1.5 px-3.5 bg-secondery">Reply</button>
                 </div>
-            </div>
 
-            {{-- Skeleton Placeholder --}}
-            <div class="rounded-xl shadow-sm p-4 space-y-4 bg-slate-200/40 animate-pulse border1 dark:bg-dark2">
-                <div class="flex gap-3">
-                    <div class="w-9 h-9 rounded-full bg-slate-300/20"></div>
-                    <div class="flex-1 space-y-3">
-                        <div class="w-40 h-5 rounded-md bg-slate-300/20"></div>
-                        <div class="w-24 h-4 rounded-md bg-slate-300/20"></div>
-                    </div>
-                    <div class="w-6 h-6 rounded-full bg-slate-300/20"></div>
-                </div>
-                <div class="w-full h-52 rounded-lg bg-slate-300/10 my-3"></div>
-                <div class="flex gap-3">
-                    <div class="w-16 h-5 rounded-md bg-slate-300/20"></div>
-                    <div class="w-14 h-5 rounded-md bg-slate-300/20"></div>
-                    <div class="w-6 h-6 rounded-full bg-slate-300/20 ml-auto"></div>
-                    <div class="w-6 h-6 rounded-full bg-slate-300/20"></div>
-                </div>
             </div>
+            @empty
+            <div class="bg-white rounded-xl shadow-sm p-8 text-center border1 dark:bg-dark2">
+                <ion-icon name="camera-outline" class="text-5xl text-gray-300 dark:text-gray-600"></ion-icon>
+                <p class="mt-3 text-gray-500 dark:text-white/60 font-normal">No posts yet. Share what's on your mind!</p>
+            </div>
+            @endforelse
 
         </div>
 
@@ -338,135 +230,102 @@
                 <div class="box p-5 px-6">
                     <div class="flex items-center justify-between text-black dark:text-white">
                         <h3 class="font-bold text-lg">Intro</h3>
-                        <a href="#" class="text-sm text-blue-500">Edit</a>
+                        <a href="{{ route('settings') }}" class="text-sm text-blue-500">Edit</a>
                     </div>
 
                     <ul class="text-gray-700 space-y-4 mt-4 text-sm dark:text-white/80">
+
+                        @if($user->location)
                         <li class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 shrink-0">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                             </svg>
-                            <div>Live In <span class="font-semibold text-black dark:text-white">Cairo, Egypt</span></div>
+                            <div>Live In <span class="font-semibold text-black dark:text-white">{{ $user->location }}</span></div>
                         </li>
+                        @endif
+
+                        @if($user->education)
                         <li class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 shrink-0">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
                             </svg>
-                            <div>Studied at <span class="font-semibold text-black dark:text-white">University of Turkey</span></div>
+                            <div>Studied at <span class="font-semibold text-black dark:text-white">{{ $user->education }}</span></div>
                         </li>
+                        @endif
+
+                        @if($user->work)
                         <li class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 shrink-0">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
                             </svg>
-                            <div>Works at <span class="font-semibold text-black dark:text-white">Envanto Market</span></div>
+                            <div>Works at <span class="font-semibold text-black dark:text-white">{{ $user->work }}</span></div>
                         </li>
+                        @endif
+
+                        @if($user->relationship_status && $user->relationship_status !== 'none' && isset($relationLabels[$user->relationship_status]))
                         <li class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 shrink-0">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                             </svg>
-                            <div>In <span class="font-semibold text-black dark:text-white">Relationship</span></div>
+                            <div><span class="font-semibold text-black dark:text-white">{{ $relationLabels[$user->relationship_status] }}</span></div>
                         </li>
+                        @endif
+
                         <li class="flex items-center gap-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 shrink-0">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12.75 19.5v-.75a7.5 7.5 0 00-7.5-7.5H4.5m0-6.75h.75c7.87 0 14.25 6.38 14.25 14.25v.75M6 18.75a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                             </svg>
-                            <div>Followed By <span class="font-semibold text-black dark:text-white">3,240 People</span></div>
+                            <div>Followed By <span class="font-semibold text-black dark:text-white">{{ number_format($user->followers_count) }} People</span></div>
                         </li>
+
+                        @if($user->website)
+                        <li class="flex items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 shrink-0">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                            </svg>
+                            <div><a href="{{ $user->website }}" target="_blank" class="font-semibold text-blue-500">{{ $user->website }}</a></div>
+                        </li>
+                        @endif
+
                     </ul>
 
-                    <div class="flex flex-wrap gap-1 text-sm mt-4 font-semibold capitalize">
-                        @foreach(['Shopping', 'Code', 'Art', 'Design'] as $hobby)
-                        <div class="inline-flex items-center gap-2 py-0.5 px-2.5 border shadow rounded-full border-gray-100">{{ $hobby }}</div>
+                    {{-- Social Links --}}
+                    @php
+                        $socials = array_filter([
+                            'logo-facebook'  => $user->facebook_url,
+                            'logo-instagram' => $user->instagram_url,
+                            'logo-twitter'   => $user->twitter_url,
+                            'logo-youtube'   => $user->youtube_url,
+                            'logo-github'    => $user->github_url,
+                        ]);
+                    @endphp
+                    @if(count($socials))
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        @foreach($socials as $icon => $url)
+                        <a href="{{ $url }}" target="_blank" class="flex items-center justify-center w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-700 hover:opacity-80">
+                            <ion-icon name="{{ $icon }}" class="text-lg"></ion-icon>
+                        </a>
                         @endforeach
                     </div>
+                    @endif
 
-                    <div class="grid grid-cols-2 gap-1 text-center text-sm mt-4 mb-2 rounded-lg overflow-hidden">
-                        @foreach([5, 7, 4, 6] as $img)
-                        <div class="relative w-full aspect-[4/3]">
-                            <img src="https://i.pravatar.cc/200?img={{ $img }}" alt="" class="object-cover w-full h-full inset-0">
-                        </div>
-                        @endforeach
-                    </div>
+                    @if(!$user->location && !$user->education && !$user->work && !$user->bio)
+                    <p class="text-sm text-gray-400 dark:text-white/40 mt-4 font-normal italic">
+                        Fill in your info in <a href="{{ route('settings') }}" class="text-blue-500 not-italic">Account Settings</a>.
+                    </p>
+                    @endif
                 </div>
 
                 {{-- Friends Box --}}
                 <div class="box p-5 px-6">
                     <div class="flex items-center justify-between text-black dark:text-white">
                         <h3 class="font-bold text-lg">Friends
-                            <span class="block text-sm text-gray-500 font-normal dark:text-white">3,489 Friends</span>
+                            <span class="block text-sm text-gray-500 font-normal dark:text-white">{{ number_format($user->following_count) }} Friends</span>
                         </h3>
                         <a href="#" class="text-sm text-blue-500">Find Friend</a>
                     </div>
-                    <div class="grid grid-cols-3 gap-2 gap-y-5 text-center text-sm mt-4 mb-2">
-                        @foreach([
-                            ['img' => 7, 'name' => 'Jesse Steeve'],
-                            ['img' => 2, 'name' => 'John Michael'],
-                            ['img' => 3, 'name' => 'Monroe Parker'],
-                            ['img' => 4, 'name' => 'Martin Gray'],
-                            ['img' => 5, 'name' => 'James Lewis'],
-                            ['img' => 6, 'name' => 'Alexa Stella'],
-                        ] as $friend)
-                        <div>
-                            <div class="relative w-full aspect-square rounded-lg overflow-hidden">
-                                <img src="https://i.pravatar.cc/100?img={{ $friend['img'] }}" alt="{{ $friend['name'] }}" class="object-cover w-full h-full inset-0">
-                            </div>
-                            <div class="mt-2 line-clamp-1">{{ $friend['name'] }}</div>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                {{-- Suggested (rounded avatars) --}}
-                <div class="box p-5 px-6 dark:bg-dark2">
-                    <div class="flex items-baseline justify-between text-black dark:text-white">
-                        <h3 class="font-bold text-base">Suggested People</h3>
-                        <a href="#" class="text-sm text-blue-500">See all</a>
-                    </div>
-                    <div class="side-list">
-                        @foreach([
-                            ['img' => 2, 'name' => 'John Michael',  'sub' => 'Updated 6 day ago'],
-                            ['img' => 4, 'name' => 'Martin Gray',   'sub' => 'Updated 2 month ago'],
-                            ['img' => 3, 'name' => 'Monroe Parker', 'sub' => 'Updated 1 week ago'],
-                            ['img' => 1, 'name' => 'Jesse Steeve',  'sub' => 'Updated 2 day ago'],
-                        ] as $s)
-                        <div class="side-list-item">
-                            <a href="#"><img src="https://i.pravatar.cc/40?img={{ $s['img'] }}" alt="{{ $s['name'] }}" class="side-list-image rounded-full"></a>
-                            <div class="flex-1">
-                                <a href="#"><h4 class="side-list-title">{{ $s['name'] }}</h4></a>
-                                <div class="side-list-info">{{ $s['sub'] }}</div>
-                            </div>
-                            <button class="button bg-primary-soft dark:text-white">Follow</button>
-                        </div>
-                        @endforeach
-                    </div>
-                    <button class="bg-secondery w-full text-black py-1.5 font-medium px-3.5 rounded-md text-sm mt-2 dark:text-white">See all</button>
-                </div>
-
-                {{-- Suggested Groups (square thumbnails) --}}
-                <div class="box p-5 px-6 dark:bg-dark2">
-                    <div class="flex items-baseline justify-between text-black dark:text-white">
-                        <h3 class="font-bold text-base">Suggested Groups</h3>
-                        <a href="#" class="text-sm text-blue-500">See all</a>
-                    </div>
-                    <div class="side-list">
-                        @foreach([
-                            ['seed' => 'sg-1', 'name' => 'Graphic Design',  'sub' => 'Updated 1 week ago'],
-                            ['seed' => 'sg-2', 'name' => 'Delicious Foods', 'sub' => 'Updated 4 week ago'],
-                            ['seed' => 'sg-3', 'name' => 'Abstract Minimal','sub' => 'Updated 2 month ago'],
-                        ] as $g)
-                        <div class="side-list-item">
-                            <a href="{{ route('group.detail') }}">
-                                <img src="https://picsum.photos/seed/{{ $g['seed'] }}/40/40" alt="{{ $g['name'] }}" class="side-list-image rounded-md">
-                            </a>
-                            <div class="flex-1">
-                                <a href="{{ route('group.detail') }}"><h4 class="side-list-title">{{ $g['name'] }}</h4></a>
-                                <div class="side-list-info">{{ $g['sub'] }}</div>
-                            </div>
-                            <button class="button bg-primary text-white">Join</button>
-                        </div>
-                        @endforeach
-                    </div>
+                    <p class="text-sm text-gray-400 dark:text-white/40 mt-4 font-normal">Friends will appear here.</p>
                 </div>
 
             </div>
@@ -504,9 +363,6 @@
             </button>
             <button type="button" class="flex items-center gap-1.5 bg-red-50 text-red-600 rounded-full py-1 px-2 border-2 border-rose-100 dark:bg-rose-950 dark:border-rose-900">
                 <ion-icon name="location" class="text-base"></ion-icon> Check in
-            </button>
-            <button type="button" class="grid place-items-center w-8 h-8 text-xl rounded-full bg-secondery">
-                <ion-icon name="ellipsis-horizontal"></ion-icon>
             </button>
         </div>
         <div class="p-5 flex justify-between items-center">

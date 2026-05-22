@@ -19,11 +19,19 @@ class SettingsController extends Controller
             'username'            => ['required', 'string', 'max:50', Rule::unique('users')->ignore($user->id)],
             'email'               => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'bio'                 => ['nullable', 'string', 'max:1000'],
+            'location'            => ['nullable', 'string', 'max:255'],
+            'work'                => ['nullable', 'string', 'max:255'],
+            'education'           => ['nullable', 'string', 'max:255'],
+            'website'             => ['nullable', 'url', 'max:255'],
             'gender'              => ['nullable', 'in:male,female,other'],
-            'relationship_status' => ['nullable', 'in:single,relationship,married,engaged'],
+            'relationship_status' => ['nullable', 'in:none,single,in_relationship,married,engaged'],
         ]);
 
-        $user->update($request->only(['name', 'username', 'email', 'bio', 'gender', 'relationship_status']));
+        $user->update($request->only([
+            'name', 'username', 'email', 'bio',
+            'location', 'work', 'education', 'website',
+            'gender', 'relationship_status',
+        ]));
 
         return back()->with('success', 'Profile updated successfully.')->with('active_tab', 0);
     }
