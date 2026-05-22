@@ -8,6 +8,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\PostController;
 
 // ── Auth (guest only) ──────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -39,6 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings/password',[SettingsController::class, 'updatePassword'])->name('settings.password');
     Route::post('/settings/avatar',  [SettingsController::class, 'updateAvatar'])->name('settings.avatar');
     Route::post('/settings/cover',   [SettingsController::class, 'updateCover'])->name('settings.cover');
+
+    // Posts
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
     // Groups / Events / Blog create
     Route::post('/groups',               [GroupController::class, 'store'])->name('groups.store');

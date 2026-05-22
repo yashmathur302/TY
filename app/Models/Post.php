@@ -8,7 +8,8 @@ class Post extends Model
 {
     protected $fillable = [
         'user_id', 'content', 'image', 'video',
-        'feeling', 'privacy', 'likes_count', 'comments_count', 'shares_count',
+        'feeling', 'location', 'privacy',
+        'likes_count', 'comments_count', 'shares_count',
     ];
 
     public function user()

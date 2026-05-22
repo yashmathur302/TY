@@ -11,7 +11,12 @@ class FeedController extends Controller
 {
     public function index()
     {
-        return view('feed');
+        $posts = \App\Models\Post::with([
+            'user',
+            'comments' => fn($q) => $q->with('user')->latest()->limit(2),
+        ])->latest()->paginate(15);
+
+        return view('feed', compact('posts'));
     }
 
     public function messages()
