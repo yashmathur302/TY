@@ -1104,6 +1104,29 @@ html:not(.dark) .card-title { color: #111827 !important; }
     border-bottom-color: #ffffff;
 }
 
+/* Profile page tab navigation */
+.profile-tab-nav li a {
+    display: inline-block;
+    padding: 0.75rem 0.875rem;
+    line-height: 2rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #4b5563;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+}
+.dark .profile-tab-nav li a {
+    color: rgba(255,255,255,0.8);
+}
+.profile-tab-nav li a:hover {
+    color: #0ea5e9;
+}
+.profile-tab-nav li.uk-active a {
+    color: #0ea5e9;
+    border-bottom-color: #0ea5e9;
+}
+
 /* -----------------------------------------
    15. Modals
 ----------------------------------------- */

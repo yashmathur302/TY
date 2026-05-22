@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Group;
+use App\Models\Event;
+use App\Models\BlogPost;
 
 class FeedController extends Controller
 {
@@ -58,13 +61,34 @@ class FeedController extends Controller
 
     public function profile()
     {
-        $user  = auth()->user();
-        $posts = $user->posts()
-            ->with(['comments' => fn($q) => $q->with('user')->latest()->limit(2)])
-            ->latest()
-            ->get();
+        $user = auth()->user();
 
-        return view('profile', compact('user', 'posts'));
+        $posts  = $user->posts()
+            ->with(['comments' => fn($q) => $q->with('user')->latest()->limit(2)])
+            ->latest()->get();
+
+        $photos = $user->posts()->whereNotNull('image')->latest()->get();
+        $videos = $user->posts()->whereNotNull('video')->latest()->get();
+
+        $myGroups     = Group::where('created_by', $user->id)->latest()->get();
+        $joinedGroups = $user->joinedGroups()
+            ->where('created_by', '!=', $user->id)->latest()->get();
+
+        $myEvents     = Event::where('created_by', $user->id)->latest()->get();
+        $otherEvents  = $user->attendingEvents()
+            ->where('created_by', '!=', $user->id)->latest()->get();
+
+        $myBlogs      = BlogPost::where('user_id', $user->id)->latest()->get();
+
+        $followers    = $user->followers()->latest()->limit(12)->get();
+        $following    = $user->following()->latest()->limit(12)->get();
+
+        return view('profile', compact(
+            'user', 'posts', 'photos', 'videos',
+            'myGroups', 'joinedGroups',
+            'myEvents', 'otherEvents',
+            'myBlogs', 'followers', 'following'
+        ));
     }
 
     public function settings()

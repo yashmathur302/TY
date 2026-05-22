@@ -23,6 +23,42 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function createdGroups()
+    {
+        return $this->hasMany(Group::class, 'created_by');
+    }
+
+    public function joinedGroups()
+    {
+        return $this->belongsToMany(Group::class, 'group_members', 'user_id', 'group_id');
+    }
+
+    public function createdEvents()
+    {
+        return $this->hasMany(Event::class, 'created_by');
+    }
+
+    public function attendingEvents()
+    {
+        return $this->belongsToMany(Event::class, 'event_attendees', 'user_id', 'event_id')
+                    ->withPivot('status');
+    }
+
+    public function blogPosts()
+    {
+        return $this->hasMany(BlogPost::class);
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
+    }
+
     public function avatarUrl(): string
     {
         return $this->profile_photo
