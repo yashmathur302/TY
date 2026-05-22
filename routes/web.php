@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\AlbumController;
 
 // ── Auth (guest only) ──────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -35,4 +39,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings/password',[SettingsController::class, 'updatePassword'])->name('settings.password');
     Route::post('/settings/avatar',  [SettingsController::class, 'updateAvatar'])->name('settings.avatar');
     Route::post('/settings/cover',   [SettingsController::class, 'updateCover'])->name('settings.cover');
+
+    // Groups / Events / Blog create
+    Route::post('/groups',               [GroupController::class, 'store'])->name('groups.store');
+    Route::post('/events',               [EventController::class, 'store'])->name('events.store');
+    Route::post('/blog',                 [BlogController::class,  'store'])->name('blog.store');
+
+    // Albums
+    Route::post('/albums',                        [AlbumController::class, 'store'])->name('albums.store');
+    Route::post('/albums/{album}/photos',         [AlbumController::class, 'uploadPhoto'])->name('albums.upload');
+    Route::patch('/albums/{album}',               [AlbumController::class, 'rename'])->name('albums.rename');
+    Route::delete('/albums/{album}',              [AlbumController::class, 'destroy'])->name('albums.destroy');
 });

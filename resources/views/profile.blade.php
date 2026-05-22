@@ -15,6 +15,12 @@
     ];
 @endphp
 
+@if(session('success'))
+<div class="max-w-[1065px] mx-auto mb-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg px-4 py-3 text-sm text-green-700 dark:text-green-400">
+    {{ session('success') }}
+</div>
+@endif
+
 <div class="max-w-[1065px] mx-auto max-lg:-m-2.5">
 
     {{-- Cover Card --}}
@@ -260,20 +266,130 @@
 
         {{-- ── Tab 3: Photos ── --}}
         <li>
-            @if($photos->count())
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                @foreach($photos as $post)
-                <div class="relative aspect-square rounded-xl overflow-hidden bg-slate-100 dark:bg-dark2">
-                    <img src="{{ asset($post->image) }}" alt="" class="w-full h-full object-cover">
+            <div class="xl:space-y-6 space-y-4">
+
+                {{-- Action bar --}}
+                <div class="flex items-center gap-3 flex-wrap">
+                    <button uk-toggle="target: #create-album-modal"
+                            class="button bg-primary text-white flex items-center gap-2">
+                        <ion-icon name="folder-open-outline" class="text-lg"></ion-icon> Create Album
+                    </button>
                 </div>
-                @endforeach
+
+                {{-- Albums --}}
+                @if($albums->count())
+                <div class="box p-5">
+                    <h3 class="font-bold text-lg text-black dark:text-white mb-4">Albums
+                        <span class="text-sm font-normal text-gray-500 dark:text-white/60 ml-2">{{ $albums->count() }}</span>
+                    </h3>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        @foreach($albums as $album)
+                        <div class="rounded-xl overflow-hidden border border-gray-100 dark:border-slate-700">
+
+                            {{-- Album cover (first 4 photos grid) --}}
+                            <div class="relative h-40 bg-slate-100 dark:bg-slate-700 overflow-hidden">
+                                @if($album->photos->count())
+                                <div class="grid grid-cols-2 w-full h-full">
+                                    @foreach($album->photos->take(4) as $p)
+                                    <div class="overflow-hidden {{ $album->photos->count() === 1 ? 'col-span-2 row-span-2' : '' }}">
+                                        <img src="{{ $p->url() }}" class="w-full h-full object-cover" alt="">
+                                    </div>
+                                    @endforeach
+                                </div>
+                                @elseif($album->coverUrl())
+                                <img src="{{ $album->coverUrl() }}" class="w-full h-full object-cover" alt="">
+                                @else
+                                <div class="flex items-center justify-center h-full">
+                                    <ion-icon name="images-outline" class="text-4xl text-gray-300 dark:text-gray-600"></ion-icon>
+                                </div>
+                                @endif
+                            </div>
+
+                            {{-- Album info + actions --}}
+                            <div class="p-3">
+                                <div class="flex items-center justify-between gap-2">
+                                    <div class="min-w-0">
+                                        <h4 class="font-semibold text-black dark:text-white text-sm truncate">{{ $album->name }}</h4>
+                                        <p class="text-xs text-gray-500 dark:text-white/60 mt-0.5">{{ $album->photos_count }} photos</p>
+                                    </div>
+                                    <div class="flex gap-1 shrink-0">
+                                        {{-- Upload photo --}}
+                                        <form method="POST" action="{{ route('albums.upload', $album) }}"
+                                              enctype="multipart/form-data" id="upload-album-{{ $album->id }}">
+                                            @csrf
+                                            <label for="photos-{{ $album->id }}"
+                                                   class="button-icon text-primary bg-primary/10 cursor-pointer"
+                                                   title="Upload photos">
+                                                <ion-icon name="cloud-upload-outline" class="text-base"></ion-icon>
+                                            </label>
+                                            <input id="photos-{{ $album->id }}" name="photos[]" type="file"
+                                                   accept="image/*" multiple class="hidden"
+                                                   onchange="document.getElementById('upload-album-{{ $album->id }}').submit()">
+                                        </form>
+                                        {{-- Rename --}}
+                                        <button class="button-icon text-slate-500 dark:text-white/60 rename-album-btn"
+                                                data-album-id="{{ $album->id }}"
+                                                data-album-name="{{ $album->name }}"
+                                                title="Rename">
+                                            <ion-icon name="pencil-outline" class="text-base"></ion-icon>
+                                        </button>
+                                        {{-- Delete --}}
+                                        <form method="POST" action="{{ route('albums.destroy', $album) }}"
+                                              onsubmit="return confirm('Delete this album and all its photos?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="button-icon text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20" title="Delete">
+                                                <ion-icon name="trash-outline" class="text-base"></ion-icon>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- Expanded photos (show all in album) --}}
+                            @if($album->photos->count() > 4)
+                            <div class="px-3 pb-3">
+                                <button uk-toggle="target: #album-photos-{{ $album->id }}"
+                                        class="text-xs text-blue-500 hover:underline">
+                                    View all {{ $album->photos_count }} photos
+                                </button>
+                                <div id="album-photos-{{ $album->id }}" hidden class="grid grid-cols-3 gap-1 mt-2">
+                                    @foreach($album->photos as $p)
+                                    <div class="aspect-square overflow-hidden rounded">
+                                        <img src="{{ $p->url() }}" class="w-full h-full object-cover" alt="">
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endif
+
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
+                {{-- Standalone post photos --}}
+                @if($photos->count())
+                <div class="box p-5">
+                    <h3 class="font-bold text-lg text-black dark:text-white mb-4">Photos from Posts</h3>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        @foreach($photos as $post)
+                        <div class="relative aspect-square rounded-xl overflow-hidden bg-slate-100 dark:bg-dark2">
+                            <img src="{{ asset($post->image) }}" alt="" class="w-full h-full object-cover">
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
+                @if(!$albums->count() && !$photos->count())
+                <div class="py-16 text-center text-gray-400 dark:text-white/40">
+                    <ion-icon name="images-outline" class="text-5xl"></ion-icon>
+                    <p class="mt-3 font-normal">No photos yet. Create an album to get started.</p>
+                </div>
+                @endif
+
             </div>
-            @else
-            <div class="py-16 text-center text-gray-400 dark:text-white/40">
-                <ion-icon name="images-outline" class="text-5xl"></ion-icon>
-                <p class="mt-3 font-normal">No photos posted yet.</p>
-            </div>
-            @endif
         </li>
 
         {{-- ── Tab 4: Videos ── --}}
@@ -298,6 +414,13 @@
         {{-- ── Tab 5: Groups ── --}}
         <li>
             <div class="xl:space-y-6 space-y-4">
+
+                <div class="flex items-center gap-3">
+                    <button uk-toggle="target: #create-group-modal"
+                            class="button bg-primary text-white flex items-center gap-2">
+                        <ion-icon name="people-outline" class="text-lg"></ion-icon> Create Group
+                    </button>
+                </div>
 
                 {{-- Your Groups --}}
                 <div class="box p-5">
@@ -357,6 +480,13 @@
         {{-- ── Tab 6: Events ── --}}
         <li>
             <div class="xl:space-y-6 space-y-4">
+
+                <div class="flex items-center gap-3">
+                    <button uk-toggle="target: #create-event-modal"
+                            class="button bg-primary text-white flex items-center gap-2">
+                        <ion-icon name="calendar-outline" class="text-lg"></ion-icon> Create Event
+                    </button>
+                </div>
 
                 {{-- Your Events --}}
                 <div class="box p-5">
@@ -423,6 +553,13 @@
         <li>
             <div class="xl:space-y-6 space-y-4">
 
+                <div class="flex items-center gap-3">
+                    <button uk-toggle="target: #create-blog-modal"
+                            class="button bg-primary text-white flex items-center gap-2">
+                        <ion-icon name="create-outline" class="text-lg"></ion-icon> Write Blog Post
+                    </button>
+                </div>
+
                 {{-- Your Blog Posts --}}
                 <div class="box p-5">
                     <h3 class="font-bold text-lg text-black dark:text-white mb-4">Your Blog Posts
@@ -462,6 +599,33 @@
 @endsection
 
 @section('modals')
+
+{{-- Restore active tab after redirect --}}
+@if(session('profile_tab'))
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var nav = document.querySelector('.profile-tab-nav');
+    if (nav) UIkit.switcher(nav).show({{ session('profile_tab') }});
+});
+</script>
+@endif
+
+{{-- Album rename script --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.rename-album-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var id   = this.dataset.albumId;
+            var name = this.dataset.albumName;
+            document.getElementById('rename-album-form').action = '/albums/' + id;
+            document.getElementById('rename-album-name').value  = name;
+            UIkit.modal('#rename-album-modal').show();
+        });
+    });
+});
+</script>
+
+{{-- Create Status --}}
 <div class="hidden lg:p-20 uk-open" id="create-status" uk-modal="">
     <div class="uk-modal-dialog relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[520px] w-full dark:bg-dark2">
         <div class="text-center py-4 border-b mb-0 dark:border-slate-700">
@@ -497,4 +661,180 @@
         </div>
     </div>
 </div>
+
+{{-- Create Album Modal --}}
+<div class="hidden lg:p-20" id="create-album-modal" uk-modal="">
+    <div class="uk-modal-dialog relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[420px] w-full dark:bg-dark2">
+        <div class="text-center py-4 border-b mb-0 dark:border-slate-700">
+            <h2 class="text-sm font-medium text-black dark:text-white">Create Album</h2>
+            <button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <form method="POST" action="{{ route('albums.store') }}" class="p-5 space-y-4">
+            @csrf
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Album Name</label>
+                <input type="text" name="name" required placeholder="My Album" class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            </div>
+            <div class="flex justify-end gap-2">
+                <button type="button" class="button bg-slate-100 dark:bg-slate-700 dark:text-white uk-modal-close">Cancel</button>
+                <button type="submit" class="button bg-blue-500 text-white">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- Rename Album Modal --}}
+<div class="hidden lg:p-20" id="rename-album-modal" uk-modal="">
+    <div class="uk-modal-dialog relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[420px] w-full dark:bg-dark2">
+        <div class="text-center py-4 border-b mb-0 dark:border-slate-700">
+            <h2 class="text-sm font-medium text-black dark:text-white">Rename Album</h2>
+            <button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <form method="POST" action="" id="rename-album-form" class="p-5 space-y-4">
+            @csrf
+            @method('PATCH')
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">New Name</label>
+                <input type="text" name="name" id="rename-album-name" required class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            </div>
+            <div class="flex justify-end gap-2">
+                <button type="button" class="button bg-slate-100 dark:bg-slate-700 dark:text-white uk-modal-close">Cancel</button>
+                <button type="submit" class="button bg-blue-500 text-white">Rename</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- Create Group Modal --}}
+<div class="hidden lg:p-20" id="create-group-modal" uk-modal="">
+    <div class="uk-modal-dialog relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[520px] w-full dark:bg-dark2">
+        <div class="text-center py-4 border-b mb-0 dark:border-slate-700">
+            <h2 class="text-sm font-medium text-black dark:text-white">Create Group</h2>
+            <button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <form method="POST" action="{{ route('groups.store') }}" enctype="multipart/form-data" class="p-5 space-y-4">
+            @csrf
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Group Name</label>
+                <input type="text" name="name" required placeholder="Group name" class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+                <textarea name="description" rows="3" placeholder="What is this group about?" class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white"></textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Privacy</label>
+                <select name="privacy" class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cover Photo</label>
+                <input type="file" name="cover" accept="image/*" class="w-full text-sm text-gray-500">
+            </div>
+            <div class="flex justify-end gap-2">
+                <button type="button" class="button bg-slate-100 dark:bg-slate-700 dark:text-white uk-modal-close">Cancel</button>
+                <button type="submit" class="button bg-blue-500 text-white">Create Group</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- Create Event Modal --}}
+<div class="hidden lg:p-20" id="create-event-modal" uk-modal="">
+    <div class="uk-modal-dialog relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[520px] w-full dark:bg-dark2">
+        <div class="text-center py-4 border-b mb-0 dark:border-slate-700">
+            <h2 class="text-sm font-medium text-black dark:text-white">Create Event</h2>
+            <button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <form method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data" class="p-5 space-y-4">
+            @csrf
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Event Title</label>
+                <input type="text" name="title" required placeholder="Event title" class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+                <textarea name="description" rows="3" placeholder="Event details..." class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white"></textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Location</label>
+                <input type="text" name="location" placeholder="City, Venue..." class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Start Date &amp; Time</label>
+                    <input type="datetime-local" name="start_date" required class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">End Date &amp; Time</label>
+                    <input type="datetime-local" name="end_date" class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cover Photo</label>
+                <input type="file" name="cover" accept="image/*" class="w-full text-sm text-gray-500">
+            </div>
+            <div class="flex justify-end gap-2">
+                <button type="button" class="button bg-slate-100 dark:bg-slate-700 dark:text-white uk-modal-close">Cancel</button>
+                <button type="submit" class="button bg-blue-500 text-white">Create Event</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- Create Blog Post Modal --}}
+<div class="hidden lg:p-20" id="create-blog-modal" uk-modal="">
+    <div class="uk-modal-dialog relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[620px] w-full dark:bg-dark2">
+        <div class="text-center py-4 border-b mb-0 dark:border-slate-700">
+            <h2 class="text-sm font-medium text-black dark:text-white">Write Blog Post</h2>
+            <button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <form method="POST" action="{{ route('blog.store') }}" enctype="multipart/form-data" class="p-5 space-y-4">
+            @csrf
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title</label>
+                <input type="text" name="title" required placeholder="Post title" class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label>
+                <input type="text" name="category" placeholder="Technology, Travel, Food..." class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cover Image</label>
+                <input type="file" name="cover" accept="image/*" class="w-full text-sm text-gray-500">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content</label>
+                <textarea name="content" rows="6" required placeholder="Write your blog post..." class="w-full border rounded-lg px-3 py-2 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white"></textarea>
+            </div>
+            <div class="flex justify-end gap-2">
+                <button type="button" class="button bg-slate-100 dark:bg-slate-700 dark:text-white uk-modal-close">Cancel</button>
+                <button type="submit" class="button bg-blue-500 text-white">Publish</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 @endsection

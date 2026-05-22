@@ -7,8 +7,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
+use App\Http\Controllers\Concerns\HandlesFileUpload;
+
 class SettingsController extends Controller
 {
+    use HandlesFileUpload;
     public function updateProfile(Request $request)
     {
         $user = Auth::user();
@@ -67,27 +70,6 @@ class SettingsController extends Controller
         Auth::user()->update(['password' => Hash::make($request->password)]);
 
         return back()->with('success', 'Password updated successfully.')->with('active_tab', 6);
-    }
-
-    private function storeUpload($file, string $folder): string
-    {
-        $dir = public_path('uploads/' . $folder);
-        if (!is_dir($dir)) {
-            mkdir($dir, 0755, true);
-        }
-        $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
-        $file->move($dir, $filename);
-        return 'uploads/' . $folder . '/' . $filename;
-    }
-
-    private function deleteUpload(?string $path): void
-    {
-        if ($path && str_starts_with($path, 'uploads/')) {
-            $full = public_path($path);
-            if (file_exists($full)) {
-                unlink($full);
-            }
-        }
     }
 
     public function updateAvatar(Request $request)

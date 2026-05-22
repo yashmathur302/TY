@@ -44,6 +44,11 @@ class User extends Authenticatable
                     ->withPivot('status');
     }
 
+    public function albums()
+    {
+        return $this->hasMany(Album::class)->latest();
+    }
+
     public function blogPosts()
     {
         return $this->hasMany(BlogPost::class);

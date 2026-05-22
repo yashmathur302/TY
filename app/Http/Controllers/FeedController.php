@@ -67,8 +67,9 @@ class FeedController extends Controller
             ->with(['comments' => fn($q) => $q->with('user')->latest()->limit(2)])
             ->latest()->get();
 
-        $photos = $user->posts()->whereNotNull('image')->latest()->get();
-        $videos = $user->posts()->whereNotNull('video')->latest()->get();
+        $photos  = $user->posts()->whereNotNull('image')->latest()->get();
+        $videos  = $user->posts()->whereNotNull('video')->latest()->get();
+        $albums  = $user->albums()->with(['photos' => fn($q) => $q->limit(4)])->get();
 
         $myGroups     = Group::where('created_by', $user->id)->latest()->get();
         $joinedGroups = $user->joinedGroups()
@@ -84,7 +85,7 @@ class FeedController extends Controller
         $following    = $user->following()->latest()->limit(12)->get();
 
         return view('profile', compact(
-            'user', 'posts', 'photos', 'videos',
+            'user', 'posts', 'photos', 'videos', 'albums',
             'myGroups', 'joinedGroups',
             'myEvents', 'otherEvents',
             'myBlogs', 'followers', 'following'
