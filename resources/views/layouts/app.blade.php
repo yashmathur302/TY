@@ -116,5 +116,135 @@
     <script src="{{ asset('assets/js/script.js') }}"></script>
 
     @stack('scripts')
+
+    {{-- Post interaction JS — defined once, after all external scripts --}}
+    <script>
+    (function () {
+        var _csrf = document.querySelector('meta[name="csrf-token"]')
+                  ? document.querySelector('meta[name="csrf-token"]').content
+                  : '';
+
+        function _postJSON(url) {
+            return fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': _csrf,
+                    'Accept':       'application/json',
+                    'Content-Type': 'application/json',
+                },
+            }).then(function (r) {
+                if (!r.ok) {
+                    return r.json().then(function (e) {
+                        throw new Error((e && e.message) ? e.message : 'Server error ' + r.status);
+                    }).catch(function () {
+                        throw new Error('Server error ' + r.status);
+                    });
+                }
+                return r.json();
+            });
+        }
+
+        window.handleLike = function (btn) {
+            var postId = btn.dataset.postId;
+            btn.disabled = true;
+            _postJSON('/posts/' + postId + '/like')
+                .then(function (data) {
+                    var icon    = btn.querySelector('ion-icon');
+                    var countEl = document.getElementById('like-count-' + postId);
+                    if (data.liked) {
+                        btn.classList.remove('text-gray-500');
+                        btn.classList.add('text-red-500');
+                        if (icon) icon.setAttribute('name', 'heart');
+                    } else {
+                        btn.classList.remove('text-red-500');
+                        btn.classList.add('text-gray-500');
+                        if (icon) icon.setAttribute('name', 'heart-outline');
+                    }
+                    if (countEl) {
+                        if (data.count > 0) {
+                            countEl.textContent = data.count;
+                            countEl.classList.remove('hidden');
+                        } else {
+                            countEl.classList.add('hidden');
+                        }
+                    }
+                })
+                .catch(function (e) { console.error('Like failed:', e.message); })
+                .finally(function () { btn.disabled = false; });
+        };
+
+        window.handleShare = function (btn) {
+            var postId = btn.dataset.postId;
+            btn.disabled = true;
+            _postJSON('/posts/' + postId + '/share')
+                .then(function (data) {
+                    var icon    = btn.querySelector('ion-icon');
+                    var countEl = document.getElementById('share-count-' + postId);
+                    if (data.shared) {
+                        btn.classList.remove('text-gray-500');
+                        btn.classList.add('text-blue-500');
+                        if (icon) icon.setAttribute('name', 'share-social');
+                    } else {
+                        btn.classList.remove('text-blue-500');
+                        btn.classList.add('text-gray-500');
+                        if (icon) icon.setAttribute('name', 'share-social-outline');
+                    }
+                    if (countEl) {
+                        if (data.count > 0) {
+                            countEl.textContent = data.count;
+                            countEl.classList.remove('hidden');
+                        } else {
+                            countEl.classList.add('hidden');
+                        }
+                    }
+                })
+                .catch(function (e) { console.error('Share failed:', e.message); })
+                .finally(function () { btn.disabled = false; });
+        };
+
+        window.toggleCommentBox = function (postId) {
+            var section = document.getElementById('comments-' + postId);
+            if (section) section.classList.toggle('hidden');
+        };
+
+        window.toggleReplyBox = function (commentId) {
+            var box = document.getElementById('reply-form-' + commentId);
+            if (!box) return;
+            box.classList.toggle('hidden');
+            if (!box.classList.contains('hidden')) {
+                var inp = box.querySelector('input[name="content"]');
+                if (inp) inp.focus();
+            }
+        };
+
+        window.showUsersList = function (postId, type, title) {
+            var modal   = document.getElementById('users-list-modal');
+            var titleEl = document.getElementById('users-list-title');
+            var listEl  = document.getElementById('users-list-body');
+            if (!modal || !listEl) return;
+            if (titleEl) titleEl.textContent = title;
+            listEl.innerHTML = '<div class="text-center py-6 text-gray-400">Loading...</div>';
+            if (typeof UIkit !== 'undefined') UIkit.modal(modal).show();
+            fetch('/posts/' + postId + '/' + type, { headers: { 'Accept': 'application/json' } })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (!data.users || data.users.length === 0) {
+                        listEl.innerHTML = '<div class="text-center py-6 text-gray-400 font-normal text-sm">No one yet.</div>';
+                        return;
+                    }
+                    listEl.innerHTML = data.users.map(function (u) {
+                        return '<div class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-700/40">' +
+                            '<img src="' + u.avatar + '" class="w-9 h-9 rounded-full object-cover" alt="">' +
+                            '<div><p class="font-semibold text-sm text-black dark:text-white">' + u.name + '</p>' +
+                            '<p class="text-xs text-gray-400 dark:text-white/40">@' + u.username + '</p></div>' +
+                            '</div>';
+                    }).join('');
+                })
+                .catch(function () {
+                    listEl.innerHTML = '<div class="text-center py-6 text-red-400 text-sm">Failed to load.</div>';
+                });
+        };
+    })();
+    </script>
 </body>
 </html>

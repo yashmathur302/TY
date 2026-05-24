@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Like extends Model
 {
-    public $timestamps = false;
+    const UPDATED_AT = null;          // table has no updated_at column
     protected $table = 'likes';
     protected $fillable = ['user_id', 'post_id'];
 

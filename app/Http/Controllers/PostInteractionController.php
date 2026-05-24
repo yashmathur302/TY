@@ -13,12 +13,15 @@ class PostInteractionController extends Controller
     // ── Toggle Like ──────────────────────────────────────────
     public function toggleLike(Post $post)
     {
-        $userId = auth()->id();
+        $userId   = auth()->id();
         $existing = Like::where('user_id', $userId)->where('post_id', $post->id)->first();
 
         if ($existing) {
             $existing->delete();
-            $post->decrement('likes_count');
+            // guard against unsigned underflow
+            if ($post->likes_count > 0) {
+                $post->decrement('likes_count');
+            }
             $liked = false;
         } else {
             Like::create(['user_id' => $userId, 'post_id' => $post->id]);
@@ -28,19 +31,21 @@ class PostInteractionController extends Controller
 
         return response()->json([
             'liked' => $liked,
-            'count' => $post->fresh()->likes_count,
+            'count' => (int) $post->fresh()->likes_count,
         ]);
     }
 
     // ── Toggle Share ─────────────────────────────────────────
     public function toggleShare(Post $post)
     {
-        $userId = auth()->id();
+        $userId   = auth()->id();
         $existing = Share::where('user_id', $userId)->where('post_id', $post->id)->first();
 
         if ($existing) {
             $existing->delete();
-            $post->decrement('shares_count');
+            if ($post->shares_count > 0) {
+                $post->decrement('shares_count');
+            }
             $shared = false;
         } else {
             Share::create(['user_id' => $userId, 'post_id' => $post->id]);
@@ -50,7 +55,7 @@ class PostInteractionController extends Controller
 
         return response()->json([
             'shared' => $shared,
-            'count'  => $post->fresh()->shares_count,
+            'count'  => (int) $post->fresh()->shares_count,
         ]);
     }
 
