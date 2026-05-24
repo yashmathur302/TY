@@ -82,6 +82,83 @@
     <!-- Floating Chat Box -->
     @include('partials.chat-box')
 
+    {{-- Share Modal --}}
+    <div class="hidden lg:p-20" id="share-post-modal" uk-modal="">
+        <div class="uk-modal-dialog relative overflow-hidden mx-auto bg-white shadow-xl rounded-xl md:w-[480px] w-full dark:bg-dark2">
+
+            {{-- Header --}}
+            <div class="text-center py-4 border-b dark:border-slate-700 relative">
+                <button type="button" id="share-back-btn"
+                        class="button-icon absolute left-0 top-0 m-2.5 hidden">
+                    <ion-icon name="arrow-back-outline" class="text-xl"></ion-icon>
+                </button>
+                <h2 class="text-sm font-medium text-black dark:text-white" id="share-modal-title">Share Post</h2>
+                <button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            {{-- Step 1: Choose destination --}}
+            <div id="share-step-dest">
+                <p class="text-xs text-gray-400 dark:text-white/40 text-center pt-4 pb-1">Where would you like to share this post?</p>
+                <div class="grid grid-cols-2 gap-3 p-4">
+                    <button type="button" class="share-dest-card flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 dark:border-slate-700 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                            data-dest="profile" data-label="My Profile" data-icon="person-circle-outline">
+                        <ion-icon name="person-circle-outline" class="text-3xl text-blue-500"></ion-icon>
+                        <span class="text-sm font-medium text-black dark:text-white">My Profile</span>
+                    </button>
+                    <button type="button" class="share-dest-card flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 dark:border-slate-700 hover:border-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors"
+                            data-dest="group" data-label="A Group" data-icon="people-outline">
+                        <ion-icon name="people-outline" class="text-3xl text-green-500"></ion-icon>
+                        <span class="text-sm font-medium text-black dark:text-white">A Group</span>
+                    </button>
+                    <button type="button" class="share-dest-card flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 dark:border-slate-700 hover:border-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
+                            data-dest="event" data-label="An Event" data-icon="calendar-outline">
+                        <ion-icon name="calendar-outline" class="text-3xl text-orange-500"></ion-icon>
+                        <span class="text-sm font-medium text-black dark:text-white">An Event</span>
+                    </button>
+                    <button type="button" class="share-dest-card flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 dark:border-slate-700 hover:border-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors"
+                            data-dest="page" data-label="A Page" data-icon="flag-outline">
+                        <ion-icon name="flag-outline" class="text-3xl text-purple-500"></ion-icon>
+                        <span class="text-sm font-medium text-black dark:text-white">A Page</span>
+                    </button>
+                </div>
+            </div>
+
+            {{-- Step 2: Choose item (group / event / page list) --}}
+            <div id="share-step-items" class="hidden">
+                <div id="share-items-list" class="max-h-64 overflow-y-auto divide-y divide-gray-50 dark:divide-slate-700/50">
+                    {{-- populated by JS --}}
+                </div>
+            </div>
+
+            {{-- Step 3: Caption + confirm --}}
+            <div id="share-step-caption" class="hidden">
+                <div class="p-4 space-y-3">
+                    {{-- Destination badge --}}
+                    <div id="share-dest-badge" class="flex items-center gap-2 bg-slate-50 dark:bg-slate-700/50 rounded-lg px-3 py-2.5 text-sm">
+                        {{-- populated by JS --}}
+                    </div>
+                    {{-- Caption textarea --}}
+                    <textarea id="share-caption-input"
+                              placeholder="Say something about this post... (optional)"
+                              rows="3"
+                              class="w-full rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-700 dark:text-white px-3 py-2.5 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+                </div>
+                <div class="px-4 pb-4 flex justify-between items-center">
+                    <span id="share-submitting-msg" class="text-xs text-gray-400 hidden">Sharing...</span>
+                    <button type="button" id="share-submit-btn"
+                            class="button bg-blue-500 text-white px-10 ml-auto">
+                        Share Now
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     {{-- Users list modal (for likes/shares) --}}
     <div class="hidden" id="users-list-modal" uk-modal="">
         <div class="uk-modal-dialog relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[400px] w-full dark:bg-dark2">
@@ -173,34 +250,171 @@
                 .finally(function () { btn.disabled = false; });
         };
 
-        window.handleShare = function (btn) {
-            var postId = btn.dataset.postId;
-            btn.disabled = true;
-            _postJSON('/posts/' + postId + '/share')
-                .then(function (data) {
-                    var icon    = btn.querySelector('ion-icon');
-                    var countEl = document.getElementById('share-count-' + postId);
-                    if (data.shared) {
-                        btn.classList.remove('text-gray-500');
-                        btn.classList.add('text-blue-500');
-                        if (icon) icon.setAttribute('name', 'share-social');
-                    } else {
-                        btn.classList.remove('text-blue-500');
-                        btn.classList.add('text-gray-500');
-                        if (icon) icon.setAttribute('name', 'share-social-outline');
+        // ── Share modal state ────────────────────────────────────
+        var _sharePostId    = null;
+        var _shareBtn       = null;
+        var _shareDestType  = null;
+        var _shareDestId    = null;
+        var _shareHistStack = []; // 'dest' | 'items'
+
+        function _shareStep(step) {
+            var dest    = document.getElementById('share-step-dest');
+            var items   = document.getElementById('share-step-items');
+            var caption = document.getElementById('share-step-caption');
+            var backBtn = document.getElementById('share-back-btn');
+            var title   = document.getElementById('share-modal-title');
+            if (!dest) return;
+            dest.classList.toggle('hidden',    step !== 'dest');
+            items.classList.toggle('hidden',   step !== 'items');
+            caption.classList.toggle('hidden', step !== 'caption');
+            backBtn.classList.toggle('hidden', step === 'dest');
+            var titles = { dest: 'Share Post', items: 'Choose Destination', caption: 'Add a Message' };
+            if (title) title.textContent = titles[step] || 'Share';
+        }
+
+        window.showShareModal = function (btn) {
+            _sharePostId    = btn.dataset.postId;
+            _shareBtn       = btn;
+            _shareDestType  = null;
+            _shareDestId    = null;
+            _shareHistStack = [];
+            var captionEl = document.getElementById('share-caption-input');
+            if (captionEl) captionEl.value = '';
+            _shareStep('dest');
+            if (typeof UIkit !== 'undefined') UIkit.modal('#share-post-modal').show();
+        };
+
+        // Back button
+        var _shareBackBtn = document.getElementById('share-back-btn');
+        if (_shareBackBtn) {
+            _shareBackBtn.addEventListener('click', function () {
+                var prev = _shareHistStack.pop();
+                _shareStep(prev || 'dest');
+            });
+        }
+
+        // Destination cards click
+        document.querySelectorAll('.share-dest-card').forEach(function (card) {
+            card.addEventListener('click', function () {
+                _shareDestType = this.dataset.dest;
+                if (_shareDestType === 'profile') {
+                    _shareDestId = null;
+                    _populateDestBadge('My Profile', 'person-circle-outline', '#3b82f6');
+                    _shareHistStack.push('dest');
+                    _shareStep('caption');
+                } else {
+                    var endpointMap = { group: 'groups', event: 'events', page: 'pages' };
+                    _loadShareItems(endpointMap[_shareDestType], this.dataset.label);
+                    _shareHistStack.push('dest');
+                    _shareStep('items');
+                }
+            });
+        });
+
+        function _loadShareItems(endpoint, destLabel) {
+            var listEl = document.getElementById('share-items-list');
+            if (!listEl) return;
+            listEl.innerHTML = '<div class="text-center py-8 text-gray-400 text-sm">Loading...</div>';
+            fetch('/share-data/' + endpoint, { headers: { 'Accept': 'application/json' } })
+                .then(function (r) { return r.json(); })
+                .then(function (items) {
+                    if (!items || items.length === 0) {
+                        listEl.innerHTML = '<div class="text-center py-8 text-gray-400 dark:text-white/40 text-sm font-normal">You have no ' + endpoint + ' yet.</div>';
+                        return;
                     }
-                    if (countEl) {
-                        if (data.count > 0) {
-                            countEl.textContent = data.count;
-                            countEl.classList.remove('hidden');
-                        } else {
-                            countEl.classList.add('hidden');
-                        }
+                    listEl.innerHTML = items.map(function (item) {
+                        var img = item.cover
+                            ? '<img src="' + item.cover + '" class="w-10 h-10 rounded-lg object-cover shrink-0" alt="">'
+                            : '<div class="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-600 flex items-center justify-center shrink-0 text-gray-400"><ion-icon name="image-outline" class="text-xl"></ion-icon></div>';
+                        return '<button type="button" class="share-item-row w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors text-left"' +
+                            ' data-id="' + item.id + '" data-name="' + String(item.name).replace(/"/g, '&quot;') + '">' +
+                            img +
+                            '<span class="text-sm font-medium text-black dark:text-white flex-1 truncate">' + item.name + '</span>' +
+                            '<ion-icon name="chevron-forward-outline" class="text-gray-300 dark:text-white/30 text-lg shrink-0"></ion-icon>' +
+                            '</button>';
+                    }).join('');
+
+                    listEl.querySelectorAll('.share-item-row').forEach(function (row) {
+                        row.addEventListener('click', function () {
+                            _shareDestId = this.dataset.id;
+                            var iconMap = { groups: 'people-outline', events: 'calendar-outline', pages: 'flag-outline' };
+                            var colorMap = { groups: '#22c55e', events: '#f97316', pages: '#a855f7' };
+                            _populateDestBadge(destLabel.replace('A ', '') + ': ' + this.dataset.name, iconMap[endpoint] || 'location-outline', colorMap[endpoint] || '#3b82f6');
+                            _shareHistStack.push('items');
+                            _shareStep('caption');
+                        });
+                    });
+                })
+                .catch(function () {
+                    listEl.innerHTML = '<div class="text-center py-8 text-red-400 text-sm">Failed to load. Please try again.</div>';
+                });
+        }
+
+        function _populateDestBadge(label, icon, color) {
+            var badge = document.getElementById('share-dest-badge');
+            if (!badge) return;
+            badge.innerHTML =
+                '<ion-icon name="' + icon + '" class="text-lg shrink-0" style="color:' + color + '"></ion-icon>' +
+                '<span class="text-sm text-gray-500 dark:text-white/60">Sharing to <strong class="text-black dark:text-white font-semibold">' + label + '</strong></span>';
+        }
+
+        // Submit share
+        var _shareSubmitBtn = document.getElementById('share-submit-btn');
+        if (_shareSubmitBtn) {
+            _shareSubmitBtn.addEventListener('click', function () {
+                var btn    = this;
+                var msgEl  = document.getElementById('share-submitting-msg');
+                var caption = (document.getElementById('share-caption-input') || {}).value || '';
+                btn.disabled = true;
+                if (msgEl) msgEl.classList.remove('hidden');
+
+                fetch('/posts/' + _sharePostId + '/share', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': _csrf,
+                        'Accept':       'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        destination_type: _shareDestType,
+                        destination_id:   _shareDestId || null,
+                        caption:          caption || null,
+                    }),
+                })
+                .then(function (r) {
+                    if (!r.ok) throw new Error('HTTP ' + r.status);
+                    return r.json();
+                })
+                .then(function (data) {
+                    // Update count on the triggering button
+                    var countEl = document.getElementById('share-count-' + _sharePostId);
+                    if (countEl && data.count > 0) {
+                        countEl.textContent = data.count;
+                        countEl.classList.remove('hidden');
+                    }
+                    // Brief success flash on the share button
+                    if (_shareBtn) {
+                        var btnIcon = _shareBtn.querySelector('ion-icon');
+                        if (btnIcon) btnIcon.setAttribute('name', 'checkmark-circle');
+                        _shareBtn.classList.add('text-blue-500');
+                        setTimeout(function () {
+                            if (btnIcon) btnIcon.setAttribute('name', 'share-social-outline');
+                            _shareBtn.classList.remove('text-blue-500');
+                        }, 2000);
+                    }
+                    // Close modal and reset
+                    if (typeof UIkit !== 'undefined') UIkit.modal('#share-post-modal').hide();
+                    if (document.getElementById('share-caption-input')) {
+                        document.getElementById('share-caption-input').value = '';
                     }
                 })
                 .catch(function (e) { console.error('Share failed:', e.message); })
-                .finally(function () { btn.disabled = false; });
-        };
+                .finally(function () {
+                    btn.disabled = false;
+                    if (msgEl) msgEl.classList.add('hidden');
+                });
+            });
+        }
 
         window.toggleCommentBox = function (postId) {
             var section = document.getElementById('comments-' + postId);

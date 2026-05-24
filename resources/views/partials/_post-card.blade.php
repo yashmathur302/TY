@@ -99,11 +99,10 @@
 
         {{-- Share --}}
         <button type="button"
-                class="post-share-btn flex items-center gap-1.5 {{ $isShared ? 'text-blue-500' : 'text-gray-500 dark:text-white/60' }} hover:text-blue-500 transition-colors"
+                class="post-share-btn flex items-center gap-1.5 text-gray-500 dark:text-white/60 hover:text-blue-500 transition-colors"
                 data-post-id="{{ $post->id }}"
-                data-shared="{{ $isShared ? 'true' : 'false' }}"
-                onclick="handleShare(this)">
-            <ion-icon class="text-xl" name="{{ $isShared ? 'share-social' : 'share-social-outline' }}"></ion-icon>
+                onclick="showShareModal(this)">
+            <ion-icon class="text-xl" name="share-social-outline"></ion-icon>
             @if($post->shares_count > 0)
             <span class="share-count" id="share-count-{{ $post->id }}">{{ number_format($post->shares_count) }}</span>
             @else

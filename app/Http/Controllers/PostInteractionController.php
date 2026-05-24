@@ -6,6 +6,9 @@ use App\Models\Post;
 use App\Models\Like;
 use App\Models\Share;
 use App\Models\Comment;
+use App\Models\Group;
+use App\Models\Event;
+use App\Models\Page;
 use Illuminate\Http\Request;
 
 class PostInteractionController extends Controller
@@ -35,28 +38,74 @@ class PostInteractionController extends Controller
         ]);
     }
 
-    // ── Toggle Share ─────────────────────────────────────────
-    public function toggleShare(Post $post)
+    // ── Share Post (with destination + caption) ───────────────
+    public function share(Post $post, Request $request)
     {
-        $userId   = auth()->id();
-        $existing = Share::where('user_id', $userId)->where('post_id', $post->id)->first();
+        $request->validate([
+            'destination_type' => ['required', 'in:profile,group,event,page'],
+            'destination_id'   => ['nullable', 'integer', 'min:1'],
+            'caption'          => ['nullable', 'string', 'max:2000'],
+        ]);
 
-        if ($existing) {
-            $existing->delete();
-            if ($post->shares_count > 0) {
-                $post->decrement('shares_count');
-            }
-            $shared = false;
-        } else {
-            Share::create(['user_id' => $userId, 'post_id' => $post->id]);
-            $post->increment('shares_count');
-            $shared = true;
-        }
+        Share::create([
+            'user_id'          => auth()->id(),
+            'post_id'          => $post->id,
+            'destination_type' => $request->destination_type,
+            'destination_id'   => $request->destination_id ?: null,
+            'caption'          => $request->caption ?: null,
+        ]);
+
+        $post->increment('shares_count');
 
         return response()->json([
-            'shared' => $shared,
-            'count'  => (int) $post->fresh()->shares_count,
+            'success' => true,
+            'count'   => (int) $post->fresh()->shares_count,
         ]);
+    }
+
+    // ── Share destination lists ────────────────────────────────
+
+    public function shareGroups()
+    {
+        $user    = auth()->user();
+        $joined  = $user->joinedGroups()->get(['groups.id', 'groups.name', 'groups.cover_photo']);
+        $created = Group::where('created_by', $user->id)->get(['id', 'name', 'cover_photo']);
+        $all     = $joined->merge($created)->unique('id');
+
+        return response()->json($all->map(fn($g) => [
+            'id'    => $g->id,
+            'name'  => $g->name,
+            'cover' => $g->cover_photo ? asset($g->cover_photo) : null,
+        ])->values());
+    }
+
+    public function shareEvents()
+    {
+        $user      = auth()->user();
+        $attending = $user->attendingEvents()->get(['events.id', 'events.title', 'events.cover_photo']);
+        $created   = Event::where('created_by', $user->id)->get(['id', 'title', 'cover_photo']);
+        $all       = $attending->merge($created)->unique('id');
+
+        return response()->json($all->map(fn($e) => [
+            'id'    => $e->id,
+            'name'  => $e->title,
+            'cover' => $e->cover_photo ? asset($e->cover_photo) : null,
+        ])->values());
+    }
+
+    public function sharePages()
+    {
+        $user    = auth()->user();
+        $liked   = Page::whereHas('followers', fn($q) => $q->where('user_id', $user->id))
+                       ->get(['id', 'name', 'cover_photo']);
+        $created = Page::where('created_by', $user->id)->get(['id', 'name', 'cover_photo']);
+        $all     = $liked->merge($created)->unique('id');
+
+        return response()->json($all->map(fn($p) => [
+            'id'    => $p->id,
+            'name'  => $p->name,
+            'cover' => $p->cover_photo ? asset($p->cover_photo) : null,
+        ])->values());
     }
 
     // ── Store Comment ─────────────────────────────────────────
