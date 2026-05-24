@@ -67,45 +67,56 @@ class PostInteractionController extends Controller
 
     public function shareGroups()
     {
-        $user    = auth()->user();
-        $joined  = $user->joinedGroups()->get(['groups.id', 'groups.name', 'groups.cover_photo']);
-        $created = Group::where('created_by', $user->id)->get(['id', 'name', 'cover_photo']);
-        $all     = $joined->merge($created)->unique('id');
+        try {
+            $user    = auth()->user();
+            $joined  = $user->joinedGroups()->get();
+            $created = Group::where('created_by', $user->id)->get();
+            $all     = $joined->merge($created)->unique('id');
 
-        return response()->json($all->map(fn($g) => [
-            'id'    => $g->id,
-            'name'  => $g->name,
-            'cover' => $g->cover_photo ? asset($g->cover_photo) : null,
-        ])->values());
+            return response()->json($all->map(fn($g) => [
+                'id'    => $g->id,
+                'name'  => $g->name,
+                'cover' => $g->cover_photo ? asset($g->cover_photo) : null,
+            ])->values());
+        } catch (\Throwable $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function shareEvents()
     {
-        $user      = auth()->user();
-        $attending = $user->attendingEvents()->get(['events.id', 'events.title', 'events.cover_photo']);
-        $created   = Event::where('created_by', $user->id)->get(['id', 'title', 'cover_photo']);
-        $all       = $attending->merge($created)->unique('id');
+        try {
+            $user      = auth()->user();
+            $attending = $user->attendingEvents()->get();
+            $created   = Event::where('created_by', $user->id)->get();
+            $all       = $attending->merge($created)->unique('id');
 
-        return response()->json($all->map(fn($e) => [
-            'id'    => $e->id,
-            'name'  => $e->title,
-            'cover' => $e->cover_photo ? asset($e->cover_photo) : null,
-        ])->values());
+            return response()->json($all->map(fn($e) => [
+                'id'    => $e->id,
+                'name'  => $e->title,
+                'cover' => $e->cover_photo ? asset($e->cover_photo) : null,
+            ])->values());
+        } catch (\Throwable $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function sharePages()
     {
-        $user    = auth()->user();
-        $liked   = Page::whereHas('followers', fn($q) => $q->where('user_id', $user->id))
-                       ->get(['id', 'name', 'cover_photo']);
-        $created = Page::where('created_by', $user->id)->get(['id', 'name', 'cover_photo']);
-        $all     = $liked->merge($created)->unique('id');
+        try {
+            $user    = auth()->user();
+            $liked   = Page::whereHas('followers', fn($q) => $q->where('user_id', $user->id))->get();
+            $created = Page::where('created_by', $user->id)->get();
+            $all     = $liked->merge($created)->unique('id');
 
-        return response()->json($all->map(fn($p) => [
-            'id'    => $p->id,
-            'name'  => $p->name,
-            'cover' => $p->cover_photo ? asset($p->cover_photo) : null,
-        ])->values());
+            return response()->json($all->map(fn($p) => [
+                'id'    => $p->id,
+                'name'  => $p->name,
+                'cover' => $p->cover_photo ? asset($p->cover_photo) : null,
+            ])->values());
+        } catch (\Throwable $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     // ── Store Comment ─────────────────────────────────────────

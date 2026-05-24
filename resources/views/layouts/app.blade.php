@@ -229,12 +229,14 @@
                     var icon    = btn.querySelector('ion-icon');
                     var countEl = document.getElementById('like-count-' + postId);
                     if (data.liked) {
-                        btn.classList.remove('text-gray-500');
+                        // Remove grey/dim classes (including dark-mode white) and go red
+                        btn.classList.remove('text-gray-500', 'dark:text-white/60', 'text-gray-400');
                         btn.classList.add('text-red-500');
                         if (icon) icon.setAttribute('name', 'heart');
                     } else {
+                        // Restore grey appearance for both light and dark mode
                         btn.classList.remove('text-red-500');
-                        btn.classList.add('text-gray-500');
+                        btn.classList.add('text-gray-500', 'dark:text-white/60');
                         if (icon) icon.setAttribute('name', 'heart-outline');
                     }
                     if (countEl) {
@@ -246,7 +248,12 @@
                         }
                     }
                 })
-                .catch(function (e) { console.error('Like failed:', e.message); })
+                .catch(function (e) {
+                    console.error('Like failed:', e.message);
+                    // Show a brief visual error on the button
+                    btn.title = 'Could not like post. Please try again.';
+                    setTimeout(function () { btn.title = ''; }, 3000);
+                })
                 .finally(function () { btn.disabled = false; });
         };
 
@@ -314,22 +321,44 @@
         function _loadShareItems(endpoint, destLabel) {
             var listEl = document.getElementById('share-items-list');
             if (!listEl) return;
+
+            var emptyMessages = {
+                groups: "You haven't joined or created any groups yet.",
+                events: "You haven't created or joined any events yet.",
+                pages:  "You haven't created or followed any pages yet."
+            };
+            var emptyMsg = emptyMessages[endpoint] || 'No items found.';
+
             listEl.innerHTML = '<div class="text-center py-8 text-gray-400 text-sm">Loading...</div>';
-            fetch('/share-data/' + endpoint, { headers: { 'Accept': 'application/json' } })
-                .then(function (r) { return r.json(); })
+            fetch('/share-data/' + endpoint, {
+                headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': _csrf }
+            })
+                .then(function (r) {
+                    if (!r.ok) {
+                        return r.text().then(function (body) {
+                            throw new Error('Server error ' + r.status);
+                        });
+                    }
+                    return r.json();
+                })
                 .then(function (items) {
-                    if (!items || items.length === 0) {
-                        listEl.innerHTML = '<div class="text-center py-8 text-gray-400 dark:text-white/40 text-sm font-normal">You have no ' + endpoint + ' yet.</div>';
+                    if (!Array.isArray(items) || items.length === 0) {
+                        listEl.innerHTML =
+                            '<div class="flex flex-col items-center gap-2 py-10 text-gray-400 dark:text-white/40">' +
+                            '<ion-icon name="' + (endpoint === 'groups' ? 'people-outline' : endpoint === 'events' ? 'calendar-outline' : 'flag-outline') + '" class="text-4xl opacity-40"></ion-icon>' +
+                            '<p class="text-sm font-normal text-center px-6">' + emptyMsg + '</p>' +
+                            '</div>';
                         return;
                     }
                     listEl.innerHTML = items.map(function (item) {
+                        var safeName = String(item.name || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
                         var img = item.cover
                             ? '<img src="' + item.cover + '" class="w-10 h-10 rounded-lg object-cover shrink-0" alt="">'
-                            : '<div class="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-600 flex items-center justify-center shrink-0 text-gray-400"><ion-icon name="image-outline" class="text-xl"></ion-icon></div>';
+                            : '<div class="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-600 flex items-center justify-center shrink-0 text-gray-400 text-lg">📌</div>';
                         return '<button type="button" class="share-item-row w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition-colors text-left"' +
-                            ' data-id="' + item.id + '" data-name="' + String(item.name).replace(/"/g, '&quot;') + '">' +
+                            ' data-id="' + item.id + '" data-name="' + safeName + '">' +
                             img +
-                            '<span class="text-sm font-medium text-black dark:text-white flex-1 truncate">' + item.name + '</span>' +
+                            '<span class="text-sm font-medium text-black dark:text-white flex-1 truncate">' + safeName + '</span>' +
                             '<ion-icon name="chevron-forward-outline" class="text-gray-300 dark:text-white/30 text-lg shrink-0"></ion-icon>' +
                             '</button>';
                     }).join('');
@@ -337,16 +366,22 @@
                     listEl.querySelectorAll('.share-item-row').forEach(function (row) {
                         row.addEventListener('click', function () {
                             _shareDestId = this.dataset.id;
-                            var iconMap = { groups: 'people-outline', events: 'calendar-outline', pages: 'flag-outline' };
+                            var iconMap  = { groups: 'people-outline', events: 'calendar-outline', pages: 'flag-outline' };
                             var colorMap = { groups: '#22c55e', events: '#f97316', pages: '#a855f7' };
-                            _populateDestBadge(destLabel.replace('A ', '') + ': ' + this.dataset.name, iconMap[endpoint] || 'location-outline', colorMap[endpoint] || '#3b82f6');
+                            var typeLabel = { groups: 'Group', events: 'Event', pages: 'Page' };
+                            _populateDestBadge((typeLabel[endpoint] || '') + ': ' + this.dataset.name, iconMap[endpoint] || 'location-outline', colorMap[endpoint] || '#3b82f6');
                             _shareHistStack.push('items');
                             _shareStep('caption');
                         });
                     });
                 })
-                .catch(function () {
-                    listEl.innerHTML = '<div class="text-center py-8 text-red-400 text-sm">Failed to load. Please try again.</div>';
+                .catch(function (err) {
+                    console.error('Share items load failed:', err);
+                    listEl.innerHTML =
+                        '<div class="flex flex-col items-center gap-2 py-10 text-red-400">' +
+                        '<ion-icon name="cloud-offline-outline" class="text-4xl"></ion-icon>' +
+                        '<p class="text-sm font-normal">Could not load ' + endpoint + '. Please try again.</p>' +
+                        '</div>';
                 });
         }
 
