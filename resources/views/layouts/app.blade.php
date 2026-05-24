@@ -82,6 +82,22 @@
     <!-- Floating Chat Box -->
     @include('partials.chat-box')
 
+    {{-- Users list modal (for likes/shares) --}}
+    <div class="hidden" id="users-list-modal" uk-modal="">
+        <div class="uk-modal-dialog relative overflow-hidden mx-auto bg-white shadow-xl rounded-lg md:w-[400px] w-full dark:bg-dark2">
+            <div class="text-center py-4 border-b dark:border-slate-700">
+                <h2 class="text-sm font-medium text-black dark:text-white" id="users-list-title">People</h2>
+                <button type="button" class="button-icon absolute top-0 right-0 m-2.5 uk-modal-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="max-h-80 overflow-y-auto py-2" id="users-list-body">
+            </div>
+        </div>
+    </div>
+
     <!-- Page Modals -->
     @yield('modals')
 
