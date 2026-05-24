@@ -9,6 +9,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostInteractionController;
 
 // ── Auth (guest only) ──────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -43,6 +44,14 @@ Route::middleware('auth')->group(function () {
 
     // Posts
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
+    // Post interactions
+    Route::post('/posts/{post}/like',                          [PostInteractionController::class, 'toggleLike'])->name('posts.like');
+    Route::post('/posts/{post}/share',                         [PostInteractionController::class, 'toggleShare'])->name('posts.share');
+    Route::post('/posts/{post}/comments',                      [PostInteractionController::class, 'storeComment'])->name('posts.comment');
+    Route::post('/posts/{post}/comments/{comment}/reply',      [PostInteractionController::class, 'storeReply'])->name('posts.reply');
+    Route::get('/posts/{post}/likers',                         [PostInteractionController::class, 'likers'])->name('posts.likers');
+    Route::get('/posts/{post}/sharers',                        [PostInteractionController::class, 'sharers'])->name('posts.sharers');
 
     // Groups / Events / Blog create
     Route::post('/groups',               [GroupController::class, 'store'])->name('groups.store');

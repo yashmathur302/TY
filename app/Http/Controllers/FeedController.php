@@ -13,8 +13,17 @@ class FeedController extends Controller
     {
         $posts = \App\Models\Post::with([
             'user',
-            'comments' => fn($q) => $q->with('user')->latest()->limit(2),
+            'comments' => fn($q) => $q->with(['user', 'replies.user'])->oldest()->limit(5),
         ])->latest()->paginate(15);
+
+        // Mark which posts current user has liked / shared
+        $uid        = auth()->id();
+        $likedIds   = \App\Models\Like::where('user_id', $uid)->pluck('post_id')->toArray();
+        $sharedIds  = \App\Models\Share::where('user_id', $uid)->pluck('post_id')->toArray();
+        $posts->each(function ($p) use ($likedIds, $sharedIds) {
+            $p->is_liked  = in_array($p->id, $likedIds);
+            $p->is_shared = in_array($p->id, $sharedIds);
+        });
 
         return view('feed', compact('posts'));
     }
@@ -69,8 +78,16 @@ class FeedController extends Controller
         $user = auth()->user();
 
         $posts  = $user->posts()
-            ->with(['comments' => fn($q) => $q->with('user')->latest()->limit(2)])
+            ->with(['comments' => fn($q) => $q->with(['user', 'replies.user'])->oldest()->limit(5)])
             ->latest()->get();
+
+        $uid        = auth()->id();
+        $likedIds   = \App\Models\Like::where('user_id', $uid)->pluck('post_id')->toArray();
+        $sharedIds  = \App\Models\Share::where('user_id', $uid)->pluck('post_id')->toArray();
+        $posts->each(function ($p) use ($likedIds, $sharedIds) {
+            $p->is_liked  = in_array($p->id, $likedIds);
+            $p->is_shared = in_array($p->id, $sharedIds);
+        });
 
         $photos  = $user->posts()->whereNotNull('image')->latest()->get();
         $videos  = $user->posts()->whereNotNull('video')->latest()->get();
