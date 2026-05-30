@@ -10,6 +10,11 @@ class PageController extends Controller
 {
     use HandlesFileUpload;
 
+    public function show(Page $page)
+    {
+        return view('page-detail', compact('page'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -30,10 +35,9 @@ class PageController extends Controller
             $data['cover_photo'] = $this->storeUpload($request->file('cover'), 'page-covers');
         }
 
-        Page::create($data);
+        $page = Page::create($data);
 
-        return redirect()->route('profile')
-            ->with('success', 'Page created successfully!')
-            ->with('profile_tab', 3);
+        return redirect()->route('pages.show', $page)
+            ->with('success', 'Page created successfully!');
     }
 }

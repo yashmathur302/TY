@@ -10,6 +10,12 @@ class BlogController extends Controller
 {
     use HandlesFileUpload;
 
+    public function show(BlogPost $blogPost)
+    {
+        $blogPost->load('user');
+        return view('blog-read', compact('blogPost'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -31,10 +37,9 @@ class BlogController extends Controller
             $data['cover_image'] = $this->storeUpload($request->file('cover'), 'blog-covers');
         }
 
-        BlogPost::create($data);
+        $blogPost = BlogPost::create($data);
 
-        return redirect()->route('profile')
-            ->with('success', 'Blog post published!')
-            ->with('profile_tab', 6);
+        return redirect()->route('blog.show', $blogPost)
+            ->with('success', 'Blog post published!');
     }
 }

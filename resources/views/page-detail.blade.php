@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Monroe Parker – EduConnect')
+@section('title', $page->name . ' – EduConnect')
 @section('description', 'Monroe Parker page on EduConnect.')
 
 @section('content')
@@ -12,7 +12,7 @@
 
         <!-- Cover Image -->
         <div class="relative overflow-hidden w-full lg:h-60 h-40">
-            <img src="https://picsum.photos/seed/pagecover/1200/400" alt="Monroe Parker cover" class="h-full w-full object-cover inset-0">
+            <img src="{{ $page->coverUrl() ?? 'https://picsum.photos/seed/pagecover/1200/400' }}" alt="Monroe Parker cover" class="h-full w-full object-cover inset-0">
             <div class="w-full bottom-0 absolute left-0 bg-gradient-to-t from-black/60 pt-10 z-10"></div>
             <div class="absolute bottom-0 right-0 m-4 z-20">
                 <div class="flex items-center gap-3">
@@ -37,12 +37,11 @@
 
                     <!-- Name & Stats -->
                     <div class="flex-1">
-                        <h3 class="md:text-2xl text-lg font-bold text-black dark:text-white">Monroe Parker</h3>
+                        <h3 class="md:text-2xl text-lg font-bold text-black dark:text-white">{{ $page->name }}</h3>
                         <p class="font-normal text-gray-500 mt-2 flex gap-2 dark:text-white/80">
-                            <span><b class="font-medium text-black dark:text-white">1.2K</b> likes</span>
-                            <span>•</span>
-                            <span><b class="font-medium text-black dark:text-white">1.4K</b> followers</span>
+                            <span><b class="font-medium text-black dark:text-white">{{ number_format($page->followers_count) }}</b> followers</span>
                         </p>
+                        @if($page->category)<p class="text-xs text-gray-400 dark:text-white/40 mt-1">{{ $page->category }}</p>@endif
                     </div>
 
                     <!-- Action Buttons -->

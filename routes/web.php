@@ -12,6 +12,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostInteractionController;
 use App\Http\Controllers\FriendController;
+use App\Http\Controllers\BlogController;
 
 // ── Auth (guest only) ──────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -36,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/group-detail', [FeedController::class, 'groupDetail'])->name('group.detail');
     Route::get('/blog',         [FeedController::class, 'blog'])->name('blog');
     Route::get('/blog-read',    [FeedController::class, 'blogRead'])->name('blog.read');
+    Route::get('/blog/{blogPost}', [BlogController::class, 'show'])->name('blog.show');
     Route::get('/profile',      [FeedController::class, 'profile'])->name('profile');
     Route::get('/settings',          [FeedController::class, 'settings'])->name('settings');
     Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile');
@@ -65,9 +67,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/friends/accept/{friendRequest}',[FriendController::class, 'accept'])->name('friends.accept');
     Route::post('/friends/decline/{friendRequest}',[FriendController::class, 'decline'])->name('friends.decline');
 
-    // Groups / Pages / Events / Blog create
+    // Groups / Pages / Events / Blog (show + create)
+    Route::get('/groups/{group}',        [GroupController::class, 'show'])->name('groups.show');
     Route::post('/groups',               [GroupController::class, 'store'])->name('groups.store');
+    Route::get('/pages/{page}',          [PageController::class,  'show'])->name('pages.show');
     Route::post('/pages',                [PageController::class,  'store'])->name('pages.store');
+    Route::get('/events/{event}',        [EventController::class, 'show'])->name('events.show');
     Route::post('/events',               [EventController::class, 'store'])->name('events.store');
     Route::post('/blog',                 [BlogController::class,  'store'])->name('blog.store');
 

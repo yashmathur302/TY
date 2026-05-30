@@ -10,6 +10,11 @@ class GroupController extends Controller
 {
     use HandlesFileUpload;
 
+    public function show(Group $group)
+    {
+        return view('group-detail', compact('group'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -30,10 +35,9 @@ class GroupController extends Controller
             $data['cover_photo'] = $this->storeUpload($request->file('cover'), 'group-covers');
         }
 
-        Group::create($data);
+        $group = Group::create($data);
 
-        return redirect()->route('profile')
-            ->with('success', 'Group created successfully!')
-            ->with('profile_tab', 4);
+        return redirect()->route('groups.show', $group)
+            ->with('success', 'Group created successfully!');
     }
 }

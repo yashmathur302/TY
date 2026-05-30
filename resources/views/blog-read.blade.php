@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Blog Read')
+@section('title', $blogPost->title . ' – EduConnect')
 
 @section('content')
 
@@ -11,27 +11,25 @@
 
         <div class="box overflow-hidden">
             <div class="relative h-80">
-                <img src="https://picsum.photos/seed/blog-read-cover/1200/400" class="w-full h-full object-cover" alt="Article Cover">
+                <img src="{{ $blogPost->coverUrl() ?? 'https://picsum.photos/seed/blog-read-cover/1200/400' }}" class="w-full h-full object-cover" alt="Article Cover">
             </div>
             <div class="p-6">
-                <h1 class="text-xl font-semibold mt-1">How designers estimate the impact of UX?</h1>
+                <h1 class="text-xl font-semibold mt-1">{{ $blogPost->title }}</h1>
 
                 <div class="flex gap-3 text-sm mt-6">
-                    <img src="https://i.pravatar.cc/40?img=5" alt="Steeve" class="w-9 h-9 rounded-full">
+                    <img src="{{ $blogPost->user->avatarUrl() }}" alt="{{ $blogPost->user->name }}" class="w-9 h-9 rounded-full">
                     <div class="flex-1">
-                        <h4 class="text-black font-medium dark:text-white">Steeve</h4>
-                        <div class="text-gray-500 font-medium text-xs dark:text-white/80">2 hours ago</div>
+                        <h4 class="text-black font-medium dark:text-white">{{ $blogPost->user->name }}</h4>
+                        <div class="text-gray-500 font-medium text-xs dark:text-white/80">{{ $blogPost->published_at?->diffForHumans() ?? $blogPost->created_at->diffForHumans() }}</div>
                     </div>
                     <div class="font-normal text-gray-500">
-                        <span class="text-sm">Business</span>
-                        <span class="text-sm text-gray-400"> &nbsp;Sep 15, 2023</span>
+                        <span class="text-sm">{{ $blogPost->category ?? '' }}</span>
+                        <span class="text-sm text-gray-400"> &nbsp;{{ $blogPost->published_at?->format('M d, Y') ?? '' }}</span>
                     </div>
                 </div>
 
                 <div class="space-y-2 text-sm font-normal mt-6 leading-6 text-black dark:text-white">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia</p>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p>
+                    <div class="whitespace-pre-line">{{ $blogPost->content }}</div>
                 </div>
             </div>
         </div>

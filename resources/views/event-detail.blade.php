@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Webinar – Raising Ducks For Egg Production – EduConnect')
+@section('title', $event->title . ' – EduConnect')
 @section('description', 'View event details, discussions and invite friends on EduConnect.')
 
 @section('content')
@@ -12,7 +12,7 @@
 
         <!-- Cover Image -->
         <div class="relative overflow-hidden lg:h-72 h-36 w-full">
-            <img src="https://picsum.photos/seed/evcover1/1200/400" alt="Event Cover" class="h-full w-full object-cover">
+            <img src="{{ $event->coverUrl() ?? 'https://picsum.photos/seed/evcover1/1200/400' }}" alt="Event Cover" class="h-full w-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 pt-10 z-10"></div>
             <div class="absolute bottom-0 right-0 m-4 z-20">
                 <div class="flex items-center gap-3">
@@ -29,24 +29,24 @@
                 <!-- Date Badge -->
                 <div class="event-date-badge z-10 mb-5">
                     <div class="event-date-badge-top"></div>
-                    <div class="event-date-badge-day">14</div>
+                    <div class="event-date-badge-day">{{ $event->start_date->format('d') }}</div>
                 </div>
 
                 <!-- Title + Countdown Row -->
                 <div class="flex lg:items-center justify-between max-lg:flex-col max-lg:gap-2">
 
                     <div class="flex-1">
-                        <p class="text-sm font-semibold text-rose-600 mb-1.5">7 OCT AT 07:00 – 11 OCT AT 12:00</p>
-                        <h3 class="md:text-2xl text-base font-bold text-black dark:text-white">Webinar - Raising Ducks For Egg Production</h3>
+                        <p class="text-sm font-semibold text-rose-600 mb-1.5">{{ strtoupper($event->start_date->format('j M \A\T H:i')) }}@if($event->end_date) – {{ strtoupper($event->end_date->format('j M \A\T H:i')) }}@endif</p>
+                        <h3 class="md:text-2xl text-base font-bold text-black dark:text-white">{{ $event->title }}</h3>
                         <p class="font-normal text-gray-500 mt-2 flex gap-2 dark:text-white/80">
                             <span>Free</span>
                             <span>•</span>
-                            <span>Online event</span>
+                            <span>{{ $event->location ?? 'Online event' }}</span>
                         </p>
                     </div>
 
                     <!-- Countdown Timer -->
-                    <div uk-countdown="date: 2027-01-01T08:36:57+00:00"
+                    <div uk-countdown="date: {{ $event->start_date->toIso8601String() }}"
                          class="flex gap-3 text-2xl font-semibold text-primary dark:text-white max-lg:justify-center">
                         <div class="event-countdown-box">
                             <span class="uk-countdown-days"></span>
@@ -120,8 +120,7 @@
             <div class="box p-5 px-6">
                 <h3 class="font-semibold text-lg text-black dark:text-white">About</h3>
                 <div class="space-y-4 leading-7 tracking-wide mt-4 text-sm text-black dark:text-white">
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+                    <p>{{ $event->description ?? 'No description provided.' }}</p>
                 </div>
             </div>
 

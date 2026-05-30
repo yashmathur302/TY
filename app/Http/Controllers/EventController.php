@@ -10,6 +10,11 @@ class EventController extends Controller
 {
     use HandlesFileUpload;
 
+    public function show(Event $event)
+    {
+        return view('event-detail', compact('event'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -34,10 +39,9 @@ class EventController extends Controller
             $data['cover_photo'] = $this->storeUpload($request->file('cover'), 'event-covers');
         }
 
-        Event::create($data);
+        $event = Event::create($data);
 
-        return redirect()->route('profile')
-            ->with('success', 'Event created successfully!')
-            ->with('profile_tab', 5);
+        return redirect()->route('events.show', $event)
+            ->with('success', 'Event created successfully!');
     }
 }
