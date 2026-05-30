@@ -201,6 +201,12 @@
                   ? document.querySelector('meta[name="csrf-token"]').content
                   : '';
 
+        function _notify(msg, status) {
+            if (typeof UIkit !== 'undefined') {
+                UIkit.notification({ message: msg, status: status || 'danger', pos: 'bottom-right', timeout: 3000 });
+            }
+        }
+
         function _postJSON(url) {
             return fetch(url, {
                 method: 'POST',
@@ -209,12 +215,14 @@
                     'Accept':       'application/json',
                     'Content-Type': 'application/json',
                 },
+                credentials: 'same-origin',
             }).then(function (r) {
                 if (!r.ok) {
-                    return r.json().then(function (e) {
-                        throw new Error((e && e.message) ? e.message : 'Server error ' + r.status);
-                    }).catch(function () {
-                        throw new Error('Server error ' + r.status);
+                    // Try to parse the JSON error, fall back to status text
+                    return r.text().then(function (body) {
+                        var msg = 'Server error ' + r.status;
+                        try { var parsed = JSON.parse(body); if (parsed.message) msg = parsed.message; } catch (e) {}
+                        throw new Error(msg);
                     });
                 }
                 return r.json();
@@ -229,12 +237,10 @@
                     var icon    = btn.querySelector('ion-icon');
                     var countEl = document.getElementById('like-count-' + postId);
                     if (data.liked) {
-                        // Remove grey/dim classes (including dark-mode white) and go red
                         btn.classList.remove('text-gray-500', 'dark:text-white/60', 'text-gray-400');
                         btn.classList.add('text-red-500');
                         if (icon) icon.setAttribute('name', 'heart');
                     } else {
-                        // Restore grey appearance for both light and dark mode
                         btn.classList.remove('text-red-500');
                         btn.classList.add('text-gray-500', 'dark:text-white/60');
                         if (icon) icon.setAttribute('name', 'heart-outline');
@@ -250,9 +256,7 @@
                 })
                 .catch(function (e) {
                     console.error('Like failed:', e.message);
-                    // Show a brief visual error on the button
-                    btn.title = 'Could not like post. Please try again.';
-                    setTimeout(function () { btn.title = ''; }, 3000);
+                    _notify('Could not like post: ' + e.message);
                 })
                 .finally(function () { btn.disabled = false; });
         };
@@ -421,13 +425,11 @@
                     return r.json();
                 })
                 .then(function (data) {
-                    // Update count on the triggering button
                     var countEl = document.getElementById('share-count-' + _sharePostId);
                     if (countEl && data.count > 0) {
                         countEl.textContent = data.count;
                         countEl.classList.remove('hidden');
                     }
-                    // Brief success flash on the share button
                     if (_shareBtn) {
                         var btnIcon = _shareBtn.querySelector('ion-icon');
                         if (btnIcon) btnIcon.setAttribute('name', 'checkmark-circle');
@@ -437,13 +439,16 @@
                             _shareBtn.classList.remove('text-blue-500');
                         }, 2000);
                     }
-                    // Close modal and reset
                     if (typeof UIkit !== 'undefined') UIkit.modal('#share-post-modal').hide();
                     if (document.getElementById('share-caption-input')) {
                         document.getElementById('share-caption-input').value = '';
                     }
+                    _notify('Post shared successfully!', 'success');
                 })
-                .catch(function (e) { console.error('Share failed:', e.message); })
+                .catch(function (e) {
+                    console.error('Share failed:', e.message);
+                    _notify('Could not share post: ' + e.message);
+                })
                 .finally(function () {
                     btn.disabled = false;
                     if (msgEl) msgEl.classList.add('hidden');
