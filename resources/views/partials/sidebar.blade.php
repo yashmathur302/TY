@@ -20,6 +20,12 @@
                             <span>Messages</span>
                         </a>
                     </li>
+                    <li class="sidebar-nav-item {{ request()->routeIs('friends') ? 'active' : '' }}">
+                        <a href="{{ route('friends') }}">
+                            <ion-icon name="person-add" class="text-xl text-rose-500"></ion-icon>
+                            <span>Friends</span>
+                        </a>
+                    </li>
                     <li class="sidebar-nav-item {{ request()->routeIs('events') ? 'active' : '' }}">
                         <a href="{{ route('events') }}">
                             <ion-icon name="calendar" class="text-xl text-orange-500"></ion-icon>

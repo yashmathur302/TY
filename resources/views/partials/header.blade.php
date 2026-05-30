@@ -90,58 +90,12 @@
                     </button>
 
                     <!-- Create Dropdown -->
-                    <div class="create-dropdown hidden bg-white p-4 rounded-lg overflow-hidden drop-shadow-xl dark:bg-slate-700 md:w-[324px] w-screen border2"
+                    <div class="create-dropdown hidden bg-white p-4 rounded-lg overflow-hidden drop-shadow-xl dark:bg-slate-700 md:w-[280px] w-screen border2"
                          uk-drop="offset:6;pos: bottom-right; mode: click; animate-out: true; animation: uk-animation-scale-up uk-transform-origin-top-right">
 
                         <h3 class="font-bold text-md dark:text-white">Create</h3>
 
-                        <div class="mt-4" tabindex="-1" uk-slider="finite:true;sets: true">
-                            <div class="uk-slider-container pb-1">
-                                <ul class="uk-slider-items grid-small" uk-scrollspy="target: > li; cls: uk-animation-scale-up , uk-animation-slide-right-small; delay: 20 ;repeat: true">
-                                    <li class="w-28" uk-scrollspy-class="uk-animation-fade">
-                                        <div class="create-item p-3 px-4 rounded-lg bg-teal-100/60 text-teal-600 dark:text-white dark:bg-dark4">
-                                            <ion-icon name="book" class="text-2xl drop-shadow-md"></ion-icon>
-                                            <div class="mt-1.5 text-sm font-medium">Story</div>
-                                        </div>
-                                    </li>
-                                    <li class="w-28">
-                                        <div class="create-item p-3 px-4 rounded-lg bg-sky-100/60 text-sky-600 dark:text-white dark:bg-dark4">
-                                            <ion-icon name="camera" class="text-2xl drop-shadow-md"></ion-icon>
-                                            <div class="mt-1.5 text-sm font-medium">Post</div>
-                                        </div>
-                                    </li>
-                                    <li class="w-28">
-                                        <div class="create-item p-3 px-4 rounded-lg bg-purple-100/60 text-purple-600 dark:text-white dark:bg-dark4">
-                                            <ion-icon name="videocam" class="text-2xl drop-shadow-md"></ion-icon>
-                                            <div class="mt-1.5 text-sm font-medium">Reel</div>
-                                        </div>
-                                    </li>
-                                    <li class="w-28">
-                                        <div class="create-item p-3 px-4 rounded-lg bg-pink-100/60 text-pink-600 dark:text-white dark:bg-dark4">
-                                            <ion-icon name="location" class="text-2xl drop-shadow-md"></ion-icon>
-                                            <div class="mt-1.5 text-sm font-medium">Location</div>
-                                        </div>
-                                    </li>
-                                    <li class="w-28">
-                                        <div class="create-item p-3 px-4 rounded-lg bg-sky-100/70 text-sky-600 dark:text-white dark:bg-dark4">
-                                            <ion-icon name="happy" class="text-2xl drop-shadow-md"></ion-icon>
-                                            <div class="mt-1.5 text-sm font-medium">Status</div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="dark:hidden">
-                                <a class="absolute -translate-y-1/2 top-1/2 -left-4 flex items-center w-8 h-full px-1.5 justify-start bg-gradient-to-r from-white via-white" href="#" uk-slider-item="previous">
-                                    <ion-icon name="chevron-back" class="text-xl"></ion-icon>
-                                </a>
-                                <a class="absolute -translate-y-1/2 top-1/2 -right-4 flex items-center w-8 h-full px-1.5 justify-end bg-gradient-to-l from-white via-white" href="#" uk-slider-item="next">
-                                    <ion-icon name="chevron-forward" class="text-xl"></ion-icon>
-                                </a>
-                            </div>
-                        </div>
-
-                        <ul class="create-links -m-1 mt-4 pb-1 text-xs text-gray-500 dark:text-white" uk-scrollspy="target: > li; cls: uk-animation-scale-up , uk-animation-slide-bottom-small ;repeat: true">
+                        <ul class="create-links -m-1 mt-3 pb-1 text-xs text-gray-500 dark:text-white" uk-scrollspy="target: > li; cls: uk-animation-scale-up , uk-animation-slide-bottom-small ;repeat: true">
                             <li uk-toggle="target: #create-group-modal"
                                 class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
                                 <div class="create-link-icon bg-blue-50 text-blue-600 w-7 h-7 rounded-lg grid place-items-center">

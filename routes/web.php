@@ -11,6 +11,7 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostInteractionController;
+use App\Http\Controllers\FriendController;
 
 // ── Auth (guest only) ──────────────────────────────────────
 Route::middleware('guest')->group(function () {
@@ -57,6 +58,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/share-data/groups',                           [PostInteractionController::class, 'shareGroups'])->name('share.groups');
     Route::get('/share-data/events',                           [PostInteractionController::class, 'shareEvents'])->name('share.events');
     Route::get('/share-data/pages',                            [PostInteractionController::class, 'sharePages'])->name('share.pages');
+
+    // Friends
+    Route::get('/friends',                        [FriendController::class, 'index'])->name('friends');
+    Route::post('/friends/request/{user}',        [FriendController::class, 'sendRequest'])->name('friends.request');
+    Route::post('/friends/accept/{friendRequest}',[FriendController::class, 'accept'])->name('friends.accept');
+    Route::post('/friends/decline/{friendRequest}',[FriendController::class, 'decline'])->name('friends.decline');
 
     // Groups / Pages / Events / Blog create
     Route::post('/groups',               [GroupController::class, 'store'])->name('groups.store');
