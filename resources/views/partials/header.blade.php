@@ -142,7 +142,8 @@
                         </div>
 
                         <ul class="create-links -m-1 mt-4 pb-1 text-xs text-gray-500 dark:text-white" uk-scrollspy="target: > li; cls: uk-animation-scale-up , uk-animation-slide-bottom-small ;repeat: true">
-                            <li class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
+                            <li uk-toggle="target: #create-group-modal"
+                                class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
                                 <div class="create-link-icon bg-blue-50 text-blue-600 w-7 h-7 rounded-lg grid place-items-center">
                                     <ion-icon name="people" class="text-base"></ion-icon>
                                 </div>
@@ -151,7 +152,8 @@
                                     <div class="mt-1 text-xs text-gray-500">Meet people with similar interests.</div>
                                 </div>
                             </li>
-                            <li class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
+                            <li uk-toggle="target: #create-page-modal"
+                                class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
                                 <div class="create-link-icon bg-purple-50 text-purple-600 w-7 h-7 rounded-lg grid place-items-center">
                                     <ion-icon name="flag" class="text-base"></ion-icon>
                                 </div>
@@ -160,7 +162,8 @@
                                     <div class="mt-1 text-xs text-gray-500">Find and connect with businesses.</div>
                                 </div>
                             </li>
-                            <li class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
+                            <li uk-toggle="target: #create-event-modal"
+                                class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
                                 <div class="create-link-icon bg-rose-50 text-rose-600 w-7 h-7 rounded-lg grid place-items-center">
                                     <ion-icon name="calendar" class="text-base"></ion-icon>
                                 </div>
@@ -169,13 +172,14 @@
                                     <div class="mt-1 text-xs text-gray-500">Discover fun activities near you.</div>
                                 </div>
                             </li>
-                            <li class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
-                                <div class="create-link-icon bg-green-50 text-green-600 w-7 h-7 rounded-lg grid place-items-center">
-                                    <ion-icon name="game-controller" class="text-base"></ion-icon>
+                            <li uk-toggle="target: #create-blog-modal"
+                                class="flex items-center gap-4 hover:bg-secondery rounded-md p-1.5 cursor-pointer dark:hover:bg-white/10">
+                                <div class="create-link-icon bg-teal-50 text-teal-600 w-7 h-7 rounded-lg grid place-items-center">
+                                    <ion-icon name="newspaper" class="text-base"></ion-icon>
                                 </div>
                                 <div class="flex-1">
-                                    <h4 class="font-medium text-sm text-black dark:text-white">Games</h4>
-                                    <div class="mt-1 text-xs text-gray-500">Play games with friends have fun.</div>
+                                    <h4 class="font-medium text-sm text-black dark:text-white">Blog</h4>
+                                    <div class="mt-1 text-xs text-gray-500">Share articles and knowledge.</div>
                                 </div>
                             </li>
                         </ul>

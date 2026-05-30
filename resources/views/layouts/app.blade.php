@@ -82,6 +82,9 @@
     <!-- Floating Chat Box -->
     @include('partials.chat-box')
 
+    {{-- Create Entity Modals (Group / Page / Event / Blog) --}}
+    @include('partials._create-entity-modals')
+
     {{-- Share Modal --}}
     <div class="hidden lg:p-20" id="share-post-modal" uk-modal="">
         <div class="uk-modal-dialog relative overflow-hidden mx-auto bg-white shadow-xl rounded-xl md:w-[480px] w-full dark:bg-dark2">

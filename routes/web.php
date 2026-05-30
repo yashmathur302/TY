@@ -8,6 +8,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostInteractionController;
 
@@ -57,8 +58,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/share-data/events',                           [PostInteractionController::class, 'shareEvents'])->name('share.events');
     Route::get('/share-data/pages',                            [PostInteractionController::class, 'sharePages'])->name('share.pages');
 
-    // Groups / Events / Blog create
+    // Groups / Pages / Events / Blog create
     Route::post('/groups',               [GroupController::class, 'store'])->name('groups.store');
+    Route::post('/pages',                [PageController::class,  'store'])->name('pages.store');
     Route::post('/events',               [EventController::class, 'store'])->name('events.store');
     Route::post('/blog',                 [BlogController::class,  'store'])->name('blog.store');
 
