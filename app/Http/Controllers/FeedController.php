@@ -36,7 +36,8 @@ class FeedController extends Controller
 
     public function events()
     {
-        return view('events');
+        $myEvents = Event::where('created_by', auth()->id())->latest()->get();
+        return view('events', compact('myEvents'));
     }
 
     public function eventDetail()
@@ -46,7 +47,8 @@ class FeedController extends Controller
 
     public function pages()
     {
-        return view('pages');
+        $myPages = Page::where('created_by', auth()->id())->latest()->get();
+        return view('pages', compact('myPages'));
     }
 
     public function pageDetail()
@@ -56,7 +58,8 @@ class FeedController extends Controller
 
     public function groups()
     {
-        return view('groups');
+        $myGroups = Group::where('created_by', auth()->id())->latest()->get();
+        return view('groups', compact('myGroups'));
     }
 
     public function groupDetail()
@@ -66,7 +69,8 @@ class FeedController extends Controller
 
     public function blog()
     {
-        return view('blog');
+        $myBlogs = BlogPost::where('user_id', auth()->id())->latest()->get();
+        return view('blog', compact('myBlogs'));
     }
 
     public function blogRead()

@@ -141,42 +141,34 @@
 
                 </div>
 
-                <!-- ===== TAB 3: My Pages – Cover + Avatar Cards ===== -->
+                <!-- ===== TAB 3: My Pages ===== -->
                 <div class="grid sm:grid-cols-3 grid-cols-2 gap-3"
                      uk-scrollspy="target: > div; cls: uk-animation-scale-up; delay: 100; repeat: true">
 
-                    @foreach([
-                        ['seed' => 'pg1', 'img' => 1,  'name' => 'Jesse Steeve',  'following' => '125k'],
-                        ['seed' => 'pg2', 'img' => 2,  'name' => 'John Michael',  'following' => '260k'],
-                        ['seed' => 'pg3', 'img' => 3,  'name' => 'Monroe Parker', 'following' => '125k'],
-                        ['seed' => 'pg4', 'img' => 14, 'name' => 'Martin Gray',   'following' => '320k'],
-                        ['seed' => 'pg5', 'img' => 5,  'name' => 'James Lewis',   'following' => '192k'],
-                        ['seed' => 'pg6', 'img' => 6,  'name' => 'Alexa Stella',  'following' => '89k'],
-                        ['seed' => 'pg7', 'img' => 3,  'name' => 'Monroe Parker', 'following' => '125k'],
-                        ['seed' => 'pg8', 'img' => 2,  'name' => 'John Michael',  'following' => '260k'],
-                        ['seed' => 'pg9', 'img' => 7,  'name' => 'Sarah Connor',  'following' => '145k'],
-                    ] as $mine)
+                    @forelse($myPages as $page)
                     <div class="card">
                         <div class="card-media sm:h-24 h-16">
-                            <img src="https://picsum.photos/seed/{{ $mine['seed'] }}/400/200" alt="{{ $mine['name'] }}">
+                            @if($page->coverUrl())
+                            <img src="{{ $page->coverUrl() }}" alt="{{ $page->name }}">
+                            @else
+                            <div class="w-full h-full bg-gradient-to-br from-purple-500 to-violet-700"></div>
+                            @endif
                             <div class="card-overly"></div>
                         </div>
-                        <div class="card-body relative z-10">
-                            <img src="https://i.pravatar.cc/48?img={{ $mine['img'] }}" alt="{{ $mine['name'] }}"
-                                 class="w-10 rounded-full sm:mb-2 mb-1 shadow -mt-8 relative border-2 border-white">
-                            <h4 class="card-title">{{ $mine['name'] }}</h4>
-                            <p class="card-text">{{ $mine['following'] }} Following</p>
+                        <div class="card-body">
+                            <a href="{{ route('pages.show', $page) }}"><h4 class="card-title">{{ $page->name }}</h4></a>
+                            @if($page->category)<p class="card-text capitalize">{{ $page->category }}</p>@endif
                             <div class="flex gap-2">
-                                <button type="button" class="button bg-primary text-white flex-1">Join</button>
-                                <button type="button" class="button bg-secondery !w-auto dark:text-white">View</button>
+                                <a href="{{ route('pages.show', $page) }}" class="button bg-primary text-white flex-1">View</a>
                             </div>
                         </div>
                     </div>
-                    @endforeach
-
-                    <div class="flex justify-center my-6 lg:col-span-3 col-span-2">
-                        <button type="button" class="bg-white py-2 px-5 rounded-full shadow-md font-semibold text-sm dark:bg-dark2 dark:text-white">Load more...</button>
+                    @empty
+                    <div class="col-span-full py-12 text-center text-gray-400 dark:text-white/40">
+                        <ion-icon name="flag-outline" class="text-4xl mb-2"></ion-icon>
+                        <p>You haven't created any pages yet.</p>
                     </div>
+                    @endforelse
 
                 </div>
 
@@ -194,25 +186,27 @@
             <div class="box p-5 px-6">
                 <div class="flex items-baseline justify-between">
                     <h3 class="font-bold text-base text-black dark:text-white">Pages You Manage</h3>
-                    <a href="#" class="text-sm text-blue-500">See all</a>
                 </div>
+                @if($myPages->count())
                 <div class="side-list">
-                    @foreach([
-                        ['img' => 2,  'name' => 'John Michael',  'updated' => '2 days ago'],
-                        ['img' => 14, 'name' => 'Martin Gray',   'updated' => '4 days ago'],
-                        ['img' => 3,  'name' => 'Monroe Parker', 'updated' => '1 week ago'],
-                        ['img' => 1,  'name' => 'Jesse Steeve',  'updated' => '2 months ago'],
-                    ] as $managed)
+                    @foreach($myPages->take(4) as $page)
                     <div class="side-list-item">
-                        <img src="https://i.pravatar.cc/40?img={{ $managed['img'] }}" alt="{{ $managed['name'] }}" class="side-list-image rounded-full">
-                        <div class="flex-1">
-                            <h4 class="side-list-title">{{ $managed['name'] }}</h4>
-                            <div class="side-list-info">Updated {{ $managed['updated'] }}</div>
+                        <div class="side-list-image rounded-lg overflow-hidden bg-gradient-to-br from-purple-500 to-violet-700 shrink-0">
+                            @if($page->coverUrl())
+                            <img src="{{ $page->coverUrl() }}" alt="{{ $page->name }}" class="w-full h-full object-cover">
+                            @endif
                         </div>
-                        <button type="button" class="button bg-secondery dark:text-white">Edit</button>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="side-list-title truncate">{{ $page->name }}</h4>
+                            <div class="side-list-info">Created {{ $page->created_at->diffForHumans() }}</div>
+                        </div>
+                        <a href="{{ route('pages.show', $page) }}" class="button bg-secondery dark:text-white shrink-0">View</a>
                     </div>
                     @endforeach
                 </div>
+                @else
+                <p class="text-sm text-gray-400 dark:text-white/40 py-4 text-center">No pages yet.</p>
+                @endif
             </div>
 
             <!-- Liked Pages -->

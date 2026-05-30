@@ -210,37 +210,39 @@
         <!-- ===== TAB 3: My Events ===== -->
         <li>
             <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 py-4 pb-8 events-grid">
-                @foreach([
-                    ['seed'=>'my1', 'label'=>'You\'re Going',  'label_color'=>'text-green-500', 'title'=>'Web Dev Bootcamp',          'location'=>'Online',   'interested'=>30, 'going'=>18],
-                    ['seed'=>'my2', 'label'=>'You\'re Hosting','label_color'=>'text-purple-500','title'=>'EduConnect Meetup 2024',    'location'=>'Mumbai',   'interested'=>55, 'going'=>40],
-                    ['seed'=>'my3', 'label'=>'Interested',     'label_color'=>'text-blue-500',  'title'=>'Laravel Conference India',  'location'=>'Delhi',    'interested'=>80, 'going'=>35],
-                    ['seed'=>'my4', 'label'=>'You\'re Going',  'label_color'=>'text-green-500', 'title'=>'Teachers Leadership Summit','location'=>'Chennai',  'interested'=>42, 'going'=>28],
-                ] as $mine)
+                @forelse($myEvents as $event)
                 <div class="card">
-                    <a href="{{ route('event.detail') }}">
+                    <a href="{{ route('events.show', $event) }}">
                         <div class="card-media h-32">
-                            <img src="{{ 'https://picsum.photos/seed/' . $mine['seed'] . '/400/200' }}" alt="{{ $mine['title'] }}">
+                            @if($event->coverUrl())
+                            <img src="{{ $event->coverUrl() }}" alt="{{ $event->title }}">
+                            @else
+                            <div class="w-full h-full bg-gradient-to-br from-primary to-blue-700"></div>
+                            @endif
                             <div class="card-overly"></div>
                         </div>
                     </a>
                     <div class="card-body">
-                        <p class="text-xs font-semibold {{ $mine['label_color'] }} mb-1">{{ $mine['label'] }}</p>
-                        <a href="{{ route('event.detail') }}"><h4 class="card-title text-sm">{{ $mine['title'] }}</h4></a>
-                        <p class="card-text mt-1">{{ $mine['location'] }}</p>
+                        <p class="text-xs font-semibold text-purple-500 mb-1">You're Hosting</p>
+                        <a href="{{ route('events.show', $event) }}"><h4 class="card-title text-sm">{{ $event->title }}</h4></a>
+                        @if($event->location)<p class="card-text mt-1">{{ $event->location }}</p>@endif
+                        <p class="text-xs text-primary mt-1">{{ $event->start_date->format('M d, Y') }}</p>
                         <div class="card-list-info mt-1">
-                            <div>{{ $mine['interested'] }} Interested</div>
+                            <div>{{ number_format($event->interested_count) }} Interested</div>
                             <div class="hidden md:block">·</div>
-                            <div>{{ $mine['going'] }} Going</div>
+                            <div>{{ number_format($event->going_count) }} Going</div>
                         </div>
                         <div class="flex gap-2">
-                            <button type="button" class="button bg-primary text-white flex-1">Interested</button>
-                            <button type="button" class="button bg-secondery !w-auto">
-                                <ion-icon name="arrow-redo" class="text-lg"></ion-icon>
-                            </button>
+                            <a href="{{ route('events.show', $event) }}" class="button bg-primary text-white flex-1">View</a>
                         </div>
                     </div>
                 </div>
-                @endforeach
+                @empty
+                <div class="col-span-full py-12 text-center text-gray-400 dark:text-white/40">
+                    <ion-icon name="calendar-outline" class="text-4xl mb-2"></ion-icon>
+                    <p>You haven't created any events yet.</p>
+                </div>
+                @endforelse
             </div>
         </li>
 

@@ -96,35 +96,38 @@
             @endforeach
         </div>
 
-        <!-- ===== TAB 3: My Groups – Primary-soft buttons ===== -->
+        <!-- ===== TAB 3: My Groups ===== -->
         <div class="groups-card-grid">
-            @foreach([
-                ['seed' => 'gc2', 'name' => 'Delicious Foods',   'category' => 'Health',          'members' => '42k'],
-                ['seed' => 'gc1', 'name' => 'Graphic Design',    'category' => 'Health',          'members' => '42k'],
-                ['seed' => 'gc3', 'name' => 'Abstract Minimal',  'category' => 'Delicious Foods', 'members' => '232k'],
-                ['seed' => 'gc4', 'name' => 'Delicious Foods',   'category' => 'Travel',          'members' => '620k'],
-            ] as $group)
+            @forelse($myGroups as $group)
             <div class="card">
-                <a href="{{ route('group.detail') }}">
+                <a href="{{ route('groups.show', $group) }}">
                     <div class="card-media h-24">
-                        <img src="https://picsum.photos/seed/{{ $group['seed'] }}/400/200" alt="{{ $group['name'] }}">
+                        @if($group->coverUrl())
+                        <img src="{{ $group->coverUrl() }}" alt="{{ $group->name }}">
+                        @else
+                        <div class="w-full h-full bg-gradient-to-br from-primary to-blue-700"></div>
+                        @endif
                         <div class="card-overly"></div>
                     </div>
                 </a>
                 <div class="card-body">
-                    <a href="{{ route('group.detail') }}"><h4 class="card-title">{{ $group['name'] }}</h4></a>
+                    <a href="{{ route('groups.show', $group) }}"><h4 class="card-title">{{ $group->name }}</h4></a>
                     <div class="card-list-info font-normal mt-1">
-                        <a href="#">{{ $group['category'] }}</a>
+                        <span class="capitalize">{{ $group->privacy }}</span>
                         <div class="md:block hidden">·</div>
-                        <div>{{ $group['members'] }} members</div>
+                        <div>{{ number_format($group->members_count) }} members</div>
                     </div>
                     <div class="flex gap-2">
-                        <button type="button" class="button bg-primary-soft text-primary dark:text-white flex-1">Join</button>
-                        <button type="button" class="button bg-secondery dark:text-white flex-1">Edit</button>
+                        <a href="{{ route('groups.show', $group) }}" class="button bg-primary text-white flex-1">View</a>
                     </div>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="col-span-full py-12 text-center text-gray-400 dark:text-white/40">
+                <ion-icon name="people-outline" class="text-4xl mb-2"></ion-icon>
+                <p>You haven't created any groups yet.</p>
+            </div>
+            @endforelse
         </div>
 
     </div>

@@ -211,42 +211,50 @@ $articles = [
         <div class="grid 2xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2.5 mt-6"
              uk-scrollspy="target: > div; cls: uk-animation-slide-bottom-small; delay: 100; repeat: true">
 
-            @foreach($articles as $article)
+            @forelse($myBlogs as $blog)
             <div class="card">
-                <a href="{{ route('blog.read') }}">
+                <a href="{{ route('blog.show', $blog) }}">
                     <div class="card-media h-36">
-                        <img src="https://picsum.photos/seed/my-{{ $article['seed'] }}/400/250" alt="{{ $article['title'] }}">
+                        @if($blog->coverUrl())
+                        <img src="{{ $blog->coverUrl() }}" alt="{{ $blog->title }}">
+                        @else
+                        <div class="w-full h-full bg-gradient-to-br from-teal-400 to-cyan-600"></div>
+                        @endif
                         <div class="card-overly"></div>
-                        <span class="blog-category-badge">{{ $article['category'] }}</span>
+                        @if($blog->category)<span class="blog-category-badge">{{ $blog->category }}</span>@endif
                     </div>
                 </a>
                 <div class="card-body">
-                    <a href="{{ route('blog.read') }}"><p class="card-text">{{ $article['author'] }}</p></a>
-                    <a href="{{ route('blog.read') }}">
-                        <h4 class="card-title text-sm line-clamp-2 mt-1.5">{{ $article['title'] }}</h4>
+                    <a href="{{ route('blog.show', $blog) }}"><p class="card-text">{{ $blog->user->name ?? auth()->user()->name }}</p></a>
+                    <a href="{{ route('blog.show', $blog) }}">
+                        <h4 class="card-title text-sm line-clamp-2 mt-1.5">{{ $blog->title }}</h4>
                     </a>
                     <div class="card-list-info items-center gap-4">
                         <div class="flex items-center gap-1.5">
                             <ion-icon name="heart-outline" class="text-lg"></ion-icon>
-                            {{ $article['likes'] }}
+                            {{ $blog->likes_count }}
                         </div>
                         <div class="flex items-center gap-1.5">
-                            <ion-icon name="chatbubble-ellipses-outline" class="text-lg"></ion-icon>
-                            {{ $article['comments'] }}
+                            <ion-icon name="eye-outline" class="text-lg"></ion-icon>
+                            {{ $blog->views_count }}
                         </div>
-                        <button type="button" class="flex ml-auto">
-                            <ion-icon name="arrow-redo-outline" class="text-lg"></ion-icon>
-                        </button>
                     </div>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <div class="col-span-full py-12 text-center text-gray-400 dark:text-white/40">
+                <ion-icon name="create-outline" class="text-4xl mb-2"></ion-icon>
+                <p>You haven't written any blog posts yet.</p>
+            </div>
+            @endforelse
 
         </div>
 
+        @if($myBlogs->count())
         <div class="flex justify-center my-6">
             <button type="button" class="bg-white py-2 px-5 rounded-full shadow-md font-semibold text-sm dark:bg-dark2">Load more...</button>
         </div>
+        @endif
     </div>
 
 </div>
