@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Models\Event;
 use App\Models\BlogPost;
+use App\Models\Page;
 
 class FeedController extends Controller
 {
@@ -103,6 +104,8 @@ class FeedController extends Controller
 
         $myBlogs      = BlogPost::where('user_id', $user->id)->latest()->get();
 
+        $myPages      = Page::where('created_by', $user->id)->latest()->get();
+
         $followers    = $user->followers()->latest()->limit(12)->get();
         $following    = $user->following()->latest()->limit(12)->get();
 
@@ -110,7 +113,7 @@ class FeedController extends Controller
             'user', 'posts', 'photos', 'videos', 'albums',
             'myGroups', 'joinedGroups',
             'myEvents', 'otherEvents',
-            'myBlogs', 'followers', 'following'
+            'myBlogs', 'myPages', 'followers', 'following'
         ));
     }
 

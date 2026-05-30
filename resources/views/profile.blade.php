@@ -89,6 +89,7 @@
                 <li><a href="#">Videos</a></li>
                 <li><a href="#">Groups</a></li>
                 <li><a href="#">Events</a></li>
+                <li><a href="#">Pages</a></li>
                 <li><a href="#">Blog</a></li>
             </ul>
 
@@ -399,7 +400,7 @@
                     @if($myGroups->count())
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach($myGroups as $group)
-                        <a href="{{ route('group.detail') }}" class="block rounded-xl overflow-hidden border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                        <a href="{{ route('groups.show', $group) }}" class="block rounded-xl overflow-hidden border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow">
                             <div class="h-28 bg-gradient-to-br from-primary to-blue-700 overflow-hidden">
                                 @if($group->coverUrl())
                                 <img src="{{ $group->coverUrl() }}" class="w-full h-full object-cover" alt="{{ $group->name }}">
@@ -425,7 +426,7 @@
                     @if($joinedGroups->count())
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach($joinedGroups as $group)
-                        <a href="{{ route('group.detail') }}" class="block rounded-xl overflow-hidden border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                        <a href="{{ route('groups.show', $group) }}" class="block rounded-xl overflow-hidden border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow">
                             <div class="h-28 bg-gradient-to-br from-violet-500 to-purple-700 overflow-hidden">
                                 @if($group->coverUrl())
                                 <img src="{{ $group->coverUrl() }}" class="w-full h-full object-cover" alt="{{ $group->name }}">
@@ -465,7 +466,7 @@
                     @if($myEvents->count())
                     <div class="grid sm:grid-cols-2 gap-4">
                         @foreach($myEvents as $event)
-                        <a href="{{ route('event.detail') }}" class="flex gap-3 p-3 rounded-xl border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                        <a href="{{ route('events.show', $event) }}" class="flex gap-3 p-3 rounded-xl border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow">
                             <div class="w-16 h-16 rounded-lg overflow-hidden bg-gradient-to-br from-primary to-blue-700 shrink-0">
                                 @if($event->coverUrl())
                                 <img src="{{ $event->coverUrl() }}" class="w-full h-full object-cover" alt="">
@@ -493,7 +494,7 @@
                     @if($otherEvents->count())
                     <div class="grid sm:grid-cols-2 gap-4">
                         @foreach($otherEvents as $event)
-                        <a href="{{ route('event.detail') }}" class="flex gap-3 p-3 rounded-xl border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                        <a href="{{ route('events.show', $event) }}" class="flex gap-3 p-3 rounded-xl border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow">
                             <div class="w-16 h-16 rounded-lg overflow-hidden bg-gradient-to-br from-orange-400 to-red-500 shrink-0">
                                 @if($event->coverUrl())
                                 <img src="{{ $event->coverUrl() }}" class="w-full h-full object-cover" alt="">
@@ -518,7 +519,52 @@
             </div>
         </li>
 
-        {{-- ── Tab 7: Blog ── --}}
+        {{-- ── Tab 7: Pages ── --}}
+        <li>
+            <div class="xl:space-y-6 space-y-4">
+
+                <div class="flex items-center gap-3">
+                    <button uk-toggle="target: #create-page-modal"
+                            class="button bg-primary text-white flex items-center gap-2">
+                        <ion-icon name="flag-outline" class="text-lg"></ion-icon> Create Page
+                    </button>
+                </div>
+
+                {{-- Your Pages --}}
+                <div class="box p-5">
+                    <h3 class="font-bold text-lg text-black dark:text-white mb-4">Your Pages
+                        <span class="text-sm font-normal text-gray-500 dark:text-white/60 ml-2">{{ $myPages->count() }}</span>
+                    </h3>
+                    @if($myPages->count())
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        @foreach($myPages as $page)
+                        <a href="{{ route('pages.show', $page) }}" class="block rounded-xl overflow-hidden border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                            <div class="h-28 bg-gradient-to-br from-purple-500 to-violet-700 overflow-hidden">
+                                @if($page->coverUrl())
+                                <img src="{{ $page->coverUrl() }}" class="w-full h-full object-cover" alt="{{ $page->name }}">
+                                @endif
+                            </div>
+                            <div class="p-3">
+                                <h4 class="font-semibold text-black dark:text-white text-sm truncate">{{ $page->name }}</h4>
+                                @if($page->category)
+                                <p class="text-xs text-primary mt-0.5 capitalize">{{ $page->category }}</p>
+                                @endif
+                                @if($page->description)
+                                <p class="text-xs text-gray-500 dark:text-white/60 mt-0.5 line-clamp-2">{{ $page->description }}</p>
+                                @endif
+                            </div>
+                        </a>
+                        @endforeach
+                    </div>
+                    @else
+                    <p class="text-gray-400 dark:text-white/40 font-normal text-sm py-6 text-center">You haven't created any pages yet.</p>
+                    @endif
+                </div>
+
+            </div>
+        </li>
+
+        {{-- ── Tab 8: Blog ── --}}
         <li>
             <div class="xl:space-y-6 space-y-4">
 
@@ -537,7 +583,7 @@
                     @if($myBlogs->count())
                     <div class="grid sm:grid-cols-2 gap-4">
                         @foreach($myBlogs as $blog)
-                        <a href="{{ route('blog.read') }}" class="block rounded-xl overflow-hidden border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                        <a href="{{ route('blog.show', $blog) }}" class="block rounded-xl overflow-hidden border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow">
                             <div class="h-36 bg-gradient-to-br from-teal-400 to-cyan-600 overflow-hidden">
                                 @if($blog->coverUrl())
                                 <img src="{{ $blog->coverUrl() }}" class="w-full h-full object-cover" alt="{{ $blog->title }}">
