@@ -107,19 +107,42 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="button bg-blue-500 text-white py-2 px-12 text-[14px]">Create</button>
+                <button type="submit" id="cs-submit-btn" class="button bg-blue-500 text-white py-2 px-12 text-[14px]">Create</button>
             </div>
+
+            {{-- Upload progress bar (hidden until upload starts) --}}
+            <div id="cs-upload-progress" class="hidden px-5 pb-4">
+                <div class="flex items-center justify-between text-xs text-gray-500 dark:text-white/60 mb-1.5">
+                    <span id="cs-progress-label">Uploading media...</span>
+                    <span id="cs-progress-pct">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
+                    <div id="cs-progress-bar" class="bg-blue-500 h-2 rounded-full transition-all duration-200"></div>
+                </div>
+            </div>
+
         </form>
     </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Image
+    var form       = document.getElementById('create-status-form');
     var imgTrigger = document.getElementById('cs-trigger-image');
     var imgInput   = document.getElementById('cs-image-input');
     var imgPreview = document.getElementById('cs-image-preview');
     var imgThumb   = document.getElementById('cs-image-thumb');
+    var vidTrigger = document.getElementById('cs-trigger-video');
+    var vidInput   = document.getElementById('cs-video-input');
+    var vidPreview = document.getElementById('cs-video-preview');
+    var vidThumb   = document.getElementById('cs-video-thumb');
+    var progressWrap = document.getElementById('cs-upload-progress');
+    var progressBar  = document.getElementById('cs-progress-bar');
+    var progressPct  = document.getElementById('cs-progress-pct');
+    var progressLbl  = document.getElementById('cs-progress-label');
+    var submitBtn    = document.getElementById('cs-submit-btn');
+
+    // Image picker
     if (imgTrigger) {
         imgTrigger.addEventListener('click', function () { imgInput.click(); });
         imgInput.addEventListener('change', function () {
@@ -135,11 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Video
-    var vidTrigger = document.getElementById('cs-trigger-video');
-    var vidInput   = document.getElementById('cs-video-input');
-    var vidPreview = document.getElementById('cs-video-preview');
-    var vidThumb   = document.getElementById('cs-video-thumb');
+    // Video picker
     if (vidTrigger) {
         vidTrigger.addEventListener('click', function () { vidInput.click(); });
         vidInput.addEventListener('change', function () {
@@ -194,5 +213,62 @@ document.addEventListener('DOMContentLoaded', function () {
             this.querySelector('.cs-check').classList.remove('hidden');
         });
     });
+
+    // Form submit — use XHR for media uploads so we can show a real progress bar
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            var hasMedia = (imgInput && imgInput.files[0]) || (vidInput && vidInput.files[0]);
+
+            if (!hasMedia) {
+                // Text-only post: submit normally (near-instant)
+                return;
+            }
+
+            e.preventDefault();
+
+            // Lock UI
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Uploading...';
+            progressWrap.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            progressPct.textContent = '0%';
+            progressLbl.textContent = 'Uploading media...';
+
+            var xhr = new XMLHttpRequest();
+
+            // Track bytes sent to server
+            xhr.upload.addEventListener('progress', function (e) {
+                if (e.lengthComputable) {
+                    var pct = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = pct + '%';
+                    progressPct.textContent = pct + '%';
+                    if (pct >= 100) {
+                        progressLbl.textContent = 'Processing post...';
+                        progressBar.style.width = '100%';
+                        progressPct.textContent = '100%';
+                    }
+                }
+            });
+
+            xhr.addEventListener('load', function () {
+                // Server finished — navigate to wherever it redirected us
+                window.location.href = xhr.responseURL || '/feed';
+            });
+
+            xhr.addEventListener('error', function () {
+                // Reset UI on network error
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Create';
+                progressWrap.classList.add('hidden');
+                if (typeof _notify === 'function') {
+                    _notify('Upload failed. Please check your connection and try again.', 'danger');
+                }
+            });
+
+            xhr.open('POST', form.action);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.send(new FormData(form));
+        });
+    }
 });
 </script>
