@@ -130,25 +130,7 @@
 
                 <div class="text-sm font-normal space-y-4 mt-4">
 
-                    @foreach([
-                        ['img' => '3',  'name' => 'Monroe Parker', 'comment' => 'What a beautiful photo! I love it. 😍'],
-                        ['img' => '2',  'name' => 'John Michael',  'comment' => 'You captured the moment. 😎'],
-                        ['img' => '5',  'name' => 'James Lewis',   'comment' => 'What a beautiful photo! I love it. 😍'],
-                        ['img' => '14', 'name' => 'Martin Gray',   'comment' => 'You captured the moment. 😎'],
-                    ] as $item)
-                    <div class="flex items-start gap-3">
-                        <img src="https://i.pravatar.cc/32?img={{ $item['img'] }}" alt="{{ $item['name'] }}" class="w-6 h-6 mt-1 rounded-full shrink-0">
-                        <div class="flex-1">
-                            <span class="text-black font-medium dark:text-white">{{ $item['name'] }}</span>
-                            <p class="mt-0.5 dark:text-white/80">{{ $item['comment'] }}</p>
-                        </div>
-                    </div>
-                    @endforeach
-
-                    <button type="button" class="flex items-center gap-1.5 text-blue-500 my-5">
-                        <ion-icon name="chevron-down-outline"></ion-icon>
-                        More Comments
-                    </button>
+                <p class="text-gray-400 dark:text-white/40 font-normal text-sm py-4 text-center">No discussions yet. Be the first to comment!</p>
 
                 </div>
 
